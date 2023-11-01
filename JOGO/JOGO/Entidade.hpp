@@ -1,0 +1,23 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
+using namespace sf;
+
+namespace Entidades
+{
+	class Entidade
+	{
+	protected:
+		RectangleShape corpo;
+
+	public:
+		Entidade(const Vector2f pos, const Vector2f tam);
+		~Entidade();
+		const RectangleShape getCorpo() const;
+
+	};
+}
+
+
+

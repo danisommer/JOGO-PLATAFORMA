@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+*.vsidx
+JOGO/.vs/JOGO/v17/.suo
+*.db
+*.ipch
+*.user
+*.filters
+*.vcxproj
+*.tlog
+*.log
+*.idb
+*.pdb
+*.ilk
+*.recipe
+*.sln
