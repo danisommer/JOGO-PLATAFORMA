@@ -7,17 +7,12 @@ namespace Entidades
 	namespace Personagens
 	{
 		Personagem::Personagem() :
-			podeAndar(true),
-			direita(true),
 			ds(0.0f),
 			dt(0.0f),
-			ds2(0.0f),
 			isJumping(true),
 			gravity(GRAVIDADE),
-			position(100.0f, 100.0f),
 			velocity(0.0f, 0.0f),
 			direcao(0.0f, 0.0f),
-			velFinal(100.0f, 100.0f),
 			Entidade(position, corpo.getSize())
 		{
 
@@ -26,20 +21,11 @@ namespace Entidades
 		Personagem::~Personagem()
 			= default;
 
-		void Personagem::andar()
-		{
-			podeAndar = true;
-		}
-
-		void Personagem::parar()
-		{
-			podeAndar = false;
-		}
-
 		void Personagem::cair()
 		{
 			// Gravidade
-			if (isJumping) {
+			if (isJumping)
+			{
 				direcao.y += gravity;
 				direcao.y += velocity.y;
 				if (gravity >= 0.23f)
@@ -47,7 +33,8 @@ namespace Entidades
 				else
 					gravity += 0.0032f;
 			}
-			else {
+			else
+			{
 				direcao.y += gravity;
 				gravity = GRAVIDADE;
 			}
@@ -75,5 +62,5 @@ namespace Entidades
 		}
 
 	}
-	
+
 }

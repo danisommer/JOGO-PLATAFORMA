@@ -9,9 +9,7 @@ namespace Entidades
 			aceleracao(1200.0f),
 			desaceleracao(1500.0f),
 			velocidadeMaxima(900.0f),
-			jumpStrength(-0.175f),
-			jumpForce()
-
+			jumpStrength(-0.175f)
 		{
 			corpo = RectangleShape(tam);
 			corpo.setPosition(pos);
@@ -20,11 +18,6 @@ namespace Entidades
 		}
 
 		Jogador::~Jogador() = default;
-
-		RectangleShape Jogador::getCorpo()
-		{
-			return corpo;
-		}
 
 		void Jogador::atualizar()
 		{
@@ -77,7 +70,7 @@ namespace Entidades
 
 		}
 	}
-	
+
 
 }
 

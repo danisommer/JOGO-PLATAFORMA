@@ -12,17 +12,13 @@ namespace Entidades
 		{
 		protected:
 			Vector2f vel;
-			Vector2f velFinal;
 			Vector2f direcao;
 			Vector2f position;
 			Vector2f velocity;
 			Clock relogio;
-			bool podeAndar;
 			bool isJumping;
-			bool direita;
 			float dt;
 			float ds;
-			float ds2;
 			float gravity;
 
 		public:
@@ -30,8 +26,6 @@ namespace Entidades
 			~Personagem();
 			virtual void atualizar() = 0;
 
-			void andar();
-			void parar();
 			void cair();
 			void setIsJumping(bool IJ);
 			void setY(float Y);
@@ -39,7 +33,7 @@ namespace Entidades
 			Vector2f getPos();
 		};
 	}
-	
+
 }
 
 

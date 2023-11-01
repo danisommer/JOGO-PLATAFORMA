@@ -44,3 +44,6 @@ JOGO/.vs/JOGO/v17/.suo
 *.ilk
 *.recipe
 *.sln
+*.db-shm
+*.db-wal
+JOGO/.vs/JOGO/v17/Browse.VC.opendb

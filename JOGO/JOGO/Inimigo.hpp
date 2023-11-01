@@ -2,8 +2,8 @@
 #include "Personagem.hpp"
 #include "Jogador.hpp"
 #include <SFML/Graphics.hpp>
-#include <cstdlib>  
-#include <ctime> 
+#include <cstdlib>
+#include <ctime>
 #include <cmath>
 #include <random>
 

@@ -12,12 +12,12 @@ Ente::~Ente()
 
 }
 
-const sf::RectangleShape* Ente::get_corpo() const 
+const sf::RectangleShape* Ente::get_corpo() const
 {
 	return &corpo;
 }
 
-void Ente::desenhar() 
+void Ente::desenhar()
 {
 	pGG->desenhaElemento(corpo);
 }

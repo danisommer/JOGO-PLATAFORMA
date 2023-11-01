@@ -6,6 +6,3 @@ namespace Lista
 	{
 	};
 }
-
-
-

@@ -68,7 +68,8 @@ namespace Gerenciadores
 
 	void Gerenciador_Colisoes::verificaColisao(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
 	{
-		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds())) {
+		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
+		{
 
 			corpo->setIsJumping(false);
 			corpo->setY(0.0f);
@@ -76,16 +77,20 @@ namespace Gerenciadores
 			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
 			sf::FloatRect plataformaBounds = plataforma->getCorpo().getGlobalBounds();
 
-			if (corpoBounds.top < plataformaBounds.top) {
+			if (corpoBounds.top < plataformaBounds.top)
+			{
 				corpo->setPos(corpo->getPos().x, plataformaBounds.top - corpoBounds.height);
 			}
-			else if (corpoBounds.top + corpoBounds.height > plataformaBounds.top + plataformaBounds.height) {
+			else if (corpoBounds.top + corpoBounds.height > plataformaBounds.top + plataformaBounds.height)
+			{
 				corpo->setPos(corpo->getPos().x, plataformaBounds.top + plataformaBounds.height);
 			}
-			else if (corpoBounds.left < plataformaBounds.left) {
+			else if (corpoBounds.left < plataformaBounds.left)
+			{
 				corpo->setPos(plataformaBounds.left - corpoBounds.width, corpo->getPos().y);
 			}
-			else {
+			else
+			{
 				corpo->setPos(plataformaBounds.left + plataformaBounds.width, corpo->getPos().y);
 			}
 		}

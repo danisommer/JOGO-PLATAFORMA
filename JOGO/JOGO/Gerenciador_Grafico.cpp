@@ -2,11 +2,11 @@
 
 using namespace sf;
 
-namespace Gerenciadores 
+namespace Gerenciadores
 {
 	Gerenciador_Grafico* Gerenciador_Grafico::pGerenciador = nullptr;
 
-	Gerenciador_Grafico::Gerenciador_Grafico():
+	Gerenciador_Grafico::Gerenciador_Grafico() :
 		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Shinobi Quest"))
 	{
 		if (janela == nullptr)
@@ -29,7 +29,7 @@ namespace Gerenciadores
 	{
 		pGerenciador == nullptr ? pGerenciador = new Gerenciador_Grafico() : pGerenciador;
 
-        return pGerenciador;
+		return pGerenciador;
 	}
 
 	sf::RenderWindow* Gerenciador_Grafico::getJanela()

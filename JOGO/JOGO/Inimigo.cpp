@@ -85,20 +85,17 @@ namespace Entidades
 			Vector2f posJogador = jogador->getCorpo().getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
-			if (podeAndar)
+			if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
 			{
-
-				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
-				{
-					perseguirJogador(posJogador, posInimigo);
-				}
-				else
-				{
-					moveAleatorio();
-				}
+				perseguirJogador(posJogador, posInimigo);
 			}
+			else
+			{
+				moveAleatorio();
+			}
+
 		}
 	}
-	
+
 
 }

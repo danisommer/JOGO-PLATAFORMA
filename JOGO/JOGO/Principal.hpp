@@ -16,32 +16,26 @@ using namespace Entidades::Obstaculos;
 
 namespace Gerenciadores
 {
-    class Gerenciador_Grafico;
-    class Gerenciador_Colisoes;
+	class Gerenciador_Grafico;
+	class Gerenciador_Colisoes;
 }
 
 class Principal
 {
 private:
-    Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
-    Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
+	Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
+	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
-    Entidades::Personagens::Jogador* jogador;
-    vector<Entidades::Personagens::Inimigo*> inimigos;
-    vector<Entidades::Personagens::Personagem*> personagens;
-    vector<Entidades::Obstaculos::Plataforma*> plataformas;
-    
-    Clock clock;
-    Time tempoAnterior;
-    Time tempoAtual;
+	vector<Entidades::Personagens::Personagem*> personagens;
+	vector<Entidades::Obstaculos::Plataforma*> plataformas;
 
 public:
-    Principal();
-    ~Principal();
-    void Executar();
-    void instanciaEntidades();
-    void AtualizarPersonagens();
-    void DesenharElementos();
+	Principal();
+	~Principal();
+	void Executar();
+	void instanciaEntidades();
+	void AtualizarPersonagens();
+	void DesenharElementos();
 
 };
 
