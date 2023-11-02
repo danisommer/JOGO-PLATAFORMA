@@ -31,7 +31,7 @@ namespace Entidades
 				if (gravity >= 0.22f)
 					gravity = 0.22f;
 				else
-					gravity += 0.0032f;
+					gravity += 0.003f;
 			}
 			else
 			{

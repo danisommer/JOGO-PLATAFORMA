@@ -22,6 +22,7 @@ namespace Entidades
 			int animacao;
 			float velAnimacao;
 			int anterior;
+			int iteracoes;
 			std::vector<Animacao> animacoes;
 			Animacao* animacaoAtual;
 			
