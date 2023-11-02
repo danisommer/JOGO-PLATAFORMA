@@ -26,6 +26,7 @@ private:
 	Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
 	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
+	Entidades::Personagens::Jogador* jogador;
 	vector<Entidades::Personagens::Personagem*> personagens;
 	vector<Entidades::Obstaculos::Plataforma*> plataformas;
 

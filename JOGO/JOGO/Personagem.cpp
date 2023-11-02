@@ -1,6 +1,6 @@
 #include "Personagem.hpp"
 #include <iostream>
-#define GRAVIDADE 0.02f
+#define GRAVIDADE 0.018f
 
 namespace Entidades
 {
@@ -28,8 +28,8 @@ namespace Entidades
 			{
 				direcao.y += gravity;
 				direcao.y += velocity.y;
-				if (gravity >= 0.23f)
-					gravity = 0.23f;
+				if (gravity >= 0.22f)
+					gravity = 0.22f;
 				else
 					gravity += 0.0032f;
 			}

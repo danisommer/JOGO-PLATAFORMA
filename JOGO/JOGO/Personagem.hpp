@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Entidade.hpp"
+#include "Animacao.hpp"
 
 using namespace sf;
 
@@ -31,6 +32,7 @@ namespace Entidades
 			void setY(float Y);
 			void setPos(float X, float Y);
 			Vector2f getPos();
+			virtual void setAnimacao(int anim) = 0;
 		};
 	}
 

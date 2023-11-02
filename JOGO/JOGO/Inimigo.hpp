@@ -7,8 +7,8 @@
 #include <cmath>
 #include <random>
 
-#define ALCANCE_X 575.0f
-#define ALCANCE_Y 575.0f
+#define ALCANCE_X 900.0f
+#define ALCANCE_Y 900.0f
 
 namespace Entidades
 {
@@ -30,6 +30,7 @@ namespace Entidades
 			void moveAleatorio();
 			void atualizar();
 
+			void setAnimacao(int anim) override;
 
 		};
 	}

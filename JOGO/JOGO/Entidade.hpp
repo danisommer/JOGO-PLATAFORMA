@@ -9,12 +9,15 @@ namespace Entidades
 	class Entidade
 	{
 	protected:
+		Sprite sprite;
 		RectangleShape corpo;
 
 	public:
 		Entidade(const Vector2f pos, const Vector2f tam);
 		~Entidade();
 		const RectangleShape getCorpo() const;
+		const Sprite getSprite() const;
+
 
 	};
 }

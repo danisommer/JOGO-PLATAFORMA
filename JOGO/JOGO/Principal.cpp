@@ -29,14 +29,6 @@ void Principal::Executar()
 
 	while (gerenciador_grafico->getOpen())
 	{
-		gerenciador_grafico->limpaTela();
-
-		gerenciador_colisoes->Executar();
-
-		AtualizarPersonagens();
-
-		DesenharElementos();
-
 		while (gerenciador_grafico->getJanela()->pollEvent(evento))
 		{
 			if (evento.type == sf::Event::Closed)
@@ -44,21 +36,33 @@ void Principal::Executar()
 				gerenciador_grafico->fecharJanela();
 			}
 		}
+
+		gerenciador_grafico->limpaTela();
+
+		gerenciador_grafico->atualizaCamera();
+
+		gerenciador_colisoes->Executar();
+
+		AtualizarPersonagens();
+
+		DesenharElementos();		
 	}
 }
 
 void Principal::instanciaEntidades()
 {
-	Entidades::Personagens::Jogador* jogador = new Entidades::Personagens::Jogador(Vector2f(200.0f, 200.0f), Vector2f(50.0f, 100.0f)); //pos tam
-	Entidades::Personagens::Inimigo* inimigo = new Entidades::Personagens::Inimigo(Vector2f(550.0f, 500.0f), Vector2f(50.0f, 100.0f), jogador); //pos tam pJogador
-	Entidades::Personagens::Inimigo* inimigo2 = new Entidades::Personagens::Inimigo(Vector2f(900.0f, 500.0f), Vector2f(50.0f, 100.0f), jogador); //pos tam pJogador
-	Entidades::Obstaculos::Plataforma* platform = new Entidades::Obstaculos::Plataforma(Vector2f(0.0f, 800.0f), Vector2f(2000.0f, 120.0f));
-	Entidades::Obstaculos::Plataforma* platform1 = new Entidades::Obstaculos::Plataforma(Vector2f(100.0f, 600.0f), Vector2f(300.0f, 30.0f));
-	Entidades::Obstaculos::Plataforma* platform2 = new Entidades::Obstaculos::Plataforma(Vector2f(400.0f, 400.0f), Vector2f(300.0f, 30.0f));
+	jogador = new Entidades::Personagens::Jogador(Vector2f(200.0f, 200.0f), Vector2f(40.0f, 80.0f)); //pos tam
+	Entidades::Personagens::Inimigo* inimigo = new Entidades::Personagens::Inimigo(Vector2f(550.0f, 500.0f), Vector2f(50.0f, 80.0f), jogador); //pos tam pJogador
+	Entidades::Personagens::Inimigo* inimigo2 = new Entidades::Personagens::Inimigo(Vector2f(900.0f, 500.0f), Vector2f(50.0f, 80.0f), jogador); //pos tam pJogador
+	Entidades::Obstaculos::Plataforma* platform = new Entidades::Obstaculos::Plataforma(Vector2f(-10000.0f, 950.0f), Vector2f(30000.0f, 120.0f));
+	Entidades::Obstaculos::Plataforma* platform1 = new Entidades::Obstaculos::Plataforma(Vector2f(100.0f, 800.0f), Vector2f(300.0f, 30.0f));
+	Entidades::Obstaculos::Plataforma* platform2 = new Entidades::Obstaculos::Plataforma(Vector2f(400.0f, 600.0f), Vector2f(300.0f, 30.0f));
 
 	Entidades::Personagens::Personagem* p1 = static_cast<Entidades::Personagens::Personagem*>(jogador);
 	Entidades::Personagens::Personagem* p2 = static_cast<Entidades::Personagens::Personagem*>(inimigo);
 	Entidades::Personagens::Personagem* p3 = static_cast<Entidades::Personagens::Personagem*>(inimigo2);
+
+	gerenciador_grafico->setJogador(jogador);
 
 	gerenciador_colisoes->setJogador(jogador);
 	gerenciador_colisoes->addInimigo(inimigo);
@@ -74,6 +78,7 @@ void Principal::instanciaEntidades()
 	personagens.push_back(p1);
 	personagens.push_back(p2);
 	personagens.push_back(p3);
+
 }
 
 void Principal::AtualizarPersonagens()
@@ -87,10 +92,11 @@ void Principal::AtualizarPersonagens()
 
 void Principal::DesenharElementos()
 {
+	gerenciador_grafico->desenhaSprite(jogador->getSprite());
+
 	for (int i = 0; i < personagens.size(); i++)
 	{
 		gerenciador_grafico->desenhaElemento(personagens.at(i)->getCorpo());
-
 	}
 	for (int i = 0; i < plataformas.size(); i++)
 	{

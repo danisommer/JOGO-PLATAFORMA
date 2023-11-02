@@ -5,9 +5,11 @@ namespace Entidades
 	namespace Personagens
 	{
 		Inimigo::Inimigo(Vector2f pos, Vector2f	tam, Jogador* jogador) :
-			jogador(jogador), iteracoes(0)
+			jogador(jogador), 
+			iteracoes(0),
+			Personagem()
 		{
-			corpo = RectangleShape(tam);
+			corpo.setSize(tam);
 			corpo.setPosition(pos);
 
 			std::random_device rd;
@@ -22,8 +24,6 @@ namespace Entidades
 
 
 			inicializa();
-
-
 		}
 
 		Inimigo::~Inimigo() = default;
@@ -94,6 +94,9 @@ namespace Entidades
 				moveAleatorio();
 			}
 
+		}
+		void Inimigo::setAnimacao(int anim)
+		{
 		}
 	}
 

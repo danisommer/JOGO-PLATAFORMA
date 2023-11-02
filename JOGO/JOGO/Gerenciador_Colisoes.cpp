@@ -71,7 +71,6 @@ namespace Gerenciadores
 		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
 		{
 
-			corpo->setIsJumping(false);
 			corpo->setY(0.0f);
 
 			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
@@ -79,6 +78,7 @@ namespace Gerenciadores
 
 			if (corpoBounds.top < plataformaBounds.top)
 			{
+				corpo->setIsJumping(false);
 				corpo->setPos(corpo->getPos().x, plataformaBounds.top - corpoBounds.height);
 			}
 			else if (corpoBounds.top + corpoBounds.height > plataformaBounds.top + plataformaBounds.height)
@@ -95,7 +95,6 @@ namespace Gerenciadores
 			}
 		}
 	}
-
 }
 
 
