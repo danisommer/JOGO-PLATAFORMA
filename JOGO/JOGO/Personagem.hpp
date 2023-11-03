@@ -19,9 +19,10 @@ namespace Entidades
 			Clock relogio;
 			bool isJumping;
 			bool voador;
-			float dt;
-			float ds;
+			bool morto;
 			float gravity;
+			float vida;
+			int animacao;
 
 		public:
 			Personagem();
@@ -33,7 +34,10 @@ namespace Entidades
 			void setY(float Y);
 			void setPos(float X, float Y);
 			Vector2f getPos();
+			void tomarDano(float dano);
 			virtual void setAnimacao(int anim) = 0;
+			void morrer();
+			bool getMorte();
 		};
 	}
 

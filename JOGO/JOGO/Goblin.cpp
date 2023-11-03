@@ -26,54 +26,12 @@ namespace Entidades
 		{
 		}
 
-		void Goblin::atualizarAnimacao()
-		{
-			if (animacao != anterior)
-			{
-				count = 0;
-				iteracoes = 0;
-			}
-
-			anterior = animacao;
-
-			animacaoAtual = &animacoes[animacao];
-
-			n_frames = animacaoAtual->getNumFrames();
-
-			static sf::Clock clock;
-			sf::Time elapsed = clock.getElapsedTime();
-
-			if (iteracoes > animacaoAtual->getAnimationSpeed())
-			{
-				if (count < n_frames - 1)
-				{
-					count++;
-				}
-				else
-				{
-					count = 0;
-				}
-
-				iteracoes = 0;
-			}
-			iteracoes++;
-
-
-			int lado;
-
-			if (direita)
-				lado = 1;
-			else
-				lado = -1;
-
-			sprite.setTexture(animacaoAtual->getFrame(count));
-			sprite.setScale(1.6 * lado, 1.6);
-			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y);
-		}
-
 		void Goblin::atacar()
 		{
-			animacaoAtual = &animacoes[3];
+			if (concluida)
+				jogador->tomarDano(0.1f);
+
+			animacao = 3;
 		}
 
 		void Goblin::inicializaAnimacoes()
@@ -127,6 +85,8 @@ namespace Entidades
 				animacaoMorte.addFrame(pedacoTexture);
 			}
 
+			animacaoMorte.setAnimationSpeed(80.0f);
+
 			//ATACAR 3
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Attack.png")) {
 				exit(1);
@@ -139,7 +99,9 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			//ATACAR 4
+			animacaoAtacar.setAnimationSpeed(25.0f);
+
+			//PARADO 4
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Idle.png")) {
 				exit(1);
 			}
@@ -157,6 +119,10 @@ namespace Entidades
 			animacoes.push_back(animacaoAtacar);
 			animacoes.push_back(animacaoParado);
 
+		}
+		void Goblin::setAnimacao(int anim)
+		{
+			animacaoAtual = &animacoes[anim];
 		}
 	}
 }

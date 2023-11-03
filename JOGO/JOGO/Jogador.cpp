@@ -14,10 +14,12 @@ namespace Entidades
 			n_frames(0),
 			count(0),
 			lado(1),
-			animacao(0),
 			anterior(0),
 			iteracoes(0),
-			ataque(0)
+			ataque(0),
+			concluida(false),
+			regiaoAtaque(),
+			dano(0.2f)
 		{
 			sprite.setPosition(pos);
 			corpo.setSize(tam);
@@ -48,11 +50,11 @@ namespace Entidades
 			}
 			else if (Keyboard::isKeyPressed(Keyboard::S))
 			{
-				animacao = 6;
+				animacao = 7;
 			}
 			else
 			{
-				animacao = 1;
+				animacao = 5;
 			}
 
 			// Pular
@@ -60,23 +62,41 @@ namespace Entidades
 			{
 				velocity.y = jumpStrength;
 				isJumping = true;
-				animacao = 2;
+				animacao = 6;
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::E))
 			{
+				atacar(lado);
+
 				direcao.x = 0.0;
 
 				if (ataque == 1)
-					animacao = 5;
-				else
 					animacao = 4;
+				else
+					animacao = 3;
+			}
+			else
+			{
+				regiaoAtaque = Vector2f();
 			}
 
 			if (isJumping)
 			{
-				animacao = 2;
+				animacao = 6;
 			}
+
+			if (vida <= 0.0f)
+			{
+				vel.x = 0.0f;
+				vel.y = 0.0f;
+				jumpStrength = 0.0f;
+
+				animacao = 2;
+				if (concluida)
+					morrer();
+			}
+
 
 			if (animacao != anterior)
 			{
@@ -98,10 +118,12 @@ namespace Entidades
 				if (count < n_frames - 1)
 				{
 					count++;
+					concluida = false;
 				}
 				else
 				{
 					count = 0;
+					concluida = true;
 
 					if (ataque == 1)
 						ataque = 0;
@@ -122,14 +144,35 @@ namespace Entidades
 			clock.restart();
 		}
 
+		void Jogador::setAnimacao(int anim)
+		{
+			animacaoAtual = &animacoes[anim];
+		}
+
+		Vector2f Jogador::getRegiaoAtaque()
+		{
+			return regiaoAtaque;
+		}
+
+		float Jogador::getDano()
+		{
+			return dano;
+		}
+
+		void Jogador::atacar(int lado)
+		{
+			regiaoAtaque = Vector2f(corpo.getPosition().x + (35.0f * lado), corpo.getPosition().y);
+		}
+
 		void Jogador::inicializaAnimacoes()
 		{
 			Animacao animacaoParado;
 			Animacao animacaoPulo;
 			Animacao animacaoAndar;
 			Animacao animacaoAtacar;
+			Animacao animacaoTomarDano;
 			Animacao animacaoAtacar2;
-			Animacao animacaoVoltar;
+			Animacao animacaoMorte;
 			Animacao animacaoAgachar;
 			sf::Texture texture;
 			int pedacoWidth = 120; //Largura
@@ -152,8 +195,8 @@ namespace Entidades
 
 			animacaoAndar.setAnimationSpeed(30.0f);
 
-			//PARADO 1
-			if (!texture.loadFromFile("Assets/Jogador/_Idle.png")) {
+			//TOMAR DANO 1
+			if (!texture.loadFromFile("Assets/Jogador/_Hit.png")) {
 				exit(1);
 			}
 
@@ -161,11 +204,11 @@ namespace Entidades
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoParado.addFrame(pedacoTexture);
+				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			//PULO 2
-			if (!texture.loadFromFile("Assets/Jogador/_Jump.png")) {
+			//MORTE 2
+			if (!texture.loadFromFile("Assets/Jogador/_Death.png")) {
 				exit(1);
 			}
 
@@ -173,22 +216,11 @@ namespace Entidades
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoPulo.addFrame(pedacoTexture);
+				animacaoMorte.addFrame(pedacoTexture);
 			}
 
-			//VOLTAR 3
-			if (!texture.loadFromFile("Assets/Jogador/_TurnAround.png")) {
-				exit(1);
-			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoVoltar.addFrame(pedacoTexture);
-			}
-
-			//ATAQUE PESADO 4
+			//ATAQUE PESADO 3
 			if (!texture.loadFromFile("Assets/Jogador/_Attack.png")) {
 				exit(1);
 			}
@@ -203,7 +235,7 @@ namespace Entidades
 			animacaoAtacar.setAnimationSpeed(30.0f);
 			animacaoAtacar2.setAnimationSpeed(30.0f);
 
-			//ATAQUE LEVE 5
+			//ATAQUE LEVE 4
 			if (!texture.loadFromFile("Assets/Jogador/_Attack2.png")) {
 				exit(1);
 			}
@@ -215,7 +247,32 @@ namespace Entidades
 				animacaoAtacar2.addFrame(pedacoTexture);
 			}
 
-			//ATACAR 6
+
+			//PARADO 5
+			if (!texture.loadFromFile("Assets/Jogador/_Idle.png")) {
+				exit(1);
+			}
+
+			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
+				sf::Texture pedacoTexture;
+				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
+				animacaoParado.addFrame(pedacoTexture);
+			}
+
+			//PULO 6
+			if (!texture.loadFromFile("Assets/Jogador/_Jump.png")) {
+				exit(1);
+			}
+
+			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
+				sf::Texture pedacoTexture;
+				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
+				animacaoPulo.addFrame(pedacoTexture);
+			}
+
+			//AGACHAR 7
 			if (!texture.loadFromFile("Assets/Jogador/_Crouch.png")) {
 				exit(1);
 			}
@@ -228,19 +285,16 @@ namespace Entidades
 			}
 
 			animacoes.push_back(animacaoAndar);
-			animacoes.push_back(animacaoParado);
-			animacoes.push_back(animacaoPulo);
-			animacoes.push_back(animacaoVoltar);
+			animacoes.push_back(animacaoTomarDano);
+			animacoes.push_back(animacaoMorte);
 			animacoes.push_back(animacaoAtacar);
 			animacoes.push_back(animacaoAtacar2);
+			animacoes.push_back(animacaoParado);
+			animacoes.push_back(animacaoPulo);
 			animacoes.push_back(animacaoAgachar);
 
 		}
 
-		void Jogador::setAnimacao(int anim)
-		{
-			animacaoAtual = &animacoes[anim];
-		}
 	}
 }
 

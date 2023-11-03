@@ -14,8 +14,9 @@ namespace Entidades
 		public:
 			Mushroom(Vector2f pos, Vector2f tam, Jogador* jogador);
 			~Mushroom();
-			void atualizarAnimacao();
 			void atacar();
+			void setAnimacao(int anim);
+
 
 		};
 

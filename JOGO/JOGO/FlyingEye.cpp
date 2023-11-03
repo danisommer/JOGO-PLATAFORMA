@@ -15,9 +15,10 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(0.15f, 0.18f);
+			vel = Vector2f(0.15f, 0.3f);
 			distanciaAlvo = 30.0f;
-			//corpo.setFillColor(sf::Color::Red);
+			ALCANCE_Y = 300.0f;
+			corpo.setFillColor(sf::Color::Red);
 
 		}
 
@@ -25,54 +26,12 @@ namespace Entidades
 		{
 		}
 
-		void FlyingEye::atualizarAnimacao()
-		{
-			if (animacao != anterior)
-			{
-				count = 0;
-				iteracoes = 0;
-			}
-
-			anterior = animacao;
-
-			animacaoAtual = &animacoes[animacao];
-
-			n_frames = animacaoAtual->getNumFrames();
-
-			static sf::Clock clock;
-			sf::Time elapsed = clock.getElapsedTime();
-
-			if (iteracoes > animacaoAtual->getAnimationSpeed())
-			{
-				if (count < n_frames - 1)
-				{
-					count++;
-				}
-				else
-				{
-					count = 0;
-				}
-
-				iteracoes = 0;
-			}
-			iteracoes++;
-
-
-			int lado;
-
-			if (direita)
-				lado = 1;
-			else
-				lado = -1;
-
-			sprite.setTexture(animacaoAtual->getFrame(count));
-			sprite.setScale(2 * lado, 2);
-			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y);
-		}
-
 		void FlyingEye::atacar()
 		{
-			animacaoAtual = &animacoes[3];
+			if (concluida)
+				jogador->tomarDano(0.2f);
+
+			animacao = 3;
 		}
 
 		void FlyingEye::inicializaAnimacoes()
@@ -81,6 +40,7 @@ namespace Entidades
 			Animacao animacaoTomarDano;
 			Animacao animacaoMorte;
 			Animacao animacaoAtacar;
+			Animacao animacaoParado;
 
 			sf::Texture texture;
 			int pedacoWidth = 150; //Largura
@@ -125,6 +85,8 @@ namespace Entidades
 				animacaoMorte.addFrame(pedacoTexture);
 			}
 
+			animacaoMorte.setAnimationSpeed(80.0f);
+
 			//ATACAR 3
 			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Attack.png")) {
 				exit(1);
@@ -137,11 +99,31 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
+			animacaoAtacar.setAnimationSpeed(25.0f);
+
+			//PARADO 4 
+			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Flight.png")) {
+				exit(1);
+			}
+
+			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
+				sf::Texture pedacoTexture;
+				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
+				animacaoParado.addFrame(pedacoTexture);
+			}
+
 			animacoes.push_back(animacaoVoando);
 			animacoes.push_back(animacaoTomarDano);
 			animacoes.push_back(animacaoMorte);
 			animacoes.push_back(animacaoAtacar);
+			animacoes.push_back(animacaoParado);
 
+		}
+
+		void FlyingEye::setAnimacao(int anim)
+		{
+			animacaoAtual = &animacoes[anim];
 		}
 	}
 }

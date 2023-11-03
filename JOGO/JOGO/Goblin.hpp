@@ -14,9 +14,8 @@ namespace Entidades
 		public:
 			Goblin(Vector2f pos, Vector2f tam, Jogador* jogador);
 			~Goblin();
-			void atualizarAnimacao();
 			void atacar();
-
+			void setAnimacao(int anim);
 		};
 
 	}

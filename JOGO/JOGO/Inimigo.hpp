@@ -7,10 +7,10 @@
 #include <cmath>
 #include <random>
 
-#define ALCANCE_X 800.0f
-#define ALCANCE_Y 800.0f
+//#define ALCANCE_X 800.0f
+//#define ALCANCE_Y 100.0f
 
-#define DISTANCIA_MINIMA_ANIMACAO 0.0f
+#define DISTANCIA_MINIMA_ANIMACAO 0.0001f
 
 namespace Entidades
 {
@@ -19,17 +19,18 @@ namespace Entidades
 		class Inimigo : public Personagem
 		{
 		private:
-			Jogador* jogador;
+			
 			Clock relogio;
 			void inicializa();
 			int random_number;
 			float distanciaX;
 			float distanciaY;
-			sf::Vector2f posAnteriorInimigo = sf::Vector2f(0.0f, 0.0f); // Inicialize com a posição inicial desejada
-
+			int atualizacao;
+			float posAnteriorInimigo;
+			bool parado;
 
 		protected:
-
+			Jogador* jogador;
 			bool direita;
 			float distanciaAlvo;
 			std::vector<Animacao> animacoes;
@@ -37,9 +38,13 @@ namespace Entidades
 			int n_frames;
 			int count;
 			int lado;
-			int animacao;
 			int anterior;
 			int iteracoes;
+			float ALCANCE_X;
+			float ALCANCE_Y;
+			float vidaAnterior;
+			bool concluida;
+
 
 		public:
 			Inimigo(Vector2f pos, Vector2f tam, Jogador* jogador);
@@ -47,10 +52,9 @@ namespace Entidades
 			void perseguirJogador(Vector2f posJogador, Vector2f posInimigo);
 			void moveAleatorio();
 			void atualizar();
-
-			void setAnimacao(int anim) override;
-			virtual void atualizarAnimacao() = 0;
+			void atualizarAnimacao();
 			virtual void atacar() = 0;
+			void setAnimacao(int anim) = 0;
 
 		};
 	}

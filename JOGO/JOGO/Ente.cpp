@@ -91,6 +91,17 @@ void Ente::AtualizarPersonagens()
 	{
 		personagens.at(i)->atualizar();
 		personagens.at(i)->cair();
+
+		if (personagens[i]->getMorte()) {
+			delete personagens[i];
+			personagens.erase(personagens.begin() + i);
+		}
+	}
+	for (int i = 1; i < personagens.size(); i++)
+	{
+		if (fabs(personagens.at(i)->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
+			fabs(personagens.at(i)->getPos().y - jogador->getRegiaoAtaque().y) < 50.0f)
+			personagens.at(i)->tomarDano(jogador->getDano());
 	}
 }
 

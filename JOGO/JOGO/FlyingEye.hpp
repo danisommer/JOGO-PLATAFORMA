@@ -15,8 +15,9 @@ namespace Entidades
 		public:
 			FlyingEye(Vector2f pos, Vector2f tam, Jogador* jogador);
 			~FlyingEye();
-			void atualizarAnimacao();
 			void atacar();
+			void setAnimacao(int anim);
+
 
 		};
 

@@ -7,14 +7,15 @@ namespace Entidades
 	namespace Personagens
 	{
 		Personagem::Personagem() :
-			ds(0.0f),
-			dt(0.0f),
 			isJumping(true),
 			gravity(GRAVIDADE),
 			velocity(0.0f, 0.0f),
 			direcao(0.0f, 0.0f),
 			Entidade(position, corpo.getSize()),
-			voador(false)
+			voador(false),
+			vida(100.0f),
+			morto(false),
+			animacao(0)
 		{
 
 		}
@@ -64,6 +65,22 @@ namespace Entidades
 		Vector2f Personagem::getPos()
 		{
 			return corpo.getPosition();
+		}
+
+		void Personagem::tomarDano(float dano)
+		{
+			vida -= dano;
+			animacao = 1;
+		}
+
+		void Personagem::morrer()
+		{
+			morto = true;
+		}
+
+		bool Personagem::getMorte()
+		{
+			return morto;
 		}
 
 	}
