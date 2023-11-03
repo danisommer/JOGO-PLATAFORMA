@@ -8,7 +8,7 @@ namespace Entidades
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam) :
 			aceleracao(900.0f),
 			desaceleracao(900.0f),
-			velocidadeMaxima(600.0f),
+			velocidadeMaxima(450.0f),
 			jumpStrength(-0.155f),
 			Personagem(),
 			n_frames(0),
@@ -23,7 +23,7 @@ namespace Entidades
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
 			corpo.setFillColor(sf::Color::Transparent);
-			vel = Vector2f(0.80f, 0.80f);
+			vel = Vector2f(0.6f, 0.6f);
 
 			inicializaAnimacoes();
 		}
@@ -150,6 +150,8 @@ namespace Entidades
 				animacaoAndar.addFrame(pedacoTexture);
 			}
 
+			animacaoAndar.setAnimationSpeed(30.0f);
+
 			//PARADO 1
 			if (!texture.loadFromFile("Assets/Jogador/_Idle.png")) {
 				exit(1);
@@ -197,6 +199,9 @@ namespace Entidades
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
+
+			animacaoAtacar.setAnimationSpeed(30.0f);
+			animacaoAtacar2.setAnimationSpeed(30.0f);
 
 			//ATAQUE LEVE 5
 			if (!texture.loadFromFile("Assets/Jogador/_Attack2.png")) {

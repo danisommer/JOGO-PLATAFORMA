@@ -1,11 +1,11 @@
-#include "Principal.hpp"
+#include "Ente.hpp"
 
 int main()
 {
 	time_t t;
 	srand(time(&t));
 
-	Principal objPrincipal;
+	Ente objPrincipal;
 	objPrincipal.Executar();
 
 	return 0;

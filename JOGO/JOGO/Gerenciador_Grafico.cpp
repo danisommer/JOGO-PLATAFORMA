@@ -16,7 +16,7 @@ namespace Gerenciadores
 			cout << "Erro alocando a janela!!" << endl;
 			exit(1);
 		}
-		view.zoom(1.15f);
+		view.zoom(1.0f);
 		janela->setView(view);
 
 	}
@@ -47,7 +47,7 @@ namespace Gerenciadores
 		janela->clear();
 	}
 
-	void Gerenciador_Grafico::desenhaElemento(const RectangleShape& corpo)
+	void Gerenciador_Grafico::desenhaHitbox(const RectangleShape& corpo)
 	{
 		janela->draw(corpo);
 	}

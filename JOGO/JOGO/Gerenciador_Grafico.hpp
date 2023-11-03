@@ -28,7 +28,7 @@ namespace Gerenciadores
 		static Gerenciador_Grafico* getGerenciador();
 		RenderWindow* getJanela();
 		void limpaTela();
-		void desenhaElemento(const RectangleShape& corpo);
+		void desenhaHitbox(const RectangleShape& corpo);
 		void desenhaSprite(const Sprite& sprite);
 		void mostraElemento();
 		void fecharJanela();

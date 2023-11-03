@@ -10,6 +10,8 @@
 #define ALCANCE_X 800.0f
 #define ALCANCE_Y 800.0f
 
+#define DISTANCIA_MINIMA_ANIMACAO 0.0f
+
 namespace Entidades
 {
 	namespace Personagens
@@ -20,13 +22,24 @@ namespace Entidades
 			Jogador* jogador;
 			Clock relogio;
 			void inicializa();
-			int iteracoes;
 			int random_number;
-			float distancia;
+			float distanciaX;
+			float distanciaY;
+			sf::Vector2f posAnteriorInimigo = sf::Vector2f(0.0f, 0.0f); // Inicialize com a posição inicial desejada
+
 
 		protected:
+
 			bool direita;
 			float distanciaAlvo;
+			std::vector<Animacao> animacoes;
+			Animacao* animacaoAtual;
+			int n_frames;
+			int count;
+			int lado;
+			int animacao;
+			int anterior;
+			int iteracoes;
 
 		public:
 			Inimigo(Vector2f pos, Vector2f tam, Jogador* jogador);
@@ -37,6 +50,7 @@ namespace Entidades
 
 			void setAnimacao(int anim) override;
 			virtual void atualizarAnimacao() = 0;
+			virtual void atacar() = 0;
 
 		};
 	}

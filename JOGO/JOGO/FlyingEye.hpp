@@ -11,19 +11,12 @@ namespace Entidades
 		private:
 
 			void inicializaAnimacoes();
-			std::vector<Animacao> animacoes;
-			Animacao* animacaoAtual;
-			int n_frames;
-			int count;
-			int lado;
-			int animacao;
-			int anterior;
-			int iteracoes;
 
 		public:
 			FlyingEye(Vector2f pos, Vector2f tam, Jogador* jogador);
 			~FlyingEye();
 			void atualizarAnimacao();
+			void atacar();
 
 		};
 

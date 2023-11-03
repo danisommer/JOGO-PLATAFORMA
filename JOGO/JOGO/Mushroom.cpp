@@ -10,19 +10,13 @@ namespace Entidades
 	{
 
 		Mushroom::Mushroom(Vector2f pos, Vector2f tam, Jogador* jogador) :
-			Inimigo(pos, tam, jogador),
-			animacaoAtual(nullptr),
-			n_frames(0),
-			count(0),
-			lado(0),
-			animacao(0),
-			anterior(0),
-			iteracoes(0)
+			Inimigo(pos, tam, jogador)
+
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(0.15f, 0.1f);
+			vel = Vector2f(0.1f, 0.1f);
 			distanciaAlvo = 30.0f;
 			//corpo.setFillColor(sf::Color::Red);
 
@@ -72,10 +66,14 @@ namespace Entidades
 			else
 				lado = -1;
 
-			animacaoAtual = &animacoes[0];
 			sprite.setTexture(animacaoAtual->getFrame(count));
 			sprite.setScale(1.6 * lado, 1.6);
 			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y);
+		}
+
+		void Mushroom::atacar()
+		{
+			animacaoAtual = &animacoes[3];
 		}
 
 		void Mushroom::inicializaAnimacoes()
