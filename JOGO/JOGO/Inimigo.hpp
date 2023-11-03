@@ -7,8 +7,8 @@
 #include <cmath>
 #include <random>
 
-#define ALCANCE_X 8.0f
-#define ALCANCE_Y 8.0f
+#define ALCANCE_X 800.0f
+#define ALCANCE_Y 800.0f
 
 namespace Entidades
 {
