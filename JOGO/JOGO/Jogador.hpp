@@ -20,9 +20,9 @@ namespace Entidades
 			int count;
 			int lado;
 			int animacao;
-			float velAnimacao;
 			int anterior;
 			int iteracoes;
+			int ataque;
 			std::vector<Animacao> animacoes;
 			Animacao* animacaoAtual;
 			

@@ -18,6 +18,7 @@ namespace Entidades
 			Vector2f velocity;
 			Clock relogio;
 			bool isJumping;
+			bool voador;
 			float dt;
 			float ds;
 			float gravity;

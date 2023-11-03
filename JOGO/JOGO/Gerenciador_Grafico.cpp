@@ -7,7 +7,7 @@ namespace Gerenciadores
 	Gerenciador_Grafico* Gerenciador_Grafico::pGerenciador = nullptr;
 
 	Gerenciador_Grafico::Gerenciador_Grafico() :
-		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Shinobi Quest")),
+		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y)),
 		pJogador(nullptr)
 	{
@@ -16,7 +16,7 @@ namespace Gerenciadores
 			cout << "Erro alocando a janela!!" << endl;
 			exit(1);
 		}
-		view.zoom(1.25f);
+		view.zoom(1.15f);
 		janela->setView(view);
 
 	}

@@ -7,8 +7,8 @@
 #include <cmath>
 #include <random>
 
-#define ALCANCE_X 900.0f
-#define ALCANCE_Y 900.0f
+#define ALCANCE_X 8.0f
+#define ALCANCE_Y 8.0f
 
 namespace Entidades
 {
@@ -22,6 +22,11 @@ namespace Entidades
 			void inicializa();
 			int iteracoes;
 			int random_number;
+			float distancia;
+
+		protected:
+			bool direita;
+			float distanciaAlvo;
 
 		public:
 			Inimigo(Vector2f pos, Vector2f tam, Jogador* jogador);
@@ -31,6 +36,7 @@ namespace Entidades
 			void atualizar();
 
 			void setAnimacao(int anim) override;
+			virtual void atualizarAnimacao() = 0;
 
 		};
 	}

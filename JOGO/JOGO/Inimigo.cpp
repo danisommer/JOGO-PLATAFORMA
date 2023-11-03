@@ -4,10 +4,13 @@ namespace Entidades
 {
 	namespace Personagens
 	{
+
 		Inimigo::Inimigo(Vector2f pos, Vector2f	tam, Jogador* jogador) :
 			jogador(jogador), 
 			iteracoes(0),
-			Personagem()
+			Personagem(),
+			direita(true),
+			distanciaAlvo(50.0f)
 		{
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
@@ -30,22 +33,40 @@ namespace Entidades
 
 		void Inimigo::inicializa()
 		{
-			vel = Vector2f(0.25f, 0.25f);
-			corpo.setFillColor(sf::Color::Red);
+			corpo.setFillColor(sf::Color::Transparent);
 
 		}
 
 		void Inimigo::perseguirJogador(Vector2f posJogador, Vector2f posInimigo)
 		{
-			if (posJogador.x - posInimigo.x > 0.0f)
+			distancia = posJogador.x - posInimigo.x;
+
+			if (fabs(distancia) > distanciaAlvo)
 			{
-				corpo.move(vel.x, 0.0f);
-			}
-			else
-			{
-				corpo.move(-vel.x, 0.0f);
+				if (distancia > 0.0f)
+				{
+					corpo.move(vel.x, 0.0f);
+					direita = true;
+				}
+				else
+				{
+					corpo.move(-vel.x, 0.0f);
+					direita = false;
+				}
 			}
 
+			if (voador)
+			{
+				if (posJogador.y - posInimigo.y > 30.0f)
+				{
+					corpo.move(0.0f, vel.y);
+				}
+				else
+				{
+					corpo.move(0.0f, -vel.y);				
+				}
+
+			}
 		}
 
 		void Inimigo::moveAleatorio()
@@ -68,11 +89,17 @@ namespace Entidades
 
 			sf::Vector2f direcao(0.0f, 0.0f);
 
-			if (random_number == 0)
+			if (random_number == 0) 
+			{
 				direcao.x = -vel.x;
-			else if (random_number == 1)
+				direita = false;
+			}
+			else if (random_number == 1) 
+			{
 				direcao.x = vel.x;
-
+				direita = true;
+			}
+				
 			iteracoes++;
 
 			corpo.move(direcao);
@@ -93,7 +120,7 @@ namespace Entidades
 			{
 				moveAleatorio();
 			}
-
+			atualizarAnimacao();
 		}
 		void Inimigo::setAnimacao(int anim)
 		{

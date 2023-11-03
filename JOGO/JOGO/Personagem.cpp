@@ -13,7 +13,8 @@ namespace Entidades
 			gravity(GRAVIDADE),
 			velocity(0.0f, 0.0f),
 			direcao(0.0f, 0.0f),
-			Entidade(position, corpo.getSize())
+			Entidade(position, corpo.getSize()),
+			voador(false)
 		{
 
 		}
@@ -23,23 +24,27 @@ namespace Entidades
 
 		void Personagem::cair()
 		{
-			// Gravidade
-			if (isJumping)
+			if (!voador) 
 			{
-				direcao.y += gravity;
-				direcao.y += velocity.y;
-				if (gravity >= 0.22f)
-					gravity = 0.22f;
+				// Gravidade
+				if (isJumping)
+				{
+					direcao.y += gravity;
+					direcao.y += velocity.y;
+					if (gravity >= 0.22f)
+						gravity = 0.22f;
+					else
+						gravity += 0.003f;
+				}
 				else
-					gravity += 0.003f;
-			}
-			else
-			{
-				direcao.y += gravity;
-				gravity = GRAVIDADE;
-			}
+				{
+					direcao.y += gravity;
+					gravity = GRAVIDADE;
+				}
 
-			corpo.move(0.0, direcao.y);
+				corpo.move(0.0, direcao.y);
+			}
+			
 		}
 
 		void Personagem::setIsJumping(bool IJ)
