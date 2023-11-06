@@ -65,9 +65,10 @@ namespace Entidades
 				animacao = 6;
 			}
 
-			if (Keyboard::isKeyPressed(Keyboard::E))
+			if (Keyboard::isKeyPressed(Keyboard::Space))
 			{
-				atacar(lado);
+				if(concluida)
+					atacar(lado);
 
 				direcao.x = 0.0;
 
@@ -136,7 +137,7 @@ namespace Entidades
 			iteracoes++;
 
 			sprite.setTexture(animacaoAtual->getFrame(count));
-			sprite.setScale(lado * 2, 2);
+			sprite.setScale(lado * 2.5, 2.5);
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
 
 			corpo.move(direcao.x, 0.0f);
@@ -161,7 +162,7 @@ namespace Entidades
 
 		void Jogador::atacar(int lado)
 		{
-			regiaoAtaque = Vector2f(corpo.getPosition().x + (35.0f * lado), corpo.getPosition().y);
+			regiaoAtaque = Vector2f(corpo.getPosition().x + (20.0f * lado), corpo.getPosition().y);
 		}
 
 		void Jogador::inicializaAnimacoes()
@@ -232,7 +233,7 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			animacaoAtacar.setAnimationSpeed(30.0f);
+			animacaoAtacar.setAnimationSpeed(20.0f);
 			animacaoAtacar2.setAnimationSpeed(30.0f);
 
 			//ATAQUE LEVE 4

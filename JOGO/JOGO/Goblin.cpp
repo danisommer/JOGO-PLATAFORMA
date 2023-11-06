@@ -18,7 +18,7 @@ namespace Entidades
 			voador = false;
 			vel = Vector2f(0.25f, 0.1f);
 			distanciaAlvo = 20.0f;
-			//corpo.setFillColor(sf::Color::Red);
+			corpo.setFillColor(sf::Color::Red);
 
 		}
 
@@ -73,6 +73,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
+			animacaoTomarDano.setAnimationSpeed(30.0f);
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Death.png")) {
 				exit(1);

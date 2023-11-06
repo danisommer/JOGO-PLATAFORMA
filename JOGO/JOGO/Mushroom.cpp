@@ -18,7 +18,7 @@ namespace Entidades
 			voador = false;
 			vel = Vector2f(0.1f, 0.1f);
 			distanciaAlvo = 30.0f;
-			//corpo.setFillColor(sf::Color::Red);
+			corpo.setFillColor(sf::Color::Red);
 
 		}
 
@@ -72,6 +72,8 @@ namespace Entidades
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
+
+			animacaoTomarDano.setAnimationSpeed(30.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Death.png")) {

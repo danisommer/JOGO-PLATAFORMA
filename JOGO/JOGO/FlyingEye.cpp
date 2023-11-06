@@ -15,7 +15,7 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(0.15f, 0.3f);
+			vel = Vector2f(0.15f, 0.4f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_Y = 300.0f;
 			corpo.setFillColor(sf::Color::Red);
@@ -72,6 +72,8 @@ namespace Entidades
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
+
+			animacaoTomarDano.setAnimationSpeed(30.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Death.png")) {

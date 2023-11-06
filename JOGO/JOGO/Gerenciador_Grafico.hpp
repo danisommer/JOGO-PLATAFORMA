@@ -21,6 +21,7 @@ namespace Gerenciadores
 
 		Entidades::Personagens::Jogador* pJogador;
 		static Gerenciador_Grafico* pGerenciador;
+		sf::Texture backgroundTexture;
 		Gerenciador_Grafico();
 
 	public:
