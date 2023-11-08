@@ -1,25 +1,35 @@
 #include "Plataforma.hpp"
+#include <iostream>
 
 namespace Entidades
 {
 	namespace Obstaculos
 	{
-        Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam) :
+        Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam, bool grande) :
             Entidade(pos, tam)
         {
 
-            if (!textura.loadFromFile("Assets/plataforma.png")) {
-                exit(1);
-            }
-
             corpo = sf::RectangleShape(tam);
             corpo.setPosition(pos);
-            corpo.setFillColor(Color::Transparent);
-            //corpo.setTextureRect(sf::IntRect(0, 0, tam.x, tam.y));
+            corpo.setFillColor(Color::Red);
 
-            sprite.setTexture(textura);
-            sprite.setPosition(Vector2f(pos.x - 102.0f, pos.y - 75.0f));
-            sprite.setScale(0.5, 0.31);
+            if (!grande) {
+                if (!textura.loadFromFile("Assets/plataforma.png")) {
+                    exit(1);
+                }
+                sprite.setTexture(textura);
+                sprite.setPosition(Vector2f(pos.x - 102.0f, pos.y - 75.0f));
+                sprite.setScale(0.5, 0.31);
+            }
+            else 
+            {
+                if (!textura.loadFromFile("Assets/Background/Battleground1/stones&grass.png")) {
+                    exit(1);
+                }
+                sprite.setTexture(textura);
+                sprite.setPosition(Vector2f(pos.x, pos.y - 525.0f));
+                sprite.setScale(1.0f, 1.0f);
+            }
         }
 	}
 }

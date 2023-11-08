@@ -12,7 +12,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 
 		public:
-			Mushroom(Vector2f pos, Vector2f tam, Jogador* jogador);
+			Mushroom(Vector2f pos, Vector2f tam);
 			~Mushroom();
 			void atacar();
 			void setAnimacao(int anim);

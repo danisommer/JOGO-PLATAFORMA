@@ -15,7 +15,9 @@ namespace Entidades
 			voador(false),
 			vida(100.0f),
 			morto(false),
-			animacao(0)
+			animacao(0),
+			moveu(true),
+			posAnterior()
 		{
 
 		}
@@ -32,10 +34,10 @@ namespace Entidades
 				{
 					direcao.y += gravity;
 					direcao.y += velocity.y;
-					if (gravity >= 0.22f)
-						gravity = 0.22f;
+					if (gravity >= 0.205f)
+						gravity = 0.205f;
 					else
-						gravity += 0.0027f;
+						gravity += 0.00195f;
 				}
 				else
 				{
@@ -81,6 +83,20 @@ namespace Entidades
 		bool Personagem::getMorte()
 		{
 			return morto;
+		}
+
+		bool Personagem::getMoveu()
+		{
+			Vector2f posAtual = corpo.getPosition();
+
+			if (posAtual.x != posAnterior.x || posAtual.y != posAnterior.y)
+				moveu = true;
+			else
+				moveu = false;
+			
+			posAnterior = posAtual;
+
+			return moveu;
 		}
 
 	}

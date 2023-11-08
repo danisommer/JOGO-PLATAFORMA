@@ -20,9 +20,12 @@ namespace Gerenciadores
 		static Gerenciador_Colisoes* getGerenciador();
 		void Executar();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
+		void removeJogador();
 		void addInimigo(Entidades::Personagens::Inimigo* inimigo);
+		void removeInimigo(int index);
 		void addPlataforma(Entidades::Obstaculos::Plataforma* plataforma);
-		void verificaColisao(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma);
+		void verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma);
+		void verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma);
 
 	};
 }

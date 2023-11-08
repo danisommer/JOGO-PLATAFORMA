@@ -47,7 +47,7 @@ namespace Entidades
 
 
 		public:
-			Inimigo(Vector2f pos, Vector2f tam, Jogador* jogador);
+			Inimigo(Vector2f pos, Vector2f tam);
 			~Inimigo();
 			void perseguirJogador(Vector2f posJogador, Vector2f posInimigo);
 			void moveAleatorio();
@@ -55,6 +55,8 @@ namespace Entidades
 			void atualizarAnimacao();
 			virtual void atacar() = 0;
 			void setAnimacao(int anim) = 0;
+			void setJogador(Jogador* j);
+			bool getVoador();
 
 		};
 	}

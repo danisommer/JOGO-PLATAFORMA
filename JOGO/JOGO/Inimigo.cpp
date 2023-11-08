@@ -6,8 +6,8 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		Inimigo::Inimigo(Vector2f pos, Vector2f	tam, Jogador* jogador) :
-			jogador(jogador),
+		Inimigo::Inimigo(Vector2f pos, Vector2f	tam) :
+			jogador(nullptr),
 			iteracoes(0),
 			Personagem(),
 			direita(true),
@@ -69,11 +69,11 @@ namespace Entidades
 
 				if (voador)
 				{
-					if (distanciaY > 30.0f)
+					if (distanciaY > 10.0f)
 					{
 						corpo.move(0.0f, vel.y);
 					}
-					else if (distanciaY < -30.0f)
+					else if (distanciaY < -10.0f)
 					{
 						corpo.move(0.0f, -vel.y);
 					}
@@ -83,7 +83,7 @@ namespace Entidades
 			}
 			else
 			{
-				if (fabs(distanciaY) <= 30.0f && fabs(distanciaX) <= 40.0f)
+				if (fabs(distanciaY) <= 10.0f && fabs(distanciaX) <= 40.0f)
 				{
 					atacar();
 				}
@@ -139,7 +139,6 @@ namespace Entidades
 				else
 				{
 					concluida = true;
-
 					count = 0;
 				}
 
@@ -157,7 +156,7 @@ namespace Entidades
 
 			sprite.setTexture(animacaoAtual->getFrame(count));
 			sprite.setScale(1.8 * lado, 1.8);
-			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y);
+			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y - 10.0f);
 		}
 
 		void Inimigo::moveAleatorio()
@@ -233,6 +232,14 @@ namespace Entidades
 		void Inimigo::setAnimacao(int anim)
 		{
 			animacaoAtual = &animacoes[anim];
+		}
+		void Inimigo::setJogador(Jogador* j)
+		{
+			jogador = j;
+		}
+		bool Inimigo::getVoador()
+		{
+			return voador;
 		}
 	}
 

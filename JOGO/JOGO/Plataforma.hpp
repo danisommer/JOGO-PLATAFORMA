@@ -11,7 +11,7 @@ namespace Entidades
 			sf::Texture textura;
 
 		public:
-			Plataforma(const Vector2f pos, const Vector2f tam);
+			Plataforma(const Vector2f pos, const Vector2f tam, bool grande);
 
 		};
 	}

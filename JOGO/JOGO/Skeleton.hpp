@@ -12,7 +12,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 
 		public:
-			Skeleton(Vector2f pos, Vector2f tam, Jogador* jogador);
+			Skeleton(Vector2f pos, Vector2f tam);
 			~Skeleton();
 			void atacar();
 			void setAnimacao(int anim);

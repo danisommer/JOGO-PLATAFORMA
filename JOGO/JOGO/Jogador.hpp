@@ -23,6 +23,7 @@ namespace Entidades
 			int iteracoes;
 			int ataque;
 			bool concluida;
+			bool atacando;
 			void atacar(int lado);
 			float dano;
 			Vector2f regiaoAtaque;
@@ -38,6 +39,7 @@ namespace Entidades
 			void setAnimacao(int anim);
 			Vector2f getRegiaoAtaque();
 			float getDano();
+			bool getAtacando();
 
 		};
 	}

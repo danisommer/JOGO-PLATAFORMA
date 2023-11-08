@@ -5,7 +5,7 @@ Ente::Ente() :
 	gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
 	gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador())
 {
-	instanciaEntidades();
+	instanciaEntidades("fase1.txt");
 }
 
 Ente::~Ente()
@@ -30,7 +30,16 @@ void Ente::Executar()
 
 	while (gerenciador_grafico->getOpen())
 	{
-		gerenciador_eventos->Executar();
+
+		while (gerenciador_grafico->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerenciador_grafico->fecharJanela();
+			}
+		}
+
+		//gerenciador_eventos->Executar();
 
 		gerenciador_grafico->limpaTela();
 
@@ -40,84 +49,158 @@ void Ente::Executar()
 
 		AtualizarPersonagens();
 
-		DesenharElementos();		
+		DesenharElementos();
 	}
 }
 
-void Ente::instanciaEntidades()
+void Ente::instanciaEntidades(const std::string& arquivoTxt)
 {
-	jogador = new Entidades::Personagens::Jogador(Vector2f(200.0f, 200.0f), Vector2f(30.0f, 80.0f)); //pos tam
-	
-	Entidades::Obstaculos::Plataforma* platform = new Entidades::Obstaculos::Plataforma(Vector2f(-10000.0f, 800.0f), Vector2f(30000.0f, 50.0f));
-	Entidades::Obstaculos::Plataforma* platform1 = new Entidades::Obstaculos::Plataforma(Vector2f(100.0f, 600.0f), Vector2f(300.0f, 50.0f));
-	Entidades::Obstaculos::Plataforma* platform2 = new Entidades::Obstaculos::Plataforma(Vector2f(400.0f, 400.0f), Vector2f(300.0f, 50.0f));
-	Entidades::Personagens::FlyingEye* olhoVoador = new Entidades::Personagens::FlyingEye(Vector2f(550.0f, 500.0f), Vector2f(40.0f, 80.0f), jogador);
-	Entidades::Personagens::Skeleton* esqueleto = new Entidades::Personagens::Skeleton(Vector2f(400.0f, 500.0f), Vector2f(40.0f, 80.0f), jogador);
-	Entidades::Personagens::Goblin* goblin = new Entidades::Personagens::Goblin(Vector2f(300.0f, 500.0f), Vector2f(40.0f, 80.0f), jogador);
-	Entidades::Personagens::Mushroom* cogumelo = new Entidades::Personagens::Mushroom(Vector2f(200.0f, 500.0f), Vector2f(40.0f, 80.0f), jogador);
 
-	Entidades::Personagens::Personagem* p1 = static_cast<Entidades::Personagens::Personagem*>(jogador);
-	Entidades::Personagens::Personagem* p2 = static_cast<Entidades::Personagens::Personagem*>(olhoVoador);
-	Entidades::Personagens::Personagem* p3 = static_cast<Entidades::Personagens::Personagem*>(esqueleto);
-	Entidades::Personagens::Personagem* p4 = static_cast<Entidades::Personagens::Personagem*>(goblin);
-	Entidades::Personagens::Personagem* p5 = static_cast<Entidades::Personagens::Personagem*>(cogumelo);
+	std::ifstream arquivo(arquivoTxt);
+	if (!arquivo.is_open()) {
+		cout << "Nao foi possivel abrir o arquivo da fase" << endl;
+		exit(1);
+	}
 
-	gerenciador_grafico->setJogador(jogador);
-	gerenciador_eventos->setJogador(jogador);
-	gerenciador_colisoes->setJogador(jogador);
+	std::vector<std::vector<char>> matriz;
 
-	gerenciador_colisoes->addPlataforma(platform);
-	gerenciador_colisoes->addPlataforma(platform1);
-	gerenciador_colisoes->addPlataforma(platform2);
-	gerenciador_colisoes->addInimigo(olhoVoador);
-	gerenciador_colisoes->addInimigo(esqueleto);
-	gerenciador_colisoes->addInimigo(goblin);
-	gerenciador_colisoes->addInimigo(cogumelo);
+	std::string linha;
+	while (std::getline(arquivo, linha)) {
+		std::vector<char> linhaChars;
+		for (char c : linha) {
+			linhaChars.push_back(c);
+		}
+		matriz.push_back(linhaChars);
+	}
+	arquivo.close();
 
-	plataformas.push_back(platform2);
-	plataformas.push_back(platform1);
-	plataformas.push_back(platform);
+	std::map<char, std::function<Entidades::Entidade* (float, float)>> entityCreators;
+	entityCreators['j'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::Jogador(Vector2f(posX, posY), Vector2f(30.0f, 90.0f));
+		};
+	entityCreators['f'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::FlyingEye(Vector2f(posX, posY), Vector2f(40.0f, 50.0f));
+		};
+	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::Skeleton(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
+		};
+	entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::Goblin(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
+		};
+	entityCreators['m'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::Mushroom(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
+		};
+	entityCreators['p'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Plataforma(Vector2f(posX, posY), Vector2f(300.0f, 50.0f), false);
+		};
+	entityCreators['P'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Plataforma(Vector2f(posX, posY), Vector2f(1900.0f, 50.0f), true);
+		};
 
-	personagens.push_back(p1);
-	personagens.push_back(p2);
-	personagens.push_back(p3);
-	personagens.push_back(p4);
-	personagens.push_back(p5);
+	for (int x = 0; x < matriz.size(); x++) {
+		for (int y = 0; y < matriz[x].size(); y++) {
+			float posX = x * 50.0f;
+			float posY = y * 50.0f;
+
+			char character = matriz[x][y];
+
+			if (entityCreators.find(character) != entityCreators.end()) {
+				Entidades::Entidade* entity = entityCreators[character](posX, posY);
+				if (dynamic_cast<Entidades::Personagens::Personagem*>(entity)) {
+					personagens.push_back(dynamic_cast<Entidades::Personagens::Personagem*>(entity));
+				}
+				if (dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)) {
+					plataformas.push_back(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
+					gerenciador_colisoes->addPlataforma(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
+				}
+				if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
+					gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
+					inimigos.push_back(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
+				}
+				if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) {
+					jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
+					gerenciador_grafico->setJogador(jogador);
+					gerenciador_eventos->setJogador(jogador);
+					gerenciador_colisoes->setJogador(jogador);
+				}
+			}
+		}
+	}
+	for (int i = 0; i < inimigos.size(); i++)
+	{
+		inimigos.at(i)->setJogador(jogador);
+	}
 }
 
 void Ente::AtualizarPersonagens()
 {
-	for (int i = 0; i < personagens.size(); i++)
+	if (jogador->getAtacando())
 	{
-		personagens.at(i)->atualizar();
-		personagens.at(i)->cair();
-
-		if (personagens[i]->getMorte()) {
-			delete personagens[i];
-			personagens.erase(personagens.begin() + i);
+		for (int i = 0; i < inimigos.size(); i++)
+		{
+			if (inimigos.at(i))
+			{
+				if (fabs(inimigos.at(i)->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
+					fabs(inimigos.at(i)->getPos().y - jogador->getRegiaoAtaque().y) < 45.0f)
+					inimigos.at(i)->tomarDano(jogador->getDano());
+			}
 		}
 	}
+
+	if (jogador)
+	{
+		if (jogador->getMorte()) {
+			gerenciador_colisoes->removeJogador();
+			jogador = nullptr;
+			gerenciador_grafico->setJogador(nullptr);
+			gerenciador_eventos->setJogador(nullptr);
+			gerenciador_colisoes->setJogador(nullptr);
+		}
+	}
+
 	for (int i = 1; i < personagens.size(); i++)
 	{
-		if (fabs(personagens.at(i)->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
-			fabs(personagens.at(i)->getPos().y - jogador->getRegiaoAtaque().y) < 50.0f)
-			personagens.at(i)->tomarDano(jogador->getDano());
+		if (personagens.at(i) && personagens[i]->getMorte())
+		{
+			gerenciador_colisoes->removeInimigo(i - 1);
+			personagens[i] = nullptr;
+			inimigos[i - 1] = nullptr;
+		}
+
 	}
+
+	for (int i = 0; i < personagens.size(); i++)
+	{
+		if (personagens.at(i))
+		{
+			personagens.at(i)->atualizar();
+			personagens.at(i)->cair();
+		}
+
+	}
+
+
 }
 
 void Ente::DesenharElementos()
 {
-	for (int i = 0; i < personagens.size(); i++)
-	{
-		//gerenciador_grafico->desenhaHitbox(personagens.at(i)->getCorpo());
-		gerenciador_grafico->desenhaSprite(personagens.at(i)->getSprite());
 
-	}
 	for (int i = 0; i < plataformas.size(); i++)
 	{
-		gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
-		gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
+		if (plataformas.at(i))
+		{
+			//gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
+			gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
+		}
+	}
 
+	for (int i = 0; i < personagens.size(); i++)
+	{
+		if (personagens.at(i))
+		{
+			//gerenciador_grafico->desenhaHitbox(personagens.at(i)->getCorpo());
+			gerenciador_grafico->desenhaSprite(personagens.at(i)->getSprite());
+		}
 	}
 
 	gerenciador_grafico->mostraElemento();

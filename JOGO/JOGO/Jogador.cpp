@@ -9,7 +9,7 @@ namespace Entidades
 			aceleracao(900.0f),
 			desaceleracao(900.0f),
 			velocidadeMaxima(450.0f),
-			jumpStrength(-0.155f),
+			jumpStrength(-0.13f),
 			Personagem(),
 			n_frames(0),
 			count(0),
@@ -19,13 +19,15 @@ namespace Entidades
 			ataque(0),
 			concluida(false),
 			regiaoAtaque(),
-			dano(0.2f)
+			dano(0.15f),
+			atacando(false)
 		{
+
 			sprite.setPosition(pos);
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
-			corpo.setFillColor(sf::Color::Transparent);
-			vel = Vector2f(0.6f, 0.6f);
+			corpo.setFillColor(sf::Color::Red);
+			vel = Vector2f(0.8f, 0.8f);
 
 			inicializaAnimacoes();
 		}
@@ -34,6 +36,7 @@ namespace Entidades
 
 		void Jogador::atualizar()
 		{
+
 			sf::Vector2f direcao(0.0f, 0.0f);
 
 			if (Keyboard::isKeyPressed(Keyboard::A))
@@ -48,10 +51,6 @@ namespace Entidades
 				animacao = 0;
 				lado = 1;
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::S))
-			{
-				animacao = 7;
-			}
 			else
 			{
 				animacao = 5;
@@ -64,11 +63,10 @@ namespace Entidades
 				isJumping = true;
 				animacao = 6;
 			}
-
-			if (Keyboard::isKeyPressed(Keyboard::Space))
+			
+			if (Keyboard::isKeyPressed(Keyboard::E))
 			{
-				if(concluida)
-					atacar(lado);
+				atacar(lado);
 
 				direcao.x = 0.0;
 
@@ -80,6 +78,7 @@ namespace Entidades
 			else
 			{
 				regiaoAtaque = Vector2f();
+				atacando = false;
 			}
 
 			if (isJumping)
@@ -111,9 +110,6 @@ namespace Entidades
 
 			n_frames = animacaoAtual->getNumFrames();
 
-			static sf::Clock clock;
-			sf::Time elapsed = clock.getElapsedTime();
-
 			if (iteracoes > animacaoAtual->getAnimationSpeed())
 			{
 				if (count < n_frames - 1)
@@ -141,8 +137,6 @@ namespace Entidades
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
 
 			corpo.move(direcao.x, 0.0f);
-
-			clock.restart();
 		}
 
 		void Jogador::setAnimacao(int anim)
@@ -160,9 +154,15 @@ namespace Entidades
 			return dano;
 		}
 
+		bool Jogador::getAtacando()
+		{
+			return atacando;
+		}
+
 		void Jogador::atacar(int lado)
 		{
-			regiaoAtaque = Vector2f(corpo.getPosition().x + (20.0f * lado), corpo.getPosition().y);
+			regiaoAtaque = Vector2f(corpo.getPosition().x + (65.0f * lado), corpo.getPosition().y);
+			atacando = true;
 		}
 
 		void Jogador::inicializaAnimacoes()
@@ -174,7 +174,6 @@ namespace Entidades
 			Animacao animacaoTomarDano;
 			Animacao animacaoAtacar2;
 			Animacao animacaoMorte;
-			Animacao animacaoAgachar;
 			sf::Texture texture;
 			int pedacoWidth = 120; //Largura
 			int pedacoHeight = 80; //Altura
@@ -194,7 +193,7 @@ namespace Entidades
 				animacaoAndar.addFrame(pedacoTexture);
 			}
 
-			animacaoAndar.setAnimationSpeed(30.0f);
+			animacaoAndar.setAnimationSpeed(45.0f);
 
 			//TOMAR DANO 1
 			if (!texture.loadFromFile("Assets/Jogador/_Hit.png")) {
@@ -234,7 +233,7 @@ namespace Entidades
 			}
 
 			animacaoAtacar.setAnimationSpeed(20.0f);
-			animacaoAtacar2.setAnimationSpeed(30.0f);
+			animacaoAtacar2.setAnimationSpeed(20.0f);
 
 			//ATAQUE LEVE 4
 			if (!texture.loadFromFile("Assets/Jogador/_Attack2.png")) {
@@ -273,18 +272,6 @@ namespace Entidades
 				animacaoPulo.addFrame(pedacoTexture);
 			}
 
-			//AGACHAR 7
-			if (!texture.loadFromFile("Assets/Jogador/_Crouch.png")) {
-				exit(1);
-			}
-
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAgachar.addFrame(pedacoTexture);
-			}
-
 			animacoes.push_back(animacaoAndar);
 			animacoes.push_back(animacaoTomarDano);
 			animacoes.push_back(animacaoMorte);
@@ -292,10 +279,8 @@ namespace Entidades
 			animacoes.push_back(animacaoAtacar2);
 			animacoes.push_back(animacaoParado);
 			animacoes.push_back(animacaoPulo);
-			animacoes.push_back(animacaoAgachar);
 
 		}
 
 	}
 }
-

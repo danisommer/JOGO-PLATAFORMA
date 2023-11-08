@@ -14,7 +14,7 @@ namespace Entidades
 
 	public:
 		Entidade(const Vector2f pos, const Vector2f tam);
-		~Entidade();
+		virtual ~Entidade();
 		const RectangleShape getCorpo() const;
 		const Sprite getSprite() const;
 

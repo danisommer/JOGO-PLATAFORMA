@@ -12,7 +12,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 
 		public:
-			Goblin(Vector2f pos, Vector2f tam, Jogador* jogador);
+			Goblin(Vector2f pos, Vector2f tam);
 			~Goblin();
 			void atacar();
 			void setAnimacao(int anim);

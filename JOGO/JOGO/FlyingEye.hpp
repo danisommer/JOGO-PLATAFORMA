@@ -13,7 +13,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 
 		public:
-			FlyingEye(Vector2f pos, Vector2f tam, Jogador* jogador);
+			FlyingEye(Vector2f pos, Vector2f tam);
 			~FlyingEye();
 			void atacar();
 			void setAnimacao(int anim);

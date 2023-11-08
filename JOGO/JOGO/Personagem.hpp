@@ -16,10 +16,12 @@ namespace Entidades
 			Vector2f direcao;
 			Vector2f position;
 			Vector2f velocity;
+			Vector2f posAnterior;
 			Clock relogio;
 			bool isJumping;
 			bool voador;
 			bool morto;
+			bool moveu;
 			float gravity;
 			float vida;
 			int animacao;
@@ -38,6 +40,8 @@ namespace Entidades
 			virtual void setAnimacao(int anim) = 0;
 			void morrer();
 			bool getMorte();
+			bool getMoveu();
+
 		};
 	}
 

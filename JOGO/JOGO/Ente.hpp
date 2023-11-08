@@ -2,6 +2,10 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include <fstream>
+#include <iostream>
+#include <functional>
 #include "Gerenciador_Grafico.hpp"
 #include "Gerenciador_Colisoes.hpp"
 #include "Gerenciador_Eventos.hpp"
@@ -36,16 +40,14 @@ private:
 	Entidades::Personagens::Jogador* jogador;
 	vector<Entidades::Personagens::Personagem*> personagens;
 	vector<Entidades::Obstaculos::Plataforma*> plataformas;
+	vector<Entidades::Personagens::Inimigo*> inimigos;
 
 public:
 	Ente();
 	~Ente();
 	void Executar();
-	void instanciaEntidades();
+	void instanciaEntidades(const std::string& arquivoTxt);
 	void AtualizarPersonagens();
 	void DesenharElementos();
-	//std::vector<std::string> lerArquivoMapa(const std::string& nomeArquivo);
-	//void criarEntidades(const std::vector<std::string>& mapa);
-	//void instanciaEntidadesAPartirdoMapa(const std::string& nomeArquivo);
 };
 

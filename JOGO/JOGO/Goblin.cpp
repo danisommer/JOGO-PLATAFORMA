@@ -9,14 +9,14 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		Goblin::Goblin(Vector2f pos, Vector2f tam, Jogador* jogador) :
-			Inimigo(pos, tam, jogador)
+		Goblin::Goblin(Vector2f pos, Vector2f tam) :
+			Inimigo(pos, tam)
 
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(0.25f, 0.1f);
+			vel = Vector2f(0.35f, 0.1f);
 			distanciaAlvo = 20.0f;
 			corpo.setFillColor(sf::Color::Red);
 
@@ -73,7 +73,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(30.0f);
+			animacaoTomarDano.setAnimationSpeed(20.0f);
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Death.png")) {
 				exit(1);
@@ -86,7 +86,7 @@ namespace Entidades
 				animacaoMorte.addFrame(pedacoTexture);
 			}
 
-			animacaoMorte.setAnimationSpeed(80.0f);
+			animacaoMorte.setAnimationSpeed(90.0f);
 
 			//ATACAR 3
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Attack.png")) {
@@ -100,7 +100,7 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			animacaoAtacar.setAnimationSpeed(25.0f);
+			animacaoAtacar.setAnimationSpeed(20.0f);
 
 			//PARADO 4
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Idle.png")) {

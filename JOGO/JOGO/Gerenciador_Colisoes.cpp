@@ -38,22 +38,23 @@ namespace Gerenciadores
 	{
 		for (int i = 0; i < plataformas.size(); i++)
 		{
-			verificaColisao(pJogador, plataformas.at(i));
-		}
-
-		for (int i = 0; i < inimigos.size(); i++)
-		{
-			for (int j = 0; j < plataformas.size(); j++)
+			verificaColisaoJogador(pJogador, plataformas.at(i));
+			for (int j = 0; j < inimigos.size(); j++)
 			{
-				verificaColisao(inimigos.at(i), plataformas.at(j));
+				if (inimigos.at(j) && !inimigos.at(j)->getVoador())
+					verificaColisaoInimigo(inimigos.at(j), plataformas.at(i));
 			}
 		}
 	}
 
-
 	void Gerenciador_Colisoes::setJogador(Entidades::Personagens::Jogador* jogador)
 	{
 		this->pJogador = jogador;
+	}
+
+	void Gerenciador_Colisoes::removeJogador()
+	{
+		pJogador = nullptr;
 	}
 
 	void Gerenciador_Colisoes::addInimigo(Entidades::Personagens::Inimigo* inimigo)
@@ -61,16 +62,20 @@ namespace Gerenciadores
 		inimigos.push_back(inimigo);
 	}
 
+	void Gerenciador_Colisoes::removeInimigo(int index)
+	{
+		inimigos[index] = nullptr;
+	}
+
 	void Gerenciador_Colisoes::addPlataforma(Entidades::Obstaculos::Plataforma* plataforma)
 	{
 		plataformas.push_back(plataforma);
 	}
 
-	void Gerenciador_Colisoes::verificaColisao(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
+	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
 	{
 		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
 		{
-
 			corpo->setY(0.0f);
 
 			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
@@ -93,8 +98,24 @@ namespace Gerenciadores
 			{
 				corpo->setPos(plataformaBounds.left + plataformaBounds.width, corpo->getPos().y);
 			}
+
+		}
+	}
+	void Gerenciador_Colisoes::verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
+	{
+		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
+		{
+			corpo->setY(0.0f);
+
+			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
+			sf::FloatRect plataformaBounds = plataforma->getCorpo().getGlobalBounds();
+
+			corpo->setIsJumping(false);
+			corpo->setPos(corpo->getPos().x, plataformaBounds.top - corpoBounds.height);
+
 		}
 	}
 }
+
 
 
