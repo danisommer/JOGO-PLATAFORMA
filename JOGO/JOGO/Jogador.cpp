@@ -41,92 +41,94 @@ namespace Entidades
 
 		void Jogador::atualizar()
 		{
-			if (envenenado)
-			{
-				if (tempoDecorridoVeneno < tempoVeneno)
-				{
-					vida -= forcaVeneno;
-					tempoDecorridoVeneno++;
-				}
-				else
-				{
-					tempoDecorridoVeneno = 0;
-					envenenado = false;
-				}
-			}
-
-			if (lento)
-			{
-				if (tempoDecorridoLentidao < tempoLentidao)
-				{
-					vel.x = forcaLentidao;
-					jumpStrength = -0.14;
-					tempoDecorridoLentidao++;
-					animacoes.at(0).setAnimationSpeed(50.0f);
-				}
-				else
-				{
-					jumpStrength = -0.16;
-					vel.x = 1.1f;
-					tempoDecorridoLentidao = 0;
-					lento = false;
-					animacoes.at(0).setAnimationSpeed(25.0f);
-
-				}
-			}
-
 			sf::Vector2f direcao(0.0f, 0.0f);
 
-			if (Keyboard::isKeyPressed(Keyboard::A))
+			if (animacao != 2)
 			{
-				direcao.x = -vel.x;
-				animacao = 0;
-				lado = -1;
-			}
-			else if (Keyboard::isKeyPressed(Keyboard::D))
-			{
-				direcao.x = vel.x;
-				animacao = 0;
-				lado = 1;
-			}
-			else
-			{
-				animacao = 5;
-			}
-
-			// Pular
-			if (Keyboard::isKeyPressed(Keyboard::W))
-			{
-				if (!isJumping)
+				if (envenenado)
 				{
-					velocity.y = jumpStrength;
-					isJumping = true;
-					animacao = 6;
+					if (tempoDecorridoVeneno < tempoVeneno)
+					{
+						vida -= forcaVeneno;
+						tempoDecorridoVeneno++;
+					}
+					else
+					{
+						tempoDecorridoVeneno = 0;
+						envenenado = false;
+					}
 				}
 
-			}
-			else
-			{
-				velocity.y = jumpStrength / 1.13;
-			}
+				if (lento)
+				{
+					if (tempoDecorridoLentidao < tempoLentidao)
+					{
+						vel.x = forcaLentidao;
+						jumpStrength = -0.14;
+						tempoDecorridoLentidao++;
+						animacoes.at(0).setAnimationSpeed(50.0f);
+					}
+					else
+					{
+						jumpStrength = -0.16;
+						vel.x = 1.1f;
+						tempoDecorridoLentidao = 0;
+						lento = false;
+						animacoes.at(0).setAnimationSpeed(25.0f);
 
-			if (Keyboard::isKeyPressed(Keyboard::E) && !isJumping)
-			{
-				atacar(lado);
+					}
+				}
 
-				direcao.x = 0.0;
-
-				if (ataque == 1)
-					animacao = 4;
+				if (Keyboard::isKeyPressed(Keyboard::A))
+				{
+					direcao.x = -vel.x;
+					animacao = 0;
+					lado = -1;
+				}
+				else if (Keyboard::isKeyPressed(Keyboard::D))
+				{
+					direcao.x = vel.x;
+					animacao = 0;
+					lado = 1;
+				}
 				else
-					animacao = 3;
-			}
-			else
-			{
-				regiaoAtaque = Vector2f();
-				atacando = false;
-			}
+				{
+					animacao = 5;
+				}
 
+				// Pular
+				if (Keyboard::isKeyPressed(Keyboard::W))
+				{
+					if (!isJumping)
+					{
+						velocity.y = jumpStrength;
+						isJumping = true;
+						animacao = 6;
+					}
+
+				}
+				else
+				{
+					velocity.y = jumpStrength / 1.13;
+				}
+
+				if (Keyboard::isKeyPressed(Keyboard::E) && !isJumping)
+				{
+					atacar(lado);
+
+					direcao.x = 0.0;
+
+					if (ataque == 1)
+						animacao = 4;
+					else
+						animacao = 3;
+				}
+				else
+				{
+					regiaoAtaque = Vector2f();
+					atacando = false;
+				}
+			}
 
 			//if (vida != vidaAnterior)
 			//{
@@ -153,8 +155,8 @@ namespace Entidades
 					morrer();
 			}
 
-			if (concluida)
-				animacao = 5;
+			//if (concluida)
+				//animacao = 5;
 
 			atualizarAnimacao(animacao);
 
