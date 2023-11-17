@@ -66,12 +66,6 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 	entityCreators['c'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Personagens::Chefao(Vector2f(posX, posY), Vector2f(100.0f, 120.0f));
 		};
-	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
-		return new Entidades::Personagens::Skeleton(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
-		};
-	entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
-		return new Entidades::Personagens::Goblin(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
-		};
 	entityCreators['m'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Personagens::Mushroom(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
 		};

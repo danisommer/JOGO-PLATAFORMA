@@ -18,7 +18,6 @@ namespace Entidades
 			anterior(0),
 			iteracoes(0),
 			ataque(0),
-			//concluida(false),
 			regiaoAtaque(),
 			atacando(false),
 			vidaAnterior(),

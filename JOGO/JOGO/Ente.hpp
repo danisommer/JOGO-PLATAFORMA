@@ -15,8 +15,6 @@
 #include "Parede.hpp"
 #include "Personagem.hpp"
 #include "FlyingEye.hpp"
-#include "Skeleton.hpp"
-#include "Goblin.hpp"
 #include "Mushroom.hpp"
 #include "Chefao.hpp"
 #include <chrono>
