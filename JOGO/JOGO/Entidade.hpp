@@ -17,8 +17,7 @@ namespace Entidades
 		virtual ~Entidade();
 		const RectangleShape getCorpo() const;
 		const Sprite getSprite() const;
-
-
+		Vector2f getPos();
 	};
 }
 

@@ -23,36 +23,18 @@ Ente::~Ente()
 	personagens.clear();
 	plataformas.clear();
 }
-
 void Ente::Executar()
 {
-	sf::Event evento;
-
 	while (gerenciador_grafico->getOpen())
 	{
-
-		while (gerenciador_grafico->getJanela()->pollEvent(evento))
-		{
-			if (evento.type == sf::Event::Closed)
-			{
-				gerenciador_grafico->fecharJanela();
-			}
-		}
-
-		//gerenciador_eventos->Executar();
-
+		gerenciador_eventos->Executar();
 		gerenciador_grafico->limpaTela();
-
 		gerenciador_grafico->atualizaCamera();
-
 		gerenciador_colisoes->Executar();
-
 		AtualizarPersonagens();
-
 		DesenharElementos();
 	}
 }
-
 void Ente::instanciaEntidades(const std::string& arquivoTxt)
 {
 
@@ -81,6 +63,9 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 	entityCreators['f'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Personagens::FlyingEye(Vector2f(posX, posY), Vector2f(40.0f, 50.0f));
 		};
+	entityCreators['c'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Personagens::Chefao(Vector2f(posX, posY), Vector2f(100.0f, 120.0f));
+		};
 	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Personagens::Skeleton(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
 		};
@@ -96,6 +81,9 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 	entityCreators['P'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Obstaculos::Plataforma(Vector2f(posX, posY), Vector2f(1900.0f, 50.0f), true);
 		};
+	entityCreators['w'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Parede(Vector2f(posX, posY), Vector2f(50.0f, 1200.0f));
+		};	
 
 	for (int x = 0; x < matriz.size(); x++) {
 		for (int y = 0; y < matriz[x].size(); y++) {
@@ -112,6 +100,9 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 				if (dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)) {
 					plataformas.push_back(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
 					gerenciador_colisoes->addPlataforma(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
+				}
+				if (dynamic_cast<Entidades::Obstaculos::Parede*>(entity)) {
+					gerenciador_colisoes->addParede(dynamic_cast<Entidades::Obstaculos::Parede*>(entity));
 				}
 				if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
 					gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
@@ -141,7 +132,7 @@ void Ente::AtualizarPersonagens()
 			if (inimigos.at(i))
 			{
 				if (fabs(inimigos.at(i)->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
-					fabs(inimigos.at(i)->getPos().y - jogador->getRegiaoAtaque().y) < 45.0f)
+					fabs(inimigos.at(i)->getPos().y - jogador->getRegiaoAtaque().y) < 80.0f)
 					inimigos.at(i)->tomarDano(jogador->getDano());
 			}
 		}
@@ -149,24 +140,34 @@ void Ente::AtualizarPersonagens()
 
 	if (jogador)
 	{
-		if (jogador->getMorte()) {
+		if (jogador->getMorte())
+		{
+			exit(1);
+			/*
 			gerenciador_colisoes->removeJogador();
 			jogador = nullptr;
 			gerenciador_grafico->setJogador(nullptr);
 			gerenciador_eventos->setJogador(nullptr);
 			gerenciador_colisoes->setJogador(nullptr);
+			*/
+
 		}
 	}
 
 	for (int i = 1; i < personagens.size(); i++)
 	{
-		if (personagens.at(i) && personagens[i]->getMorte())
+		if (personagens.at(i))
 		{
-			gerenciador_colisoes->removeInimigo(i - 1);
-			personagens[i] = nullptr;
-			inimigos[i - 1] = nullptr;
-		}
+			//cout << i << " - " << personagens.at(i)->getMorte() << endl;
 
+			if (personagens.at(i)->getMorte())
+			{
+
+				gerenciador_colisoes->removeInimigo(i - 1);
+				personagens[i] = nullptr;
+				inimigos[i - 1] = nullptr;
+			}
+		}
 	}
 
 	for (int i = 0; i < personagens.size(); i++)
@@ -178,8 +179,6 @@ void Ente::AtualizarPersonagens()
 		}
 
 	}
-
-
 }
 
 void Ente::DesenharElementos()
@@ -187,11 +186,8 @@ void Ente::DesenharElementos()
 
 	for (int i = 0; i < plataformas.size(); i++)
 	{
-		if (plataformas.at(i))
-		{
-			//gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
-			gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
-		}
+		//gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
+		gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
 	}
 
 	for (int i = 0; i < personagens.size(); i++)
@@ -200,6 +196,9 @@ void Ente::DesenharElementos()
 		{
 			//gerenciador_grafico->desenhaHitbox(personagens.at(i)->getCorpo());
 			gerenciador_grafico->desenhaSprite(personagens.at(i)->getSprite());
+			personagens.at(i)->atualizarBarraVida();
+			gerenciador_grafico->desenhaSprite(personagens.at(i)->getBorder());
+			gerenciador_grafico->desenhaSprite(personagens.at(i)->getHealthBar());
 		}
 	}
 

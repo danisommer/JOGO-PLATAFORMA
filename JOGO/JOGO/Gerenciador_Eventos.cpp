@@ -58,7 +58,7 @@ namespace Gerenciadores
 
 		while (gerenciador_grafico->getJanela()->pollEvent(evento))
 		{
-			if (evento.type == Event::KeyPressed)
+		/*	if (evento.type == Event::KeyPressed)
 			{
 				verificaPressionar(evento.key.code);
 			}
@@ -66,7 +66,9 @@ namespace Gerenciadores
 			{
 				verificaSoltar(evento.key.code);
 			}
-			else if (evento.type == sf::Event::Closed) 
+			else*/ 
+			
+			if (evento.type == sf::Event::Closed) 
 			{
 				gerenciador_grafico->fecharJanela();
 			}

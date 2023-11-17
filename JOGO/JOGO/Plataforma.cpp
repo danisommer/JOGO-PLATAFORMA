@@ -14,7 +14,7 @@ namespace Entidades
             corpo.setFillColor(Color::Red);
 
             if (!grande) {
-                if (!textura.loadFromFile("Assets/plataforma.png")) {
+                if (!textura.loadFromFile("Assets/Cenario/plataforma.png")) {
                     exit(1);
                 }
                 sprite.setTexture(textura);

@@ -12,11 +12,16 @@
 #include "Jogador.hpp"
 #include "Inimigo.hpp"
 #include "Plataforma.hpp"
+#include "Parede.hpp"
 #include "Personagem.hpp"
 #include "FlyingEye.hpp"
 #include "Skeleton.hpp"
 #include "Goblin.hpp"
 #include "Mushroom.hpp"
+#include "Chefao.hpp"
+#include <chrono>
+#include <thread>
+
 
 using namespace sf;
 using namespace std;

@@ -1,6 +1,9 @@
 #include "Goblin.hpp"
-
 #include "iostream"
+#define VIDA_MAX 100.0f
+#define SIZE 1.8f
+
+
 
 using namespace std;
 
@@ -16,10 +19,12 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(0.35f, 0.1f);
+			vel = Vector2f(0.45f, 0.1f);
 			distanciaAlvo = 20.0f;
 			corpo.setFillColor(sf::Color::Red);
-
+			healthBar.setScale(vida / 500.0f, 0.2f);
+			dano = 0.3f;
+			vida = VIDA_MAX;
 		}
 
 		Goblin::~Goblin()
@@ -28,8 +33,9 @@ namespace Entidades
 
 		void Goblin::atacar()
 		{
-			if (concluida)
-				jogador->tomarDano(0.1f);
+			if (!morto)
+				if (concluida)
+					jogador->tomarDano(dano);
 
 			animacao = 3;
 		}
@@ -73,7 +79,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(20.0f);
+			animacaoTomarDano.setAnimationSpeed(25.0f);
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Death.png")) {
 				exit(1);
@@ -100,7 +106,7 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			animacaoAtacar.setAnimationSpeed(20.0f);
+			animacaoAtacar.setAnimationSpeed(10.0f);
 
 			//PARADO 4
 			if (!texture.loadFromFile("Assets/Monsters/Goblin/Idle.png")) {
@@ -125,5 +131,45 @@ namespace Entidades
 		{
 			animacaoAtual = &animacoes[anim];
 		}
+
+		float Goblin::getVida()
+		{
+			return VIDA_MAX;
+		}
+
+		float Goblin::getSize()
+		{
+			return SIZE;
+		}
+		void Goblin::atualizar()
+		{
+			Vector2f posJogador = jogador->getCorpo().getPosition();
+			Vector2f posInimigo = corpo.getPosition();
+
+			if (!parado)
+			{
+				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
+				{
+					perseguirJogador(posJogador, posInimigo);
+				}
+				else
+				{
+					moveAleatorio();
+				}
+			}
+
+			atualizarAnimacao();
+
+			if (vida <= 0.0f)
+			{
+				parado = true;
+				animacao = 2;
+				voador = false;
+				//corpo.move(0.0f, 0.9f);
+			}
+
+
+		}
+
 	}
 }

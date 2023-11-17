@@ -1,6 +1,9 @@
 #include "Mushroom.hpp"
 
 #include "iostream"
+#define VIDA_MAX 100.0f
+#define SIZE 1.8f
+
 
 using namespace std;
 
@@ -10,16 +13,20 @@ namespace Entidades
 	{
 
 		Mushroom::Mushroom(Vector2f pos, Vector2f tam) :
-			Inimigo(pos, tam)
+			Inimigo(pos, tam),
+			forcaVeneno(0.035f),
+			tempoEnvenenamento(700)
 
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(0.15f, 0.1f);
+			vel = Vector2f(0.35f, 0.1f);
 			distanciaAlvo = 30.0f;
 			corpo.setFillColor(sf::Color::Red);
-
+			healthBar.setScale(vida / 500.0f, 0.2f);
+			dano = 0.2f;
+			vida = VIDA_MAX;
 		}
 
 		Mushroom::~Mushroom()
@@ -28,8 +35,13 @@ namespace Entidades
 
 		void Mushroom::atacar()
 		{
-			if (concluida)
-				jogador->tomarDano(0.4f);
+			if (!morto)
+				if (concluida)
+				{
+					jogador->tomarDano(dano);
+					jogador->setEnvenenado(true, tempoEnvenenamento, forcaVeneno);
+
+				}
 
 			animacao = 3;
 		}
@@ -73,7 +85,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(20.0f);
+			animacaoTomarDano.setAnimationSpeed(25.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Death.png")) {
@@ -126,5 +138,45 @@ namespace Entidades
 		{
 			animacaoAtual = &animacoes[anim];
 		}
-	}
+
+		float Mushroom::getVida()
+		{
+			return VIDA_MAX;
+		}
+	
+		float Mushroom::getSize()
+		{
+			return SIZE;
+		}
+		void Mushroom::atualizar()
+		{
+			Vector2f posJogador = jogador->getCorpo().getPosition();
+			Vector2f posInimigo = corpo.getPosition();
+
+			if (!parado)
+			{
+				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
+				{
+					perseguirJogador(posJogador, posInimigo);
+				}
+				else
+				{
+					moveAleatorio();
+				}
+			}
+
+			atualizarAnimacao();
+
+			if (vida <= 0.0f)
+			{
+				parado = true;
+				animacao = 2;
+				voador = false;
+				//corpo.move(0.0f, 0.9f);
+			}
+
+
+		}
+}
+
 }

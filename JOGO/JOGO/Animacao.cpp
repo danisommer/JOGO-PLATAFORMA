@@ -1,7 +1,7 @@
 #include "Animacao.hpp"
 
 Animacao::Animacao():
-	animationSpeed(50.0f),
+	animationSpeed(30.0f),
 	lado(1)
 {
 }

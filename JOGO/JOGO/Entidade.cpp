@@ -20,4 +20,9 @@ namespace Entidades
 		return sprite;
 	}
 
+	Vector2f Entidade::getPos()
+	{
+		return corpo.getPosition();
+	}
+
 }

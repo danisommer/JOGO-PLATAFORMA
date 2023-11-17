@@ -22,10 +22,21 @@ namespace Entidades
 			int anterior;
 			int iteracoes;
 			int ataque;
-			bool concluida;
+			float vidaAnterior;
 			bool atacando;
+			bool tomandoDano;
+
+			bool envenenado;
+			int tempoVeneno;
+			int tempoDecorridoVeneno;
+			float forcaVeneno;
+
+			bool lento;
+			int tempoLentidao;
+			int tempoDecorridoLentidao;
+			float forcaLentidao;
+		
 			void atacar(int lado);
-			float dano;
 			Vector2f regiaoAtaque;
 			std::vector<Animacao> animacoes;
 			Animacao* animacaoAtual;
@@ -36,11 +47,14 @@ namespace Entidades
 			Jogador(Vector2f pos, Vector2f tam);
 			~Jogador();
 			void atualizar();
+			void atualizarAnimacao(int animacao);
 			void setAnimacao(int anim);
 			Vector2f getRegiaoAtaque();
 			float getDano();
 			bool getAtacando();
-
+			float getVida();
+			void setEnvenenado(bool veneno, int tempo, float intensidade);
+			void setLento(bool lentidao, int tempo, float forca);
 		};
 	}
 

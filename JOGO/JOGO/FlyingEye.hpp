@@ -11,14 +11,17 @@ namespace Entidades
 		private:
 
 			void inicializaAnimacoes();
+			float forcaLentidao;
+			int tempoLentidao;
 
 		public:
 			FlyingEye(Vector2f pos, Vector2f tam);
 			~FlyingEye();
 			void atacar();
 			void setAnimacao(int anim);
-
-
+			float getVida();
+			float getSize();
+			void atualizar();
 		};
 
 	}

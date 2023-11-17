@@ -1,5 +1,8 @@
 #include "FlyingEye.hpp"
 #include "iostream"
+#define VIDA_MAX 60.0f
+#define SIZE 1.8f
+
 
 using namespace std;
 
@@ -9,17 +12,23 @@ namespace Entidades
 	{
 
 		FlyingEye::FlyingEye(Vector2f pos, Vector2f tam):
-			Inimigo(pos, tam)
+			Inimigo(pos, tam),
+			tempoLentidao(700),
+			forcaLentidao(0.5f)
+
 
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(0.4f, 0.45f);
+			vel = Vector2f(0.4f, 0.5f);
 			distanciaAlvo = 30.0f;
-			ALCANCE_Y = 500.0f;
+			ALCANCE_Y = 900.0f;
 			corpo.setFillColor(sf::Color::Red);
-			vida = 60.0f;
+			vida = VIDA_MAX;
+			dano = 0.35f;
+
+			healthBar.setScale(vida / 500.0f, 0.2f);
 
 		}
 
@@ -29,8 +38,13 @@ namespace Entidades
 
 		void FlyingEye::atacar()
 		{
-			if (concluida)
-				jogador->tomarDano(0.2f);
+			if (!morto)
+				if (concluida)
+				{
+					jogador->tomarDano(dano);
+					jogador->setLento(true, tempoLentidao, forcaLentidao);
+
+				}
 
 			animacao = 3;
 		}
@@ -47,7 +61,7 @@ namespace Entidades
 			int pedacoWidth = 150; //Largura
 			int pedacoHeight = 150; //Altura
 
-			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 1.25);
+			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 0.85);
 			sprite.setOrigin(spriteOrigin);
 
 			//VOANDO 0 
@@ -74,7 +88,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(20.0f);
+			animacaoTomarDano.setAnimationSpeed(25.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Death.png")) {
@@ -102,7 +116,7 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			animacaoAtacar.setAnimationSpeed(20.0f);
+			animacaoAtacar.setAnimationSpeed(15.0f);
 
 			//PARADO 4 
 			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Flight.png")) {
@@ -127,6 +141,45 @@ namespace Entidades
 		void FlyingEye::setAnimacao(int anim)
 		{
 			animacaoAtual = &animacoes[anim];
+		}
+
+		float FlyingEye::getVida()
+		{
+			return VIDA_MAX;
+		}
+
+		float FlyingEye::getSize()
+		{
+			return SIZE;
+		}
+		void FlyingEye::atualizar()
+		{
+			Vector2f posJogador = jogador->getCorpo().getPosition();
+			Vector2f posInimigo = corpo.getPosition();
+
+			if (!parado)
+			{
+				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
+				{
+					perseguirJogador(posJogador, posInimigo);
+				}
+				else
+				{
+					moveAleatorio();
+				}
+			}
+
+			atualizarAnimacao();
+
+			if (vida <= 0.0f)
+			{
+				parado = true;
+				animacao = 2;
+				voador = false;
+				//corpo.move(0.0f, 0.9f);
+			}
+
+
 		}
 	}
 }

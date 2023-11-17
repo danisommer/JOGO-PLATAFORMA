@@ -27,7 +27,6 @@ namespace Entidades
 			float distanciaY;
 			int atualizacao;
 			float posAnteriorInimigo;
-			bool parado;
 
 		protected:
 			Jogador* jogador;
@@ -43,7 +42,12 @@ namespace Entidades
 			float ALCANCE_X;
 			float ALCANCE_Y;
 			float vidaAnterior;
-			bool concluida;
+			float distanciaAtaqueX;
+			float distanciaAtaqueY;
+			bool parado;
+			bool teleportando;
+
+			//bool concluida;
 
 
 		public:
@@ -51,12 +55,14 @@ namespace Entidades
 			~Inimigo();
 			void perseguirJogador(Vector2f posJogador, Vector2f posInimigo);
 			void moveAleatorio();
-			void atualizar();
+			virtual void atualizar() = 0;
 			void atualizarAnimacao();
 			virtual void atacar() = 0;
 			void setAnimacao(int anim) = 0;
 			void setJogador(Jogador* j);
 			bool getVoador();
+			float getVida() = 0;
+			virtual float getSize() = 0;
 
 		};
 	}

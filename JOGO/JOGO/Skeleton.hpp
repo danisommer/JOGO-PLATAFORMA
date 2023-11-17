@@ -16,6 +16,9 @@ namespace Entidades
 			~Skeleton();
 			void atacar();
 			void setAnimacao(int anim);
+			float getVida();
+			float getSize();
+			void atualizar();
 
 		};
 

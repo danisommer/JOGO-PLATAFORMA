@@ -38,12 +38,20 @@ namespace Gerenciadores
 	{
 		for (int i = 0; i < plataformas.size(); i++)
 		{
-			verificaColisaoJogador(pJogador, plataformas.at(i));
+			if(fabs(pJogador->getPos().y - plataformas.at(i)->getPos().y) < 100.0f)
+				verificaColisaoJogador(pJogador, plataformas.at(i)->getCorpo());
+
 			for (int j = 0; j < inimigos.size(); j++)
 			{
 				if (inimigos.at(j) && !inimigos.at(j)->getVoador())
-					verificaColisaoInimigo(inimigos.at(j), plataformas.at(i));
+					verificaColisaoInimigo(inimigos.at(j), plataformas.at(i)->getCorpo());
 			}
+		}
+
+		for (int i = 0; i < paredes.size(); i++)
+		{
+			if (fabs(pJogador->getPos().x - paredes.at(i)->getPos().x) < 100.0f)
+			verificaColisaoJogador(pJogador, paredes.at(i)->getCorpo());
 		}
 	}
 
@@ -72,14 +80,19 @@ namespace Gerenciadores
 		plataformas.push_back(plataforma);
 	}
 
-	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
+	void Gerenciador_Colisoes::addParede(Entidades::Obstaculos::Parede* parede)
 	{
-		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
+		paredes.push_back(parede);
+	}
+
+	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma)
+	{
+		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma.getGlobalBounds()))
 		{
 			corpo->setY(0.0f);
 
 			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
-			sf::FloatRect plataformaBounds = plataforma->getCorpo().getGlobalBounds();
+			sf::FloatRect plataformaBounds = plataforma.getGlobalBounds();
 
 			if (corpoBounds.top < plataformaBounds.top)
 			{
@@ -101,18 +114,13 @@ namespace Gerenciadores
 
 		}
 	}
-	void Gerenciador_Colisoes::verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, Entidades::Obstaculos::Plataforma* plataforma)
+	void Gerenciador_Colisoes::verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma)
 	{
-		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma->getCorpo().getGlobalBounds()))
+		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma.getGlobalBounds()))
 		{
 			corpo->setY(0.0f);
-
-			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
-			sf::FloatRect plataformaBounds = plataforma->getCorpo().getGlobalBounds();
-
 			corpo->setIsJumping(false);
-			corpo->setPos(corpo->getPos().x, plataformaBounds.top - corpoBounds.height);
-
+			corpo->setPos(corpo->getPos().x, plataforma.getGlobalBounds().top - corpo->getCorpo().getGlobalBounds().height);
 		}
 	}
 }

@@ -17,13 +17,20 @@ namespace Entidades
 			Vector2f position;
 			Vector2f velocity;
 			Vector2f posAnterior;
+			Sprite healthBar;
+			Sprite border;
+			Texture healthBarTexture;
+			Texture borderTexture;
 			Clock relogio;
 			bool isJumping;
 			bool voador;
 			bool morto;
 			bool moveu;
+			bool concluida;
+			bool inimigo;
 			float gravity;
 			float vida;
+			float dano;
 			int animacao;
 
 		public:
@@ -41,6 +48,11 @@ namespace Entidades
 			void morrer();
 			bool getMorte();
 			bool getMoveu();
+			void atualizarBarraVida();
+			Sprite getHealthBar();
+			Sprite getBorder();
+			virtual float getVida() = 0;
+			
 
 		};
 	}

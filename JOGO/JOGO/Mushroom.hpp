@@ -10,12 +10,17 @@ namespace Entidades
 		{
 		private:
 			void inicializaAnimacoes();
+			float forcaVeneno;
+			int tempoEnvenenamento;
 
 		public:
 			Mushroom(Vector2f pos, Vector2f tam);
 			~Mushroom();
 			void atacar();
 			void setAnimacao(int anim);
+			float getVida();
+			float getSize();
+			void atualizar();
 
 
 		};

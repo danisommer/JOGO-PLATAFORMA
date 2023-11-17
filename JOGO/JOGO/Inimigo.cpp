@@ -21,9 +21,12 @@ namespace Entidades
 			posAnteriorInimigo(0.0f),
 			ALCANCE_X(800.0f),
 			ALCANCE_Y(300.0f),
-			parado(false)
+			parado(false),
+			distanciaAtaqueX(60.0f),
+			distanciaAtaqueY(30.0f),
+			teleportando(false)
 		{
-
+			inimigo = true;
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
 
@@ -66,9 +69,15 @@ namespace Entidades
 					corpo.move(-vel.x, 0.0f);
 					direita = false;
 				}
+				animacao = 0;
+			}
 
-				if (voador)
+			if (voador)
+			{
+				if (fabs(distanciaY) > distanciaAlvo)
 				{
+
+
 					if (distanciaY > 10.0f)
 					{
 						corpo.move(0.0f, vel.y);
@@ -77,31 +86,18 @@ namespace Entidades
 					{
 						corpo.move(0.0f, -vel.y);
 					}
-				}
 
-				animacao = 0;
-			}
-			else
-			{
-				if (fabs(distanciaY) <= 10.0f && fabs(distanciaX) <= 40.0f)
-				{
-					atacar();
 				}
+			}
+
+			if (fabs(distanciaY) <= distanciaAtaqueY && fabs(distanciaX) <= distanciaAtaqueX)
+			{
+				atacar();
 			}
 		}
 
 		void Inimigo::atualizarAnimacao()
 		{
-			if (vida <= 0.0f)
-			{
-				parado = true;
-
-				animacao = 2;
-
-				if (concluida)
-					morrer();
-			}
-
 			if (vida != vidaAnterior)
 			{
 				animacao = 1;
@@ -140,6 +136,12 @@ namespace Entidades
 				{
 					concluida = true;
 					count = 0;
+
+					if (animacao == 2)
+						morrer();
+
+					if (animacao == 5)
+						teleportando = false;
 				}
 
 				iteracoes = 0;
@@ -155,8 +157,9 @@ namespace Entidades
 				lado = -1;
 
 			sprite.setTexture(animacaoAtual->getFrame(count));
-			sprite.setScale(1.8 * lado, 1.8);
+			sprite.setScale(getSize() * lado, getSize());
 			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y - 10.0f);
+
 		}
 
 		void Inimigo::moveAleatorio()
@@ -198,35 +201,6 @@ namespace Entidades
 			atualizacao++;
 
 			corpo.move(direcao);
-		}
-
-		void Inimigo::atualizar()
-		{
-			Vector2f posJogador = jogador->getCorpo().getPosition();
-			Vector2f posInimigo = corpo.getPosition();
-
-			if (!parado)
-			{
-				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
-				{
-					perseguirJogador(posJogador, posInimigo);
-				}
-				else
-				{
-					moveAleatorio();
-				}
-			}
-
-			float distanciaPercorrida = fabs(posInimigo.x - posAnteriorInimigo);
-
-			if ((distanciaPercorrida == 0.0f) && animacao != 3)
-			{
-				animacao = 4;
-			}
-
-			posAnteriorInimigo = posInimigo.x;
-
-			atualizarAnimacao();
 		}
 
 		void Inimigo::setAnimacao(int anim)
