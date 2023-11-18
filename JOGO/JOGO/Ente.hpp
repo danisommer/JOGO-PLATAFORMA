@@ -17,6 +17,7 @@
 #include "FlyingEye.hpp"
 #include "Mushroom.hpp"
 #include "Chefao.hpp"
+#include "Serra.hpp"
 #include <chrono>
 #include <thread>
 
@@ -43,6 +44,7 @@ private:
 	Entidades::Personagens::Jogador* jogador;
 	vector<Entidades::Personagens::Personagem*> personagens;
 	vector<Entidades::Obstaculos::Plataforma*> plataformas;
+	vector<Entidades::Obstaculos::Obstaculo*> obstaculos;
 	vector<Entidades::Personagens::Inimigo*> inimigos;
 
 public:

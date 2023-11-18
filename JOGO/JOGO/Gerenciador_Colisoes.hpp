@@ -3,6 +3,7 @@
 #include "Jogador.hpp"
 #include "Plataforma.hpp"
 #include "Parede.hpp"
+#include "Obstaculo.hpp"
 #include <vector>
 
 namespace Gerenciadores
@@ -15,6 +16,7 @@ namespace Gerenciadores
 		Entidades::Personagens::Jogador* pJogador;
 		std::vector<Entidades::Personagens::Inimigo*> inimigos;
 		std::vector<Entidades::Obstaculos::Plataforma*> plataformas;
+		std::vector<Entidades::Obstaculos::Obstaculo*> obstaculos;
 		std::vector<Entidades::Obstaculos::Parede*> paredes;
 
 	public:
@@ -27,9 +29,9 @@ namespace Gerenciadores
 		void removeInimigo(int index);
 		void addPlataforma(Entidades::Obstaculos::Plataforma* plataforma);
 		void addParede(Entidades::Obstaculos::Parede* parede);
+		void addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma);
 		void verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma);
-
 	};
 }
 

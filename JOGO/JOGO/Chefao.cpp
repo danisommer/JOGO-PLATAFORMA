@@ -165,22 +165,17 @@ namespace Entidades
 			teleportando = true;
 
 			int lado1;
-			int lado2;
+			int lado2 = -1;
 
 			if (rand() % 2)
 				lado1 = 1;
 			else
 				lado1 = -1;
 
-			if (rand() % 2)
-				lado2 = 1;
-			else
-				lado2 = -1;
-
 			Portal* p1 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
 			portais.push_back(p1);
 
-			corpo.move(lado1 * (300.0f + rand() % 300), lado2 * (rand() % 300));
+			corpo.move(lado1 * (300.0f + rand() % 400), lado2 * (rand() % 300));
 
 			Portal* p2 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
 			portais.push_back(p2);

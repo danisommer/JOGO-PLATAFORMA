@@ -6,7 +6,7 @@ namespace Entidades
 	namespace Obstaculos
 	{
         Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam, bool grande) :
-            Entidade(pos, tam)
+            Obstaculo(pos, tam)
         {
 
             corpo = sf::RectangleShape(tam);
@@ -30,6 +30,12 @@ namespace Entidades
                 sprite.setPosition(Vector2f(pos.x, pos.y - 525.0f));
                 sprite.setScale(1.0f, 1.0f);
             }
+        }
+        Plataforma::~Plataforma()
+        {
+        }
+        void Plataforma::executar()
+        {
         }
 	}
 }

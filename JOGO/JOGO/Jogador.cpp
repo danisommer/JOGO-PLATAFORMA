@@ -49,11 +49,13 @@ namespace Entidades
 				{
 					if (tempoDecorridoVeneno < tempoVeneno)
 					{
+						sprite.setColor(Color::Green);
 						vida -= forcaVeneno;
 						tempoDecorridoVeneno++;
 					}
 					else
 					{
+						sprite.setColor(Color{255, 255, 255});
 						tempoDecorridoVeneno = 0;
 						envenenado = false;
 					}
@@ -66,7 +68,7 @@ namespace Entidades
 						vel.x = forcaLentidao;
 						jumpStrength = -0.14;
 						tempoDecorridoLentidao++;
-						animacoes.at(0).setAnimationSpeed(50.0f);
+						animacoes.at(0).setAnimationSpeed(60.0f);
 					}
 					else
 					{

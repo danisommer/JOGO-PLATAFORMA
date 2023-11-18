@@ -55,6 +55,7 @@ namespace Entidades
 			float getVida();
 			void setEnvenenado(bool veneno, int tempo, float intensidade);
 			void setLento(bool lentidao, int tempo, float forca);
+
 		};
 	}
 

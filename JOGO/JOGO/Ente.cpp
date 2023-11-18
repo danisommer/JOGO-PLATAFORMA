@@ -77,7 +77,10 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 		};
 	entityCreators['w'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Obstaculos::Parede(Vector2f(posX, posY), Vector2f(50.0f, 1200.0f));
-		};	
+		};
+	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Serra(Vector2f(posX, posY), Vector2f(100.0f, 100.0f));
+		};
 
 	for (int x = 0; x < matriz.size(); x++) {
 		for (int y = 0; y < matriz[x].size(); y++) {
@@ -97,6 +100,10 @@ void Ente::instanciaEntidades(const std::string& arquivoTxt)
 				}
 				if (dynamic_cast<Entidades::Obstaculos::Parede*>(entity)) {
 					gerenciador_colisoes->addParede(dynamic_cast<Entidades::Obstaculos::Parede*>(entity));
+				}
+				if (dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity)) {
+					obstaculos.push_back(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
+					gerenciador_colisoes->addObstaculo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
 				}
 				if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
 					gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
@@ -173,16 +180,26 @@ void Ente::AtualizarPersonagens()
 		}
 
 	}
+
+	for (int i = 0; i < obstaculos.size(); i++)
+	{
+		obstaculos.at(i)->executar();
+	}
 }
 
 void Ente::DesenharElementos()
 {
-
-	for (int i = 0; i < plataformas.size(); i++)
+	for (int i = 0; i < obstaculos.size(); i++)
 	{
-		//gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
-		gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
+		//gerenciador_grafico->desenhaHitbox(obstaculos.at(i)->getCorpo());
+		gerenciador_grafico->desenhaSprite(obstaculos.at(i)->getSprite());
 	}
+
+	//for (int i = 0; i < plataformas.size(); i++)
+	//{
+		//gerenciador_grafico->desenhaHitbox(plataformas.at(i)->getCorpo());
+		//gerenciador_grafico->desenhaSprite(plataformas.at(i)->getSprite());
+	//}
 
 	for (int i = 0; i < personagens.size(); i++)
 	{

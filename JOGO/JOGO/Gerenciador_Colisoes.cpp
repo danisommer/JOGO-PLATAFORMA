@@ -53,6 +53,13 @@ namespace Gerenciadores
 			if (fabs(pJogador->getPos().x - paredes.at(i)->getPos().x) < 100.0f)
 			verificaColisaoJogador(pJogador, paredes.at(i)->getCorpo());
 		}
+
+		for (int i = 0; i < obstaculos.size(); i++)
+		{
+			//if (pJogador->getCorpo().getGlobalBounds().intersects(obstaculos.at(i)->getCorpo().getGlobalBounds()))
+				//obstaculos.at(i)->;
+			
+		}
 	}
 
 	void Gerenciador_Colisoes::setJogador(Entidades::Personagens::Jogador* jogador)
@@ -83,6 +90,11 @@ namespace Gerenciadores
 	void Gerenciador_Colisoes::addParede(Entidades::Obstaculos::Parede* parede)
 	{
 		paredes.push_back(parede);
+	}
+
+	void Gerenciador_Colisoes::addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo)
+	{
+		obstaculos.push_back(obstaculo);
 	}
 
 	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma)
