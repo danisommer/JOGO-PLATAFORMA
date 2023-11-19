@@ -48,3 +48,4 @@ JOGO/.vs/JOGO/v17/.suo
 *.db-wal
 JOGO/.vs/JOGO/v17/Browse.VC.opendb
 JOGO/JOGO/.vs/JOGO/v17/.suo
+*.opendb
