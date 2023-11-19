@@ -13,9 +13,9 @@ namespace Entidades
 		public:
 			Parede(const Vector2f pos, const Vector2f tam);
 			~Parede();
-			void executar();
-
 			void atualizar();
+			void danar();
+
 		};
 	}
 }

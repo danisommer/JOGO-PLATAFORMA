@@ -6,17 +6,20 @@ namespace Entidades
 {
 	namespace Obstaculos
 	{
-		class Serra : public Obstaculo
+		class Espinho : public Obstaculo
 		{
 		private:
-			float dano;
+			float veneno;
+			int tempoEnvenenamento;
+			float danoInstantaneo;
+			bool pisou;
 			Animacao animacao;
 			int cont;
 			int iteracoes;
 
 		public:
-			Serra(const Vector2f pos, const Vector2f tam);
-			~Serra();
+			Espinho(const Vector2f pos, const Vector2f tam);
+			~Espinho();
 			void inicializaAnimacoes();
 			void atualizaAnimacao();
 			void atualizar();

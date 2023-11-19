@@ -15,6 +15,75 @@ Principal::~Principal()
 	listaObstaculo.limpar();
 }
 
+bool Principal::Aleatorizar(char character)
+{
+	static int numCogumelosCriados = 0;
+	static int numVoadoresCriados = 0;
+	static int numSerrasCriadas = 0;
+	static int numEspinhosCriados = 0;
+	static int numSlimesCriados = 0;
+
+	const int numMinimoCogumelos = 3;
+	const int numMinimoVoadores = 3;
+	const int numMinimoSerras = 3;
+	const int numMinimoEspinhos = 3;
+	const int numMinimoSlimes = 3;
+
+	static bool seedInicializada = false;
+	if (!seedInicializada) {
+		std::srand(std::time(0));
+		seedInicializada = true;
+	}
+
+	if (character == 'f') {
+		if (numVoadoresCriados < numMinimoVoadores) {
+			numVoadoresCriados++;
+			return true;
+		}
+		else {
+			return std::rand() % 2 == 0;
+		}
+	}
+	else if (character == 'm') {
+		if (numCogumelosCriados < numMinimoCogumelos) {
+			numCogumelosCriados++;
+			return true;
+		}
+		else {
+			return std::rand() % 2 == 0;
+		}
+	}
+	else if (character == 's') {
+		if (numSerrasCriadas < numMinimoSerras) {
+			numSerrasCriadas++;
+			return true;
+		}
+		else {
+			return std::rand() % 2 == 0;
+		}
+	}
+	else if (character == 'e') {
+		if (numEspinhosCriados < numMinimoEspinhos) {
+			numEspinhosCriados++;
+			return true;
+		}
+		else {
+			return std::rand() % 2 == 0;
+		}
+	}
+	else if (character == 'g') {
+		if (numSlimesCriados < numMinimoSlimes) {
+			numSlimesCriados++;
+			return true;
+		}
+		else {
+			return std::rand() % 2 == 0;
+		}
+	}
+
+	return true;
+}
+
 void Principal::instanciaEntidades(const std::string& arquivoTxt)
 {
 
@@ -60,6 +129,12 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 		};
 	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Obstaculos::Serra(Vector2f(posX, posY), Vector2f(100.0f, 100.0f));
+		};	
+	entityCreators['e'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Espinho(Vector2f(posX, posY), Vector2f(100.0f, 50.0f));
+		};	
+	entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
+		return new Entidades::Obstaculos::Slime(Vector2f(posX, posY), Vector2f(300.0f, 50.0f));
 		};
 	for (int x = 0; x < matriz.size(); x++) {
 		for (int y = 0; y < matriz[x].size(); y++) {
@@ -68,38 +143,32 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 
 			char character = matriz[x][y];
 
-			if (entityCreators.find(character) != entityCreators.end()) {
-				Entidades::Entidade* entity = entityCreators[character](posX, posY);
-
-				if (dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)) {
-					gerenciador_colisoes->addPlataforma(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
+			if (Aleatorizar(character))
+			{
+				if (entityCreators.find(character) != entityCreators.end()) {
+					Entidades::Entidade* entity = entityCreators[character](posX, posY);
+					if (dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity)) {
+						gerenciador_colisoes->addObstaculo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
+						listaObstaculo.addEntidade(entity);
+						gerenciador_colisoes->addCorpo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
+					}
+					if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
+						gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
+						listaPersonagem.addEntidade(entity);
+					}
+					if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) {
+						jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
+						listaPersonagem.addEntidade(entity);
+						gerenciador_grafico->setJogador(jogador);
+						gerenciador_eventos->setJogador(jogador);
+						gerenciador_colisoes->setJogador(jogador);
+					}
 				}
-				if (dynamic_cast<Entidades::Obstaculos::Parede*>(entity)) {
-					gerenciador_colisoes->addParede(dynamic_cast<Entidades::Obstaculos::Parede*>(entity));
-				}
-				if (dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity)) {
-					gerenciador_colisoes->addObstaculo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
-					listaObstaculo.addEntidade(entity);
-				}
-				if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
-					gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
-					listaPersonagem.addEntidade(entity);
-				}
-				if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) {
-					jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
-					listaPersonagem.addEntidade(entity);
-					gerenciador_grafico->setJogador(jogador);
-					gerenciador_eventos->setJogador(jogador);
-					gerenciador_colisoes->setJogador(jogador);
-				}
-
 			}
-
 		}
 	}
 	Inimigo::setJogador(jogador);
-
-	cout << listaObstaculo.getTam() << endl;
+	Obstaculo::setJogador(jogador);
 }
 
 void Principal::executar()
@@ -121,8 +190,9 @@ void Principal::AtualizarPersonagens()
 	//listaPersonagem.executar(gerenciador_grafico->getJanela());
 	//listaObstaculo.executar(gerenciador_grafico->getJanela());
 
-	Entidades::Personagens::Inimigo* aux = nullptr;
+	Entidades::Personagens::Inimigo* pAuxInim = nullptr;
 	Entidades::Personagens::Personagem* pAuxPerso = nullptr;
+	Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
 
 
 	//Verificar se tomou dano
@@ -132,11 +202,11 @@ void Principal::AtualizarPersonagens()
 		{
 			if (listaPersonagem.operator[](i))
 			{
-				aux = dynamic_cast<Entidades::Personagens::Inimigo*>(listaPersonagem.operator[](i));
-				if (aux) {
-					if (fabs(aux->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
-						fabs(aux->getPos().y - jogador->getRegiaoAtaque().y) < 80.0f)
-						aux->tomarDano(jogador->getDano());
+				pAuxInim = dynamic_cast<Entidades::Personagens::Inimigo*>(listaPersonagem.operator[](i));
+				if (pAuxInim) {
+					if (fabs(pAuxInim->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
+						fabs(pAuxInim->getPos().y - jogador->getRegiaoAtaque().y) < 80.0f)
+						pAuxInim->tomarDano(jogador->getDano());
 				}
 
 			}
@@ -177,6 +247,19 @@ void Principal::AtualizarPersonagens()
 			pAuxPerso->cair();
 
 		}
+	}	
+	
+	//atualizar obstaculos
+	for (int i = 0; i < listaObstaculo.getTam(); i++)
+	{
+		pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
+		if (pAuxObst)
+		{
+			pAuxObst->atualizar();
+			gerenciador_grafico->desenhaSprite(pAuxObst->getSprite());
+			//gerenciador_grafico->desenhaHitbox(*pAuxObst->getCorpo());
+
+		}
 	}
 }
 
@@ -198,7 +281,5 @@ void Principal::DesenharElementos()
 
 		}
 	}
-
 	gerenciador_grafico->mostraElemento();
-
 }

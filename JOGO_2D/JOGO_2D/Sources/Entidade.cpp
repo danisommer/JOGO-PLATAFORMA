@@ -14,9 +14,9 @@ namespace Entidades
 	{
 	}
 
-	const RectangleShape Entidade::getCorpo() const
+	RectangleShape* Entidade::getCorpo()
 	{
-		return corpo;
+		return &corpo;
 	}	
 	const Sprite Entidade::getSprite() const
 	{

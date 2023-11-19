@@ -19,7 +19,7 @@ namespace Entidades
                 }
                 sprite.setTexture(textura);
                 sprite.setPosition(Vector2f(pos.x - 102.0f, pos.y - 75.0f));
-                sprite.setScale(0.5, 0.31);
+                sprite.setScale(0.5f, 0.31f);
             }
             else
             {
@@ -34,12 +34,14 @@ namespace Entidades
         Plataforma::~Plataforma()
         {
         }
-        void Plataforma::executar()
-        {
-        }
+
         void Plataforma::atualizar()
         {
 
+        }
+
+        void Plataforma::danar()
+        {
         }
     }
 }

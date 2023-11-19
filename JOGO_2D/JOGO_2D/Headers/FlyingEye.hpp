@@ -13,6 +13,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 			float forcaLentidao;
 			int tempoLentidao;
+			float forcaPulo;
 
 		public:
 			FlyingEye(Vector2f pos, Vector2f tam);

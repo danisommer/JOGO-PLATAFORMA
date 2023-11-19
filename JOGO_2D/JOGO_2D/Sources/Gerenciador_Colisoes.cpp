@@ -20,11 +20,6 @@ namespace Gerenciadores
 		}
 		inimigos.clear();
 
-		for (auto plataforma : plataformas)
-		{
-			delete plataforma;
-		}
-		plataformas.clear();
 	}
 
 	Gerenciador_Colisoes* Gerenciador_Colisoes::getGerenciador()
@@ -36,30 +31,26 @@ namespace Gerenciadores
 
 	void Gerenciador_Colisoes::Executar()
 	{
-		for (int i = 0; i < plataformas.size(); i++)
+		for (int i = 0; i < obstaculos.size(); i++)
 		{
-			if(fabs(pJogador->getPos().y - plataformas.at(i)->getPos().y) < 100.0f)
-				verificaColisaoJogador(pJogador, plataformas.at(i)->getCorpo());
+			if (pJogador->getCorpo()->getGlobalBounds().intersects(obstaculos.at(i)->getCorpo()->getGlobalBounds()))
+			{
+				obstaculos.at(i)->danar();
+			}
+		}
+
+		for (int i = 0; i < corpos.size(); i++)
+		{
+			verificaColisaoJogador(pJogador, corpos.at(i));
 
 			for (int j = 0; j < inimigos.size(); j++)
 			{
 				if (inimigos.at(j) && !inimigos.at(j)->getVoador())
-					verificaColisaoInimigo(inimigos.at(j), plataformas.at(i)->getCorpo());
+					verificaColisaoInimigo(inimigos.at(j), corpos.at(i));
 			}
 		}
 
-		for (int i = 0; i < paredes.size(); i++)
-		{
-			if (fabs(pJogador->getPos().x - paredes.at(i)->getPos().x) < 100.0f)
-			verificaColisaoJogador(pJogador, paredes.at(i)->getCorpo());
-		}
 
-		//for (int i = 0; i < obstaculos.size(); i++)
-		//{
-			//if (pJogador->getCorpo().getGlobalBounds().intersects(obstaculos.at(i)->getCorpo().getGlobalBounds()))
-				//obstaculos.at(i)->;
-			
-		//}
 
 		for (int i = 0; i < inimigos.size(); i++)
 		{
@@ -100,27 +91,35 @@ namespace Gerenciadores
 
 	void Gerenciador_Colisoes::addPlataforma(Entidades::Obstaculos::Plataforma* plataforma)
 	{
-		plataformas.push_back(plataforma);
+		corpos.push_back(plataforma->getCorpo());
 	}
 
 	void Gerenciador_Colisoes::addParede(Entidades::Obstaculos::Parede* parede)
 	{
-		paredes.push_back(parede);
+		corpos.push_back(parede->getCorpo());
+
+	}
+
+	void Gerenciador_Colisoes::addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo)
+	{
+		if(obstaculo->getColidir())
+			corpos.push_back(obstaculo->getCorpo());
 	}
 
 	void Gerenciador_Colisoes::addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo)
 	{
-		obstaculos.push_back(obstaculo);
+		if(obstaculo->getDanoso())
+			obstaculos.push_back(obstaculo);
 	}
 
-	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma)
+	void Gerenciador_Colisoes::verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma)
 	{
-		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma.getGlobalBounds()))
+		if (corpo->getCorpo()->getGlobalBounds().intersects(plataforma->getGlobalBounds()))
 		{
 			corpo->setY(0.0f);
 
-			sf::FloatRect corpoBounds = corpo->getCorpo().getGlobalBounds();
-			sf::FloatRect plataformaBounds = plataforma.getGlobalBounds();
+			sf::FloatRect corpoBounds = corpo->getCorpo()->getGlobalBounds();
+			sf::FloatRect plataformaBounds = plataforma->getGlobalBounds();
 
 			if (corpoBounds.top < plataformaBounds.top)
 			{
@@ -142,13 +141,13 @@ namespace Gerenciadores
 
 		}
 	}
-	void Gerenciador_Colisoes::verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape plataforma)
+	void Gerenciador_Colisoes::verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma)
 	{
-		if (corpo->getCorpo().getGlobalBounds().intersects(plataforma.getGlobalBounds()))
+		if (corpo->getCorpo()->getGlobalBounds().intersects(plataforma->getGlobalBounds()))
 		{
 			corpo->setY(0.0f);
 			corpo->setIsJumping(false);
-			corpo->setPos(corpo->getPos().x, plataforma.getGlobalBounds().top - corpo->getCorpo().getGlobalBounds().height);
+			corpo->setPos(corpo->getPos().x, plataforma->getGlobalBounds().top - corpo->getCorpo()->getGlobalBounds().height);
 		}
 	}
 }

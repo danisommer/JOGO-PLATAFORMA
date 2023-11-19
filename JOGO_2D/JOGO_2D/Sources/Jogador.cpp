@@ -64,13 +64,13 @@ namespace Entidades
 					if (tempoDecorridoLentidao < tempoLentidao)
 					{
 						vel.x = forcaLentidao;
-						jumpStrength = -0.14;
+						jumpStrength = forcaPulo;
 						tempoDecorridoLentidao++;
-						animacoes.at(0).setAnimationSpeed(60.0f);
+						animacoes.at(0).setAnimationSpeed(80.0f);
 					}
 					else
 					{
-						jumpStrength = -0.16;
+						jumpStrength = -0.16f;
 						vel.x = 1.1f;
 						tempoDecorridoLentidao = 0;
 						lento = false;
@@ -78,8 +78,6 @@ namespace Entidades
 
 					}
 				}
-
-				
 			}
 
 			if (isJumping)
@@ -141,7 +139,7 @@ namespace Entidades
 			iteracoes++;
 
 			sprite.setTexture(animacaoAtual->getFrame(count));
-			sprite.setScale(lado * 2.5, 2.5);
+			sprite.setScale(lado * 2.5f, 2.5f);
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
 		}
 
@@ -150,17 +148,17 @@ namespace Entidades
 			animacaoAtual = &animacoes[anim];
 		}
 
-		Vector2f Jogador::getRegiaoAtaque()
+		const Vector2f Jogador::getRegiaoAtaque() const 
 		{
 			return regiaoAtaque;
 		}
 
-		float Jogador::getDano()
+		const float Jogador::getDano() const
 		{
 			return dano;
 		}
 
-		bool Jogador::getAtacando()
+		const bool Jogador::getAtacando() const
 		{
 			return atacando;
 		}
@@ -178,12 +176,14 @@ namespace Entidades
 			corEnvenenado = cor;
 		}
 
-		void Jogador::setLento(bool lentidao, int tempo, float forca)
+		void Jogador::setLento(bool lentidao, int tempo, float fL, float fP)
 		{
 			lento = lentidao;
 			tempoLentidao = tempo;
-			forcaLentidao = forca;
+			forcaLentidao = fL;
+			forcaPulo = fP;
 		}
+
 
 		void Jogador::mover(bool direita, bool esquerda)
 		{
@@ -246,7 +246,7 @@ namespace Entidades
 			}
 			else
 			{
-				velocity.y = jumpStrength / 1.13;
+				velocity.y = jumpStrength / 1.13f;
 			}
 		}
 
@@ -264,7 +264,7 @@ namespace Entidades
 			int pedacoWidth = 120; //Largura
 			int pedacoHeight = 80; //Altura
 
-			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.55, corpo.getSize().y / 2.0f);
+			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.55f, corpo.getSize().y / 2.0f);
 			sprite.setOrigin(spriteOrigin);
 
 			//ANDAR 0 
@@ -272,7 +272,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -286,7 +286,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -301,7 +301,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -314,7 +314,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -329,7 +329,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -342,7 +342,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -356,7 +356,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -368,7 +368,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);

@@ -74,8 +74,8 @@ namespace Entidades
 			exit(1);
 		}
 
-		for (int i = 0; i < texture.getSize().x; i += largura) {
-			for (int j = 0; j < texture.getSize().y; j += largura) {
+		for (unsigned int i = 0; i < texture.getSize().x; i += largura) {
+			for (unsigned int j = 0; j < texture.getSize().y; j += largura) {
 				sf::IntRect pedacoRect(i, 0, largura, largura);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -131,7 +131,7 @@ namespace Entidades
 		sprite.setPosition(corpo.getPosition().x - 80.0f * lado, corpo.getPosition().y);
 	}
 
-	bool Projetil::getExplodiu()
+	const bool Projetil::getExplodiu() const
 	{
 		return explodiu;
 	}
@@ -141,7 +141,7 @@ namespace Entidades
 		colidiu = c;
 	}
 
-	float Projetil::getDano()
+	const float Projetil::getDano() const
 	{
 		return dano;
 	}

@@ -66,7 +66,7 @@ namespace Entidades
 			{
 				if (projeteis.at(i))
 				{
-					if (jogador1->getCorpo().getGlobalBounds().intersects(projeteis.at(i)->getCorpo().getGlobalBounds()))
+					if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
 					{
 						projeteis.at(i)->setColidiu(true);
 						jogador1->tomarDano(projeteis.at(i)->getDano());
@@ -85,24 +85,24 @@ namespace Entidades
 		void Chefao::atualizaVida() {
 			if ((vida > VIDA_MAX * 3 / 4) && (!bravo && !muitoBravo && !enfurecido)) {
 				bravo = true;
-				delayAtaque = 1800.0f;
+				delayAtaque = 1800;
 
 			}
 			else if ((vida <= VIDA_MAX * 3 / 4 && vida > VIDA_MAX / 2) && (bravo && !muitoBravo && !enfurecido)) {
 				muitoBravo = true;
-				delayAtaque = 1500.0f;
+				delayAtaque = 1500;
 				teleportar();
 
 			}
 			else if ((vida <= VIDA_MAX / 2 && vida > VIDA_MAX / 4) && (muitoBravo && !enfurecido)) {
 				enfurecido = true;
-				delayAtaque = 1200.0f;
+				delayAtaque = 1200;
 				teleportar();
 
 			}
 			else if ((vida <= VIDA_MAX / 4) && enfurecido) {
 				enfurecido = false;
-				delayAtaque = 900.0f;
+				delayAtaque = 900;
 				teleportar();
 
 			}
@@ -124,7 +124,7 @@ namespace Entidades
 
 		void Chefao::atualizar()
 		{
-			Vector2f posJogador = jogador1->getCorpo().getPosition();
+			Vector2f posJogador = jogador1->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)
@@ -160,18 +160,18 @@ namespace Entidades
 		{
 			teleportando = true;
 
-			int lado1;
-			int lado2 = -1;
+			float lado1;
+			float lado2 = -1.0f;
 
 			if (rand() % 2)
-				lado1 = 1;
+				lado1 = 1.0;
 			else
-				lado1 = -1;
+				lado1 = -1.0;
 
 			Portal* p1 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
 			portais.push_back(p1);
 
-			corpo.move(lado1 * (300.0f + rand() % 400), lado2 * (rand() % 300));
+			corpo.move(lado1 * (float)(300.0f + rand() % 400), lado2 * (float)(rand() % 300));
 
 			Portal* p2 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
 			portais.push_back(p2);
@@ -198,7 +198,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -210,7 +210,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -224,7 +224,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -238,7 +238,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -252,7 +252,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);

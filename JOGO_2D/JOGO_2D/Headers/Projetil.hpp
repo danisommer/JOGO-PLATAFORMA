@@ -29,8 +29,8 @@ namespace Entidades
 		void inicializaAnimacoes();
 		void atualizarAnimacao(int animacao);
 		void setColidiu(bool c);
-		float getDano();
-		bool getExplodiu();
+		const float getDano() const;
+		const bool getExplodiu() const;
 
 	};
 

@@ -16,7 +16,7 @@ namespace Entidades
 		Entidade(const Vector2f pos, const Vector2f tam);
 		Entidade();
 		virtual ~Entidade();
-		const RectangleShape getCorpo() const;
+		RectangleShape* getCorpo();
 		const Sprite getSprite() const;
 		virtual void atualizar() = 0;
 		Vector2f getPos();

@@ -199,7 +199,7 @@ namespace Entidades
 
 		void Inimigo::atualizar()
 		{
-			Vector2f posJogador = jogador1->getCorpo().getPosition();
+			Vector2f posJogador = jogador1->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)
@@ -234,19 +234,19 @@ namespace Entidades
 		{
 			jogador1 = j;
 		}
-		bool Inimigo::getVoador()
+		const bool Inimigo::getVoador() const
 		{
 			return voador;
 		}
-		bool Inimigo::getParado()
+		const bool Inimigo::getParado() const
 		{
 			return parado;
 		}
-		float Inimigo::getDistanciaAtaqueX()
+		const float Inimigo::getDistanciaAtaqueX() const
 		{
 			return distanciaAtaqueX;
 		}		
-		float Inimigo::getDistanciaAtaqueY()
+		const float Inimigo::getDistanciaAtaqueY() const
 		{
 			return distanciaAtaqueY;
 		}

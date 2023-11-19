@@ -36,6 +36,7 @@ namespace Entidades
 			int tempoLentidao;
 			int tempoDecorridoLentidao;
 			float forcaLentidao;
+			float forcaPulo;
 		
 			Vector2f regiaoAtaque;
 			std::vector<Animacao> animacoes;
@@ -49,12 +50,12 @@ namespace Entidades
 			void atualizar();
 			void atualizarAnimacao(int animacao);
 			void setAnimacao(int anim);
-			Vector2f getRegiaoAtaque();
-			float getDano();
-			bool getAtacando();
+			const Vector2f getRegiaoAtaque() const;
+			const float getDano() const;
+			const bool getAtacando() const;
 			float getVida();
 			void setEnvenenado(bool veneno, int tempo, float intensidade, Color cor);
-			void setLento(bool lentidao, int tempo, float forca);
+			void setLento(bool lentidao, int tempo, float fL, float fP);
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);

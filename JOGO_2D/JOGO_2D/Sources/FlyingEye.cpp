@@ -13,7 +13,8 @@ namespace Entidades
 		FlyingEye::FlyingEye(Vector2f pos, Vector2f tam):
 			Inimigo(pos, tam),
 			tempoLentidao(700),
-			forcaLentidao(0.5f)
+			forcaLentidao(0.5f),
+			forcaPulo(-0.14f)
 
 
 		{
@@ -41,7 +42,7 @@ namespace Entidades
 				if (concluida)
 				{
 					jogador1->tomarDano(dano);
-					jogador1->setLento(true, tempoLentidao, forcaLentidao);
+					jogador1->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
 
 				}
 
@@ -60,7 +61,7 @@ namespace Entidades
 			int pedacoWidth = 150; //Largura
 			int pedacoHeight = 150; //Altura
 
-			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 0.85);
+			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 0.85f);
 			sprite.setOrigin(spriteOrigin);
 
 			//VOANDO 0 
@@ -68,7 +69,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -80,7 +81,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -94,7 +95,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -108,7 +109,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -122,7 +123,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -153,7 +154,7 @@ namespace Entidades
 		}
 		void FlyingEye::atualizar()
 		{
-			Vector2f posJogador = jogador1->getCorpo().getPosition();
+			Vector2f posJogador = jogador1->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)

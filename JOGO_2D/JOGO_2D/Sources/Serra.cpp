@@ -8,13 +8,16 @@ namespace Entidades
 		Serra::Serra(const Vector2f pos, const Vector2f tam) :
 			Obstaculo(pos, tam),
 			cont(0),
-			iteracoes(0)
+			iteracoes(0),
+			dano(0.2f)
 		{
 			corpo.setFillColor(Color::Red);
 			corpo.setPosition(pos);
 			corpo.setSize(tam);
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
+			danoso = true;
+			colidir = false;
 		}
 
 		Serra::~Serra()
@@ -30,14 +33,14 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += largura) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += largura) {
 				sf::IntRect pedacoRect(x, 0, largura, largura);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
 				animacao.addFrame(pedacoTexture);
 			}
 
-			animacao.setAnimationSpeed(5.0f);
+			animacao.setAnimationSpeed(2.0f);
 
 		}
 
@@ -64,17 +67,14 @@ namespace Entidades
 
 		}
 
-		void Serra::executar()
+		void Serra::atualizar()
 		{
 			atualizaAnimacao();
 		}
-		//void Serra::danar(Jogador* pJogador)
-		//{
-		//}
 
-		void Serra::atualizar()
+		void Serra::danar()
 		{
-
+			jogador1->tomarDano(dano);
 		}
 	}
 }

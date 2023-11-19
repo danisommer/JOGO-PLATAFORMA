@@ -1,5 +1,6 @@
 #pragma once
 #include "Entidade.hpp"
+#include "Jogador.hpp"
 
 namespace Entidades
 {
@@ -7,18 +8,20 @@ namespace Entidades
 	{
 		class Obstaculo : public Entidade
 		{
-		private:
+		protected:
+			static Personagens::Jogador* jogador1;
+			bool danoso;
+			bool colidir;
 
 		public:
 			Obstaculo(const Vector2f pos, const Vector2f tam);
 			~Obstaculo();
-			virtual void executar() = 0;
-			//virtual void danar() = 0;
+			void atualizar() = 0;
+			virtual void danar() = 0;
+			static void setJogador(Personagens::Jogador* j);
+			bool getColidir();
+			bool getDanoso();
 
 		};
 	}
 }
-
-
-
-

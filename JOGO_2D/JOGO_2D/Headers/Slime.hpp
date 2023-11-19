@@ -5,14 +5,16 @@ namespace Entidades
 {
 	namespace Obstaculos
 	{
-		class Plataforma : public Obstaculo
+		class Slime : public Obstaculo
 		{
 		private:
 			sf::Texture textura;
+			float pegajosidadePulo;
+			float pegajosidadeMovimento;
 
 		public:
-			Plataforma(const Vector2f pos, const Vector2f tam, bool grande);
-			~Plataforma();
+			Slime(const Vector2f pos, const Vector2f tam);
+			~Slime();
 			void atualizar();
 			void danar();
 

@@ -44,7 +44,6 @@ namespace Entidades
 			float vidaAnterior;
 			float distanciaAtaqueX;
 			float distanciaAtaqueY;
-			//bool concluida;
 			bool parado;
 			bool teleportando;
 
@@ -58,12 +57,12 @@ namespace Entidades
 			virtual void atacar() = 0;
 			void setAnimacao(int anim) = 0;
 			static void setJogador(Jogador* j);
-			bool getVoador();
+			const bool getVoador() const;
 			virtual float getVida() = 0;
 			virtual float getSize() = 0;
-			bool getParado();
-			float getDistanciaAtaqueX();
-			float getDistanciaAtaqueY();
+			const bool getParado() const;
+			const float getDistanciaAtaqueX() const;
+			const float getDistanciaAtaqueY() const;
 		};
 	}
 }

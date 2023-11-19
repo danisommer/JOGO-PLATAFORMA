@@ -89,7 +89,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -101,7 +101,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -115,7 +115,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -129,7 +129,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -143,7 +143,7 @@ namespace Entidades
 				exit(1);
 			}
 
-			for (int x = 0; x < texture.getSize().x; x += pedacoWidth) {
+			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
@@ -173,7 +173,7 @@ namespace Entidades
 		}
 		void Mushroom::atualizar()
 		{
-			Vector2f posJogador = jogador1->getCorpo().getPosition();
+			Vector2f posJogador = jogador1->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)

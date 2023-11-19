@@ -20,13 +20,13 @@ namespace Entidades
 
 		}
 
-		void Parede::executar()
-		{
-		}
-
 		void Parede::atualizar()
 		{
 
+		}
+
+		void Parede::danar()
+		{
 		}
 	}
 }
