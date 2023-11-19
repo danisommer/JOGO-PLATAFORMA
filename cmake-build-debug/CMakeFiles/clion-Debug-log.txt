@@ -1,1 +1,0 @@
-CMakeLists.txt not found in C:\Users\fabri\Downloads\Programacao\TECPROG-UTFPR\JOGO-PLATAFORMA Select CMakeLists.txt
