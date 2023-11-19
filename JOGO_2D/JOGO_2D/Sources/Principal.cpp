@@ -73,11 +73,9 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 
 				if (dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)) {
 					gerenciador_colisoes->addPlataforma(dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity));
-					listaObstaculo.addEntidade(entity);
 				}
 				if (dynamic_cast<Entidades::Obstaculos::Parede*>(entity)) {
 					gerenciador_colisoes->addParede(dynamic_cast<Entidades::Obstaculos::Parede*>(entity));
-					listaObstaculo.addEntidade(entity);
 				}
 				if (dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity)) {
 					gerenciador_colisoes->addObstaculo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
@@ -101,7 +99,6 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 	}
 	Inimigo::setJogador(jogador);
 
-	cout << listaPersonagem.getTam() << endl;
 	cout << listaObstaculo.getTam() << endl;
 }
 
@@ -112,8 +109,9 @@ void Principal::executar()
 		gerenciador_eventos->Executar();
 		gerenciador_grafico->limpaTela();
 		gerenciador_grafico->atualizaCamera();
-		gerenciador_colisoes->Executar();
 		AtualizarPersonagens();
+		gerenciador_colisoes->Executar();
+
 		DesenharElementos();
 	}
 }
@@ -185,7 +183,6 @@ void Principal::AtualizarPersonagens()
 void Principal::DesenharElementos()
 {
 	Entidades::Personagens::Personagem* pAuxPerso = nullptr;
-
 
 	listaObstaculo.desenharEntidades(gerenciador_grafico);
 	listaPersonagem.desenharEntidades(gerenciador_grafico);

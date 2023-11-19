@@ -216,7 +216,7 @@ namespace Entidades
 
 			float distanciaPercorrida = fabs(posInimigo.x - posAnteriorInimigo);
 
-			if ((distanciaPercorrida == 0.0f) && animacao != 3)
+			if ((distanciaPercorrida <= 0.0f) && animacao != 3)
 			{
 				animacao = 4;
 			}

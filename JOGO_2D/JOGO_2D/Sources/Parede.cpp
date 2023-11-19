@@ -6,7 +6,7 @@ namespace Entidades
 	namespace Obstaculos
 	{
 		Parede::Parede(const sf::Vector2f pos, const sf::Vector2f tam) :
-			Entidade(pos, tam)
+			Obstaculo(pos, tam)
 		{
 
 			corpo = sf::RectangleShape(tam);
@@ -18,6 +18,10 @@ namespace Entidades
 		Parede::~Parede()
 		{
 
+		}
+
+		void Parede::executar()
+		{
 		}
 
 		void Parede::atualizar()

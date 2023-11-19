@@ -59,6 +59,7 @@ namespace Entidades
 			void bater(bool batendo);
 			void pular(bool pulando);
 
+
 		};
 	}
 
