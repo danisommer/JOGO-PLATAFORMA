@@ -236,10 +236,13 @@ namespace Entidades
 		{
 			if (pulando)
 			{
-				
-				velocity.y = jumpStrength;
-				isJumping = true;
-				animacao = 6;
+				if (!isJumping)
+				{
+					velocity.y = jumpStrength;
+					isJumping = true;
+					animacao = 6;
+				}
+
 			}
 			else
 			{
