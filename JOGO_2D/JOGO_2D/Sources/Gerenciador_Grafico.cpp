@@ -103,7 +103,7 @@ namespace Gerenciadores
 		sf::Vector2f playerPosition = jogador->getPos();
 		float middleX;
 
-		if (jogador2 != nullptr) {
+		if (jogador2) {
 			sf::Vector2f player2Position = jogador2->getPos();
 
 			middleX = (playerPosition.x + player2Position.x) / 2.0f;

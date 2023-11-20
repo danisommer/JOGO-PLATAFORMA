@@ -278,10 +278,22 @@ void Principal::AtualizarPersonagens()
 			gerenciador_eventos->setJogador(nullptr);
 			gerenciador_colisoes->setJogador(nullptr);
 		}
+	}	
+	
+	//Verificar se morreu
+	if (jogador2)
+	{
+		if (jogador2->getMorte()) {
+			gerenciador_colisoes->removeJogador();
+			jogador2 = nullptr;
+			gerenciador_grafico->setJogador2(nullptr);
+			gerenciador_eventos->setJogador2(nullptr);
+			gerenciador_colisoes->setJogador2(nullptr);
+		}
 	}
 
 	//Verificar se morreu
-	for (int i = 1; i < listaPersonagem.getTam(); i++)
+	for (int i = 0; i < listaPersonagem.getTam(); i++)
 	{
 		pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
 		if (pAuxPerso && pAuxPerso->getMorte())

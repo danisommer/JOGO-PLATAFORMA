@@ -188,26 +188,44 @@ namespace Entidades
 		void Mushroom::atualizar()
 		{
 			Vector2f posJogador = jogador1->getCorpo()->getPosition();
-			Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
-			if (!parado)
+			float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
+
+			if (jogador2)
 			{
-				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
+				Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
 				float distanciaJogador2 = sqrt(pow(posJogador2.x - posInimigo.x, 2) + pow(posJogador2.y - posInimigo.y, 2));
 
-				if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y &&
-					(distanciaJogador1 < distanciaJogador2 || distanciaJogador2 > ALCANCE_X || distanciaJogador2 > ALCANCE_Y))
+				if (!parado)
 				{
-					perseguirJogador(posJogador, posInimigo);
+					if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y &&
+						(distanciaJogador1 < distanciaJogador2 || distanciaJogador2 > ALCANCE_X || distanciaJogador2 > ALCANCE_Y))
+					{
+						perseguirJogador(posJogador, posInimigo);
+					}
+					else if (distanciaJogador2 <= ALCANCE_X && distanciaJogador2 <= ALCANCE_Y)
+					{
+						perseguirJogador(posJogador2, posInimigo);
+					}
+					else
+					{
+						moveAleatorio();
+					}
 				}
-				else if (distanciaJogador2 <= ALCANCE_X && distanciaJogador2 <= ALCANCE_Y)
+			}
+			else
+			{
+				if (!parado)
 				{
-					perseguirJogador(posJogador2, posInimigo);
-				}
-				else
-				{
-					moveAleatorio();
+					if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y)
+					{
+						perseguirJogador(posJogador, posInimigo);
+					}
+					else
+					{
+						moveAleatorio();
+					}
 				}
 			}
 
