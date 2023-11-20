@@ -42,9 +42,11 @@ namespace Entidades
 		
 			Vector2f regiaoAtaque;
 			std::vector<Animacao> animacoes;
+			std::vector<Keyboard::Key> teclas;
 			Animacao* animacaoAtual;
 			
 			void inicializaAnimacoes();
+			void inicializaTeclas();
 
 		public:
 			Jogador(Vector2f pos, Vector2f tam);

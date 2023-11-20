@@ -37,6 +37,7 @@ namespace Entidades
 			vel = Vector2f(1.1f, 1.1f);
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
+			inicializaTeclas();
 
 			jogadorCriado = true;
 		}
@@ -191,7 +192,6 @@ namespace Entidades
 
 		void Jogador::mover(bool direita, bool esquerda)
 		{
-
 			if (direita)
 			{
 				direcao.x = vel.x;
@@ -218,6 +218,11 @@ namespace Entidades
 		{
 			if (batendo && !isJumping)
 			{
+				if (Keyboard::isKeyPressed(teclas.at(0)))
+					lado = -1;
+				if (Keyboard::isKeyPressed(teclas.at(1)))
+					lado = 1;
+
 				regiaoAtaque = Vector2f(corpo.getPosition().x + (65.0f * lado), corpo.getPosition().y);
 				atacando = true;
 
@@ -395,6 +400,24 @@ namespace Entidades
 			animacoes.push_back(animacaoPulo);
 			animacoes.push_back(animacaoCair);
 
+		}
+
+		void Jogador::inicializaTeclas()
+		{
+			if (!jogadorCriado)
+			{
+				teclas.push_back(Keyboard::A);
+				teclas.push_back(Keyboard::D);
+				teclas.push_back(Keyboard::W);
+				teclas.push_back(Keyboard::E);
+			}
+			else
+			{
+				teclas.push_back(Keyboard::Left);
+				teclas.push_back(Keyboard::Right);
+				teclas.push_back(Keyboard::Up);
+				teclas.push_back(Keyboard::M);
+			}
 		}
 
 	}

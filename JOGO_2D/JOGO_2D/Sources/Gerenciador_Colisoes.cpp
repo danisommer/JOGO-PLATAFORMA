@@ -34,7 +34,7 @@ namespace Gerenciadores
 	{
 		for (int i = 0; i < obstaculos.size(); i++)
 		{
-			if (pJogador->getCorpo()->getGlobalBounds().intersects(obstaculos.at(i)->getCorpo()->getGlobalBounds()))
+			if (pJogador && pJogador->getCorpo()->getGlobalBounds().intersects(obstaculos.at(i)->getCorpo()->getGlobalBounds()))
 			{
 				obstaculos.at(i)->danar(1);
 			}
@@ -46,9 +46,10 @@ namespace Gerenciadores
 
 		for (int i = 0; i < corpos.size(); i++)
 		{
-			verificaColisaoJogador(pJogador, corpos.at(i));
+			if (pJogador)
+				verificaColisaoJogador(pJogador, corpos.at(i));
 
-			if(pJogador2)
+			if (pJogador2)
 				verificaColisaoJogador(pJogador2, corpos.at(i));
 
 			for (int j = 0; j < inimigos.size(); j++)
@@ -63,14 +64,21 @@ namespace Gerenciadores
 
 			if (inimigos.at(i) && !inimigos.at(i)->getParado())
 			{
-				float distanciaX = pJogador->getPos().x - inimigos.at(i)->getPos().x;
-				float distanciaY = pJogador->getPos().y - inimigos.at(i)->getPos().y;
+				float distanciaX;
+				float distanciaY;
 
-				if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
+				if (pJogador)
 				{
-					inimigos.at(i)->atacar(1);
+					distanciaX = pJogador->getPos().x - inimigos.at(i)->getPos().x;
+					distanciaY = pJogador->getPos().y - inimigos.at(i)->getPos().y;
+
+					if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
+					{
+						inimigos.at(i)->atacar(1);
+					}
 				}
-				else if (pJogador2)
+				
+				if (pJogador2)
 				{
 					distanciaX = pJogador2->getPos().x - inimigos.at(i)->getPos().x;
 					distanciaY = pJogador2->getPos().y - inimigos.at(i)->getPos().y;
@@ -97,11 +105,6 @@ namespace Gerenciadores
 		this->pJogador2 = jogador;
 	}
 
-	void Gerenciador_Colisoes::removeJogador()
-	{
-		pJogador = nullptr;
-	}
-
 	void Gerenciador_Colisoes::addInimigo(Entidades::Personagens::Inimigo* inimigo)
 	{
 		inimigos.push_back(inimigo);
@@ -125,13 +128,13 @@ namespace Gerenciadores
 
 	void Gerenciador_Colisoes::addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo)
 	{
-		if(obstaculo->getColidir())
+		if (obstaculo->getColidir())
 			corpos.push_back(obstaculo->getCorpo());
 	}
 
 	void Gerenciador_Colisoes::addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo)
 	{
-		if(obstaculo->getDanoso())
+		if (obstaculo->getDanoso())
 			obstaculos.push_back(obstaculo);
 	}
 

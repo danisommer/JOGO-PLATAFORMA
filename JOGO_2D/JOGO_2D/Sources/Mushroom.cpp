@@ -189,8 +189,22 @@ namespace Entidades
 		{
 			if (!parado)
 			{
-				Vector2f posJogador = jogador1->getCorpo()->getPosition();
+				Vector2f posJogador;
 				Vector2f posInimigo = corpo.getPosition();
+
+				if (jogador1)
+				{
+					posJogador = jogador1->getCorpo()->getPosition();
+				}
+				else if (jogador2)
+				{
+					posJogador = jogador2->getCorpo()->getPosition();
+				}
+				else
+				{
+					moveAleatorio();
+					return;
+				}
 
 				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
 

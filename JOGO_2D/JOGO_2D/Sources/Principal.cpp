@@ -4,7 +4,7 @@ Principal::Principal() :
 	gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
 	gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 	gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
-	listaPersonagem(), 
+	listaPersonagem(),
 	listaObstaculo(),
 	jogador(nullptr),
 	jogador2(nullptr),
@@ -134,10 +134,10 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 		};
 	entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Obstaculos::Serra(Vector2f(posX, posY), Vector2f(100.0f, 100.0f));
-		};	
+		};
 	entityCreators['e'] = [](float posX, float posY) -> Entidades::Entidade* {
-		return new Entidades::Obstaculos::Espinho(Vector2f(posX, posY), Vector2f(100.0f, 50.0f));
-		};	
+		return new Entidades::Obstaculos::Espinho(Vector2f(posX, posY), Vector2f(100.0f, 20.0f));
+		};
 	entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
 		return new Entidades::Obstaculos::Slime(Vector2f(posX, posY), Vector2f(300.0f, 50.0f));
 		};
@@ -161,7 +161,7 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 						gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
 						listaPersonagem.addEntidade(entity);
 					}
-					if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) 
+					if (dynamic_cast<Entidades::Personagens::Jogador*>(entity))
 					{
 						if (!jogadorCriado)
 						{
@@ -206,7 +206,7 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 		cout << "numero incomum de jogadores" << endl;
 		exit(1);
 	}
-	
+
 }
 
 void Principal::executar()
@@ -218,7 +218,6 @@ void Principal::executar()
 		gerenciador_grafico->atualizaCamera();
 		AtualizarPersonagens();
 		gerenciador_colisoes->Executar();
-
 		DesenharElementos();
 	}
 }
@@ -232,9 +231,8 @@ void Principal::AtualizarPersonagens()
 	Entidades::Personagens::Personagem* pAuxPerso = nullptr;
 	Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
 
-
 	//Verificar se tomou dano
-	if (jogador->getAtacando())
+	if (jogador && jogador->getAtacando())
 	{
 		for (int i = 1; i < listaPersonagem.getTam(); i++)
 		{
@@ -251,6 +249,7 @@ void Principal::AtualizarPersonagens()
 		}
 	}
 
+	//Verificar se tomou dano
 	if (jogador2 && jogador2->getAtacando())
 	{
 		for (int i = 1; i < listaPersonagem.getTam(); i++)
@@ -272,23 +271,25 @@ void Principal::AtualizarPersonagens()
 	if (jogador)
 	{
 		if (jogador->getMorte()) {
-			gerenciador_colisoes->removeJogador();
 			jogador = nullptr;
 			gerenciador_grafico->setJogador(nullptr);
 			gerenciador_eventos->setJogador(nullptr);
 			gerenciador_colisoes->setJogador(nullptr);
+			Inimigo::setJogador(nullptr);
+			Obstaculo::setJogador(nullptr);
 		}
-	}	
-	
+	}
+
 	//Verificar se morreu
 	if (jogador2)
 	{
 		if (jogador2->getMorte()) {
-			gerenciador_colisoes->removeJogador();
 			jogador2 = nullptr;
 			gerenciador_grafico->setJogador2(nullptr);
 			gerenciador_eventos->setJogador2(nullptr);
 			gerenciador_colisoes->setJogador2(nullptr);
+			Inimigo::setJogador2(nullptr);
+			Obstaculo::setJogador2(nullptr);
 		}
 	}
 
@@ -303,19 +304,18 @@ void Principal::AtualizarPersonagens()
 
 	}
 
-	//Atualizar, cair e barra de vida
+	//Atualizar e cair 
 	for (int i = 0; i < listaPersonagem.getTam(); i++)
 	{
 		pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
 		if (pAuxPerso)
 		{
-
 			pAuxPerso->atualizar();
 			pAuxPerso->cair();
-
 		}
-	}	
-	
+
+	}
+
 	//atualizar obstaculos
 	for (int i = 0; i < listaObstaculo.getTam(); i++)
 	{

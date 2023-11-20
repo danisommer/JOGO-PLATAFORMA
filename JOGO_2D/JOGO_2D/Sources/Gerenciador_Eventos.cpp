@@ -6,7 +6,7 @@ namespace Gerenciadores
 	Gerenciador_Grafico* Gerenciador_Eventos::gerenciador_grafico = Gerenciador_Grafico::getGerenciador();
 
 
-	Gerenciador_Eventos::Gerenciador_Eventos():
+	Gerenciador_Eventos::Gerenciador_Eventos() :
 		pJogador(nullptr),
 		pJogador2(nullptr)
 	{
@@ -40,43 +40,47 @@ namespace Gerenciadores
 
 		gerenciador_grafico->getJanela()->pollEvent(evento);
 
-		if (Keyboard::isKeyPressed(Keyboard::E))
+		if (pJogador)
 		{
-			pJogador->bater(true);
-
-		}
-		else
-		{
-			pJogador->bater(false);
-
-
-			if (Keyboard::isKeyPressed(Keyboard::D))
+			if (Keyboard::isKeyPressed(Keyboard::E))
 			{
-				pJogador->mover(true, false);
-			}
-
-			if (Keyboard::isKeyPressed(Keyboard::A))
-			{
-				pJogador->mover(false, true);
-
-			}
-
-			if (!(Keyboard::isKeyPressed(Keyboard::D)) && !(Keyboard::isKeyPressed(Keyboard::A)))
-			{
-				pJogador->mover(false, false);
-			}
-
-			if (Keyboard::isKeyPressed(Keyboard::W))
-			{
-				pJogador->pular(true);
+				pJogador->bater(true);
 
 			}
 			else
 			{
-				pJogador->pular(false);
+				pJogador->bater(false);
 
+
+				if (Keyboard::isKeyPressed(Keyboard::D))
+				{
+					pJogador->mover(true, false);
+				}
+
+				if (Keyboard::isKeyPressed(Keyboard::A))
+				{
+					pJogador->mover(false, true);
+
+				}
+
+				if (!(Keyboard::isKeyPressed(Keyboard::D)) && !(Keyboard::isKeyPressed(Keyboard::A)))
+				{
+					pJogador->mover(false, false);
+				}
+
+				if (Keyboard::isKeyPressed(Keyboard::W))
+				{
+					pJogador->pular(true);
+
+				}
+				else
+				{
+					pJogador->pular(false);
+
+				}
 			}
 		}
+
 		if (pJogador2)
 		{
 			if (Keyboard::isKeyPressed(Keyboard::M))
@@ -117,12 +121,12 @@ namespace Gerenciadores
 				}
 			}
 		}
-		
-		
-		if (evento.type == sf::Event::Closed) 
-			{
-				gerenciador_grafico->fecharJanela();
-			}
+
+
+		if (evento.type == sf::Event::Closed)
+		{
+			gerenciador_grafico->fecharJanela();
 		}
 	}
+}
 

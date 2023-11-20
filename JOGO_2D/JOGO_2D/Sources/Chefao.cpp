@@ -61,15 +61,17 @@ namespace Entidades
 
 		void Chefao::atualizaProjeteis()
 		{
-
 			for (int i = 0; i < projeteis.size(); i++)
 			{
 				if (projeteis.at(i))
 				{
-					if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
+					if (jogador1)
 					{
-						projeteis.at(i)->setColidiu(true);
-						jogador1->tomarDano(projeteis.at(i)->getDano());
+						if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
+						{
+							projeteis.at(i)->setColidiu(true);
+							jogador1->tomarDano(projeteis.at(i)->getDano());
+						}
 					}
 
 					if (jogador2)
@@ -135,8 +137,22 @@ namespace Entidades
 		{
 			if (!parado)
 			{
-				Vector2f posJogador = jogador1->getCorpo()->getPosition();
+				Vector2f posJogador;
 				Vector2f posInimigo = corpo.getPosition();
+
+				if (jogador1)
+				{
+					posJogador = jogador1->getCorpo()->getPosition();
+				}
+				else if (jogador2)
+				{
+					posJogador = jogador2->getCorpo()->getPosition();
+				}
+				else
+				{
+					moveAleatorio();
+					return;
+				}
 
 				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
 

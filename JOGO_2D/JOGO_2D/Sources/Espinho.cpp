@@ -14,9 +14,9 @@ namespace Entidades
 			veneno(0.035f)
 		{
 			corpo.setFillColor(Color::Red);
-			corpo.setPosition(pos);
+			corpo.setPosition(pos.x, pos.y + 30.0f);
 			corpo.setSize(tam);
-			sprite.setPosition(pos.x,pos.y - 15.0f);
+			sprite.setPosition(pos.x,pos.y - 12.0f);
 			inicializaAnimacoes();
 			danoso = true;
 			colidir = false;

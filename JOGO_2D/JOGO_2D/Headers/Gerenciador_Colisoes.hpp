@@ -27,7 +27,6 @@ namespace Gerenciadores
 		void Executar();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
 		void setJogador2(Entidades::Personagens::Jogador* jogador);
-		void removeJogador();
 		void addInimigo(Entidades::Personagens::Inimigo* inimigo);
 		void removeInimigo(int index);
 		void addPlataforma(Entidades::Obstaculos::Plataforma* plataforma);

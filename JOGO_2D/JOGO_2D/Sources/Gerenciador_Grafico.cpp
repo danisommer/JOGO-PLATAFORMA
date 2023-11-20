@@ -74,57 +74,43 @@ namespace Gerenciadores
 			janela->close();
 	}
 
-	/*
-	
 	void Gerenciador_Grafico::atualizaCamera()
 	{
 		sf::Vector2f cameraCenter = view.getCenter();
-		sf::Vector2f playerPosition = jogador->getPos();
-
-		cameraCenter.x = playerPosition.x;
-		//cameraCenter.y = playerPosition.y;
-
-		view.setCenter(cameraCenter);
-		janela->setView(view);
-
-		Sprite sprite(backgroundTexture);
-		sprite.setScale(0.9f, 0.9f);
-		sprite.setPosition(playerPosition.x - (TELA_X / 2), -30.0f);
-
-		janela->draw(sprite);
-
-	}
-
-	*/
-
-	void Gerenciador_Grafico::atualizaCamera()
-	{
-		sf::Vector2f cameraCenter = view.getCenter();
-		sf::Vector2f playerPosition = jogador->getPos();
-		float middleX;
-
-		if (jogador2) {
-			sf::Vector2f player2Position = jogador2->getPos();
-
-			middleX = (playerPosition.x + player2Position.x) / 2.0f;
-
-			cameraCenter.x = middleX;
-		}
-		else {
-			cameraCenter.x = playerPosition.x;
-		}
-
-		view.setCenter(cameraCenter);
-		janela->setView(view);
-
 		sf::Sprite sprite(backgroundTexture);
 		sprite.setScale(0.9f, 0.9f);
 
-		if(jogador2)
-			sprite.setPosition(middleX - (TELA_X / 2), -30.0f);
-		else
-			sprite.setPosition(playerPosition.x - (TELA_X / 2), -30.0f);
+		if (jogador2 && jogador) 
+		{
+			sf::Vector2f playerPosition = jogador->getPos();
+			sf::Vector2f player2Position = jogador2->getPos();
 
+			float middleX = (playerPosition.x + player2Position.x) / 2.0f;
+
+			cameraCenter.x = middleX;
+
+			sprite.setPosition(middleX - (TELA_X / 2), -30.0f);
+		}
+		else if (jogador2) 
+		{
+			sf::Vector2f player2Position = jogador2->getPos();
+
+			cameraCenter.x = player2Position.x;
+
+			sprite.setPosition(player2Position.x - (TELA_X / 2), -30.0f);
+
+		}
+		else if (jogador) 
+		{
+			sf::Vector2f playerPosition = jogador->getPos();
+
+			cameraCenter.x = playerPosition.x;
+
+			sprite.setPosition(playerPosition.x - (TELA_X / 2), -30.0f);
+		}
+
+		view.setCenter(cameraCenter);
+		janela->setView(view);
 		janela->draw(sprite);
 	}
 
@@ -137,18 +123,10 @@ namespace Gerenciadores
 
 	void Gerenciador_Grafico::setJogador(Entidades::Personagens::Jogador* jogador)
 	{
-		if (jogador) {
-			this->jogador = jogador;
-		}
-		else
-			std::cout << "Nao tem jogador" << std::endl;
+		this->jogador = jogador;
 	}
 	void Gerenciador_Grafico::setJogador2(Entidades::Personagens::Jogador* jogador)
 	{
-		if (jogador) {
-			this->jogador2 = jogador;
-		}
-		else
-			std::cout << "Nao tem jogador" << std::endl;
+		this->jogador2 = jogador;
 	}
 }
