@@ -11,6 +11,7 @@ namespace Gerenciadores
 	private:
 		static Gerenciador_Grafico* gerenciador_grafico;
 		Entidades::Personagens::Jogador* pJogador;
+		Entidades::Personagens::Jogador* pJogador2;
 
 		static Gerenciador_Eventos* pGerenciador;
 		Gerenciador_Eventos();
@@ -18,6 +19,7 @@ namespace Gerenciadores
 		~Gerenciador_Eventos();
 		static Gerenciador_Eventos* getGerenciador();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
+		void setJogador2(Entidades::Personagens::Jogador* jogador);
 		void Executar();
 	};
 

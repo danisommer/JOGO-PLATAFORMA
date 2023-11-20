@@ -6,7 +6,8 @@ namespace Gerenciadores
 
 
 	Gerenciador_Colisoes::Gerenciador_Colisoes() :
-		pJogador(nullptr)
+		pJogador(nullptr),
+		pJogador2(nullptr)
 	{
 	}
 
@@ -35,7 +36,11 @@ namespace Gerenciadores
 		{
 			if (pJogador->getCorpo()->getGlobalBounds().intersects(obstaculos.at(i)->getCorpo()->getGlobalBounds()))
 			{
-				obstaculos.at(i)->danar();
+				obstaculos.at(i)->danar(1);
+			}
+			if (pJogador2 && pJogador2->getCorpo()->getGlobalBounds().intersects(obstaculos.at(i)->getCorpo()->getGlobalBounds()))
+			{
+				obstaculos.at(i)->danar(2);
 			}
 		}
 
@@ -43,14 +48,15 @@ namespace Gerenciadores
 		{
 			verificaColisaoJogador(pJogador, corpos.at(i));
 
+			if(pJogador2)
+				verificaColisaoJogador(pJogador2, corpos.at(i));
+
 			for (int j = 0; j < inimigos.size(); j++)
 			{
 				if (inimigos.at(j) && !inimigos.at(j)->getVoador())
 					verificaColisaoInimigo(inimigos.at(j), corpos.at(i));
 			}
 		}
-
-
 
 		for (int i = 0; i < inimigos.size(); i++)
 		{
@@ -62,8 +68,20 @@ namespace Gerenciadores
 
 				if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
 				{
-					inimigos.at(i)->atacar();
+					inimigos.at(i)->atacar(1);
 				}
+				else if (pJogador2)
+				{
+					distanciaX = pJogador2->getPos().x - inimigos.at(i)->getPos().x;
+					distanciaY = pJogador2->getPos().y - inimigos.at(i)->getPos().y;
+
+					if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
+					{
+						inimigos.at(i)->atacar(2);
+					}
+				}
+
+
 			}
 
 		}
@@ -72,6 +90,11 @@ namespace Gerenciadores
 	void Gerenciador_Colisoes::setJogador(Entidades::Personagens::Jogador* jogador)
 	{
 		this->pJogador = jogador;
+	}
+
+	void Gerenciador_Colisoes::setJogador2(Entidades::Personagens::Jogador* jogador)
+	{
+		this->pJogador2 = jogador;
 	}
 
 	void Gerenciador_Colisoes::removeJogador()

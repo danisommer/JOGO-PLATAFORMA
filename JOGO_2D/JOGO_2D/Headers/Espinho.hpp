@@ -23,7 +23,7 @@ namespace Entidades
 			void inicializaAnimacoes();
 			void atualizaAnimacao();
 			void atualizar();
-			void danar();
+			void danar(int jogador);
 
 		};
 	}

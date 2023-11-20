@@ -14,7 +14,7 @@ namespace Entidades
 			Parede(const Vector2f pos, const Vector2f tam);
 			~Parede();
 			void atualizar();
-			void danar();
+			void danar(int jogador);
 
 		};
 	}

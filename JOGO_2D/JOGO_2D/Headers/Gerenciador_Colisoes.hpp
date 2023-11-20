@@ -15,6 +15,7 @@ namespace Gerenciadores
 		static Gerenciador_Colisoes* pGerenciador;
 		Gerenciador_Colisoes();
 		Entidades::Personagens::Jogador* pJogador;
+		Entidades::Personagens::Jogador* pJogador2;
 		std::vector<Entidades::Personagens::Inimigo*> inimigos;
 		std::vector<sf::RectangleShape*> corpos;
 
@@ -25,6 +26,7 @@ namespace Gerenciadores
 		static Gerenciador_Colisoes* getGerenciador();
 		void Executar();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
+		void setJogador2(Entidades::Personagens::Jogador* jogador);
 		void removeJogador();
 		void addInimigo(Entidades::Personagens::Inimigo* inimigo);
 		void removeInimigo(int index);

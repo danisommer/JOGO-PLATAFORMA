@@ -72,9 +72,17 @@ namespace Entidades
 			atualizaAnimacao();
 		}
 
-		void Serra::danar()
+		void Serra::danar(int jogador)
 		{
-			jogador1->tomarDano(dano);
+			if (jogador == 1)
+			{
+				jogador1->tomarDano(dano);
+			}
+			else if (jogador == 2)
+			{
+				jogador2->tomarDano(dano);
+
+			}
 		}
 	}
 }

@@ -83,15 +83,24 @@ namespace Entidades
 			atualizaAnimacao();
 		}
 
-		void Espinho::danar()
+		void Espinho::danar(int jogador)
 		{
 			if (!pisou) 
 			{
-				jogador1->tomarDano(danoInstantaneo);
-				jogador1->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
+				if (jogador == 1)
+				{
+
+					jogador1->tomarDano(danoInstantaneo);
+					jogador1->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
+				}
+				else if (jogador == 2)
+				{
+
+					jogador2->tomarDano(danoInstantaneo);
+					jogador2->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
+				}
+
 			}
-
-
 			pisou = true;
 		}
 	}

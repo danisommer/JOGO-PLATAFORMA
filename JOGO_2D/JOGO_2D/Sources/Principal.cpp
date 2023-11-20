@@ -4,7 +4,12 @@ Principal::Principal() :
 	gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
 	gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 	gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
-	listaPersonagem(), listaObstaculo()
+	listaPersonagem(), 
+	listaObstaculo(),
+	jogador(nullptr),
+	jogador2(nullptr),
+	jogadorCriado(false),
+	numJogadores(0)
 {
 	instanciaEntidades("Fases/fase1.txt");
 }
@@ -149,26 +154,59 @@ void Principal::instanciaEntidades(const std::string& arquivoTxt)
 					Entidades::Entidade* entity = entityCreators[character](posX, posY);
 					if (dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity)) {
 						gerenciador_colisoes->addObstaculo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
-						listaObstaculo.addEntidade(entity);
 						gerenciador_colisoes->addCorpo(dynamic_cast<Entidades::Obstaculos::Obstaculo*>(entity));
+						listaObstaculo.addEntidade(entity);
 					}
 					if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
 						gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
 						listaPersonagem.addEntidade(entity);
 					}
-					if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) {
-						jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
-						listaPersonagem.addEntidade(entity);
-						gerenciador_grafico->setJogador(jogador);
-						gerenciador_eventos->setJogador(jogador);
-						gerenciador_colisoes->setJogador(jogador);
+					if (dynamic_cast<Entidades::Personagens::Jogador*>(entity)) 
+					{
+						if (!jogadorCriado)
+						{
+							jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
+							listaPersonagem.addEntidade(entity);
+							gerenciador_grafico->setJogador(jogador);
+							gerenciador_eventos->setJogador(jogador);
+							gerenciador_colisoes->setJogador(jogador);
+
+							jogadorCriado = true;
+						}
+						else
+						{
+							jogador2 = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
+							listaPersonagem.addEntidade(entity);
+							gerenciador_grafico->setJogador2(jogador2);
+							gerenciador_eventos->setJogador2(jogador2);
+							gerenciador_colisoes->setJogador2(jogador2);
+						}
+						numJogadores++;
 					}
 				}
 			}
 		}
 	}
-	Inimigo::setJogador(jogador);
-	Obstaculo::setJogador(jogador);
+
+	if (numJogadores == 1)
+	{
+		Inimigo::setJogador(jogador);
+		Obstaculo::setJogador(jogador);
+	}
+	else if (numJogadores == 2)
+	{
+		Inimigo::setJogador(jogador);
+		Obstaculo::setJogador(jogador);
+
+		Inimigo::setJogador2(jogador2);
+		Obstaculo::setJogador2(jogador2);
+	}
+	else
+	{
+		cout << "numero incomum de jogadores" << endl;
+		exit(1);
+	}
+	
 }
 
 void Principal::executar()
@@ -207,6 +245,23 @@ void Principal::AtualizarPersonagens()
 					if (fabs(pAuxInim->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
 						fabs(pAuxInim->getPos().y - jogador->getRegiaoAtaque().y) < 80.0f)
 						pAuxInim->tomarDano(jogador->getDano());
+				}
+
+			}
+		}
+	}
+
+	if (jogador2 && jogador2->getAtacando())
+	{
+		for (int i = 1; i < listaPersonagem.getTam(); i++)
+		{
+			if (listaPersonagem.operator[](i))
+			{
+				pAuxInim = dynamic_cast<Entidades::Personagens::Inimigo*>(listaPersonagem.operator[](i));
+				if (pAuxInim) {
+					if (fabs(pAuxInim->getPos().x - jogador2->getRegiaoAtaque().x) < 80.0f &&
+						fabs(pAuxInim->getPos().y - jogador2->getRegiaoAtaque().y) < 80.0f)
+						pAuxInim->tomarDano(jogador2->getDano());
 				}
 
 			}

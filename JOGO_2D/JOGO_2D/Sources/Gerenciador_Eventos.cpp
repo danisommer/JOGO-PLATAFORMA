@@ -7,7 +7,8 @@ namespace Gerenciadores
 
 
 	Gerenciador_Eventos::Gerenciador_Eventos():
-		pJogador(nullptr)
+		pJogador(nullptr),
+		pJogador2(nullptr)
 	{
 
 	}
@@ -26,6 +27,11 @@ namespace Gerenciadores
 	void Gerenciador_Eventos::setJogador(Entidades::Personagens::Jogador* jogador)
 	{
 		this->pJogador = jogador;
+	}
+
+	void Gerenciador_Eventos::setJogador2(Entidades::Personagens::Jogador* jogador)
+	{
+		this->pJogador2 = jogador;
 	}
 
 	void Gerenciador_Eventos::Executar()
@@ -71,6 +77,47 @@ namespace Gerenciadores
 
 			}
 		}
+		if (pJogador2)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::M))
+			{
+				pJogador2->bater(true);
+
+			}
+			else
+			{
+				pJogador2->bater(false);
+
+
+				if (Keyboard::isKeyPressed(Keyboard::Right))
+				{
+					pJogador2->mover(true, false);
+				}
+
+				if (Keyboard::isKeyPressed(Keyboard::Left))
+				{
+					pJogador2->mover(false, true);
+
+				}
+
+				if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)))
+				{
+					pJogador2->mover(false, false);
+				}
+
+				if (Keyboard::isKeyPressed(Keyboard::Up))
+				{
+					pJogador2->pular(true);
+
+				}
+				else
+				{
+					pJogador2->pular(false);
+
+				}
+			}
+		}
+		
 		
 		if (evento.type == sf::Event::Closed) 
 			{

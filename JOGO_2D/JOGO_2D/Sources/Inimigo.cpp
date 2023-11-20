@@ -6,6 +6,7 @@ namespace Entidades
 	namespace Personagens
 	{
 		Jogador* Inimigo::jogador1 = nullptr;
+		Jogador* Inimigo::jogador2 = nullptr;
 
 		Inimigo::Inimigo(Vector2f pos, Vector2f	tam) :
 			iteracoes(0),
@@ -197,35 +198,6 @@ namespace Entidades
 			corpo.move(direcao);
 		}
 
-		void Inimigo::atualizar()
-		{
-			Vector2f posJogador = jogador1->getCorpo()->getPosition();
-			Vector2f posInimigo = corpo.getPosition();
-
-			if (!parado)
-			{
-				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
-				{
-					perseguirJogador(posJogador, posInimigo);
-				}
-				else
-				{
-					moveAleatorio();
-				}
-			}
-
-			float distanciaPercorrida = fabs(posInimigo.x - posAnteriorInimigo);
-
-			if ((distanciaPercorrida <= 0.0f) && animacao != 3)
-			{
-				animacao = 4;
-			}
-
-			posAnteriorInimigo = posInimigo.x;
-
-			atualizarAnimacao();
-		}
-
 		void Inimigo::setAnimacao(int anim)
 		{
 			animacaoAtual = &animacoes[anim];
@@ -233,6 +205,11 @@ namespace Entidades
 		void Inimigo::setJogador(Jogador* j)
 		{
 			jogador1 = j;
+		}
+		void Inimigo::setJogador2(Jogador* j)
+		{
+			jogador2 = j;
+
 		}
 		const bool Inimigo::getVoador() const
 		{
@@ -245,7 +222,7 @@ namespace Entidades
 		const float Inimigo::getDistanciaAtaqueX() const
 		{
 			return distanciaAtaqueX;
-		}		
+		}
 		const float Inimigo::getDistanciaAtaqueY() const
 		{
 			return distanciaAtaqueY;

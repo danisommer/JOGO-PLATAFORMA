@@ -35,9 +35,17 @@ namespace Entidades
 
 		}
 
-		void Slime::danar()
+		void Slime::danar(int jogador)
 		{
-			jogador1->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
+			if (jogador == 1)
+			{
+				jogador1->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
+			}
+			else if (jogador == 2)
+			{
+				jogador2->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
+
+			}
 
 		}
 	}

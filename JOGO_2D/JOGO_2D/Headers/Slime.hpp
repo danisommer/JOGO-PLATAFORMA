@@ -16,7 +16,7 @@ namespace Entidades
 			Slime(const Vector2f pos, const Vector2f tam);
 			~Slime();
 			void atualizar();
-			void danar();
+			void danar(int jogador);
 
 		};
 	}

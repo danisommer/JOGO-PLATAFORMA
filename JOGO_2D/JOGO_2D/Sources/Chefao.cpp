@@ -41,7 +41,7 @@ namespace Entidades
 		{
 		}
 
-		void Chefao::atacar() {
+		void Chefao::atacar(int jogador) {
 
 			auto agora = std::chrono::steady_clock::now();
 			auto diferenca = std::chrono::duration_cast<std::chrono::milliseconds>(agora - ultimoAtaque).count();
@@ -70,6 +70,15 @@ namespace Entidades
 					{
 						projeteis.at(i)->setColidiu(true);
 						jogador1->tomarDano(projeteis.at(i)->getDano());
+					}
+
+					if (jogador2)
+					{
+						if (jogador2->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
+						{
+							projeteis.at(i)->setColidiu(true);
+							jogador2->tomarDano(projeteis.at(i)->getDano());
+						}
 					}
 
 					projeteis.at(i)->atualizar();
@@ -125,13 +134,22 @@ namespace Entidades
 		void Chefao::atualizar()
 		{
 			Vector2f posJogador = jogador1->getCorpo()->getPosition();
+			Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)
 			{
-				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
+				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
+				float distanciaJogador2 = sqrt(pow(posJogador2.x - posInimigo.x, 2) + pow(posJogador2.y - posInimigo.y, 2));
+
+				if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y &&
+					(distanciaJogador1 < distanciaJogador2 || distanciaJogador2 > ALCANCE_X || distanciaJogador2 > ALCANCE_Y))
 				{
 					perseguirJogador(posJogador, posInimigo);
+				}
+				else if (distanciaJogador2 <= ALCANCE_X && distanciaJogador2 <= ALCANCE_Y)
+				{
+					perseguirJogador(posJogador2, posInimigo);
 				}
 				else
 				{

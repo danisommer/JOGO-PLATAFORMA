@@ -31,7 +31,7 @@ namespace Entidades
 		public:
 			Chefao(Vector2f pos, Vector2f tam);
 			~Chefao();
-			void atacar();
+			void atacar(int jogador);
 			void setAnimacao(int anim);
 			float getVida();
 			float getSize();

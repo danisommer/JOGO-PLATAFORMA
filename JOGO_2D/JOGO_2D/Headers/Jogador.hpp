@@ -12,6 +12,8 @@ namespace Entidades
 		class Jogador : public Personagem
 		{
 		private:
+			static bool jogadorCriado;
+
 			float aceleracao;
 			float desaceleracao;
 			float velocidadeMaxima;

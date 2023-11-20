@@ -40,7 +40,7 @@ namespace Entidades
 
         }
 
-        void Plataforma::danar()
+        void Plataforma::danar(int jogador)
         {
         }
     }

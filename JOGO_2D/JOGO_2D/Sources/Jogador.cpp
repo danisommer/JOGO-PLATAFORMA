@@ -6,6 +6,8 @@ namespace Entidades
 {
 	namespace Personagens
 	{
+		bool Jogador::jogadorCriado = false;
+
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam) :
 			aceleracao(900.0f),
 			desaceleracao(900.0f),
@@ -35,6 +37,8 @@ namespace Entidades
 			vel = Vector2f(1.1f, 1.1f);
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
+
+			jogadorCriado = true;
 		}
 
 		Jogador::~Jogador() = default;
@@ -250,8 +254,13 @@ namespace Entidades
 			}
 		}
 
+
+
 		void Jogador::inicializaAnimacoes()
 		{
+
+			String pasta = jogadorCriado ? "Jogador2" : "Jogador";
+
 			Animacao animacaoParado;
 			Animacao animacaoPulo;
 			Animacao animacaoAndar;
@@ -268,7 +277,7 @@ namespace Entidades
 			sprite.setOrigin(spriteOrigin);
 
 			//ANDAR 0 
-			if (!texture.loadFromFile("Assets/Jogador/_Run.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Run.png")) {
 				exit(1);
 			}
 
@@ -282,7 +291,7 @@ namespace Entidades
 			animacaoAndar.setAnimationSpeed(25.0f);
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/Jogador/_Hit.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Hit.png")) {
 				exit(1);
 			}
 
@@ -297,7 +306,7 @@ namespace Entidades
 
 
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/Jogador/_Death.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Death.png")) {
 				exit(1);
 			}
 
@@ -310,7 +319,7 @@ namespace Entidades
 
 
 			//ATAQUE PESADO 3
-			if (!texture.loadFromFile("Assets/Jogador/_Attack.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Attack.png")) {
 				exit(1);
 			}
 
@@ -325,7 +334,7 @@ namespace Entidades
 			animacaoAtacar2.setAnimationSpeed(20.0f);
 
 			//ATAQUE LEVE 4
-			if (!texture.loadFromFile("Assets/Jogador/_Attack2.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Attack2.png")) {
 				exit(1);
 			}
 
@@ -338,7 +347,7 @@ namespace Entidades
 
 
 			//PARADO 5
-			if (!texture.loadFromFile("Assets/Jogador/_Idle.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Idle.png")) {
 				exit(1);
 			}
 
@@ -352,7 +361,7 @@ namespace Entidades
 			animacaoParado.setAnimationSpeed(40.0f);
 
 			//PULO 6
-			if (!texture.loadFromFile("Assets/Jogador/_Jump.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Jump.png")) {
 				exit(1);
 			}
 
@@ -364,7 +373,7 @@ namespace Entidades
 			}
 
 			//PULO 6
-			if (!texture.loadFromFile("Assets/Jogador/_Fall.png")) {
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Fall.png")) {
 				exit(1);
 			}
 

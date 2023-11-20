@@ -35,8 +35,12 @@ private:
 	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
 	Entidades::Personagens::Jogador* jogador;
+	Entidades::Personagens::Jogador* jogador2;
 	Lista::ListaEntidade listaPersonagem;
 	Lista::ListaEntidade listaObstaculo;
+
+	bool jogadorCriado;
+	int numJogadores;
 
 public:
 	Principal();

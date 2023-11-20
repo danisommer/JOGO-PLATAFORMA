@@ -20,6 +20,7 @@ namespace Gerenciadores
 		View view;
 
 		Entidades::Personagens::Jogador* jogador;
+		Entidades::Personagens::Jogador* jogador2;
 		static Gerenciador_Grafico* pGerenciador;
 		sf::Texture backgroundTexture;
 		Gerenciador_Grafico();
@@ -36,6 +37,7 @@ namespace Gerenciadores
 		void atualizaCamera();
 		bool getOpen();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
+		void setJogador2(Entidades::Personagens::Jogador* jogador);
 	};
 
 }

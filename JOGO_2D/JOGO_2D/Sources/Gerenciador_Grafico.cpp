@@ -9,7 +9,8 @@ namespace Gerenciadores
 	Gerenciador_Grafico::Gerenciador_Grafico() :
 		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y)),
-		jogador(nullptr)
+		jogador(nullptr),
+		jogador2(nullptr)
 
 	{
 		if (janela == nullptr)
@@ -102,6 +103,14 @@ namespace Gerenciadores
 	{
 		if (jogador) {
 			this->jogador = jogador;
+		}
+		else
+			std::cout << "Nao tem jogador" << std::endl;
+	}
+	void Gerenciador_Grafico::setJogador2(Entidades::Personagens::Jogador* jogador)
+	{
+		if (jogador) {
+			this->jogador2 = jogador;
 		}
 		else
 			std::cout << "Nao tem jogador" << std::endl;

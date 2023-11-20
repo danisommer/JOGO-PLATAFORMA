@@ -40,19 +40,27 @@ namespace Entidades
 		{
 		}
 
-		void Mushroom::atacar()
+		void Mushroom::atacar(int jogador)
 		{
 			if (!morto)
 				if (concluida)
 				{
-					jogador1->tomarDano(dano);
-					envenenar();
+					if (jogador == 1)
+					{
+						jogador1->tomarDano(dano);
+						envenenar(1);
+					}
+					else if (jogador == 2)
+					{
+						jogador2->tomarDano(dano);
+						envenenar(2);
+					}
 				}
 
 			animacao = 3;
 		}
 
-		void Mushroom::envenenar()
+		void Mushroom::envenenar(int jogador)
 		{
 			if (venenoEspecial)
 			{
@@ -65,8 +73,14 @@ namespace Entidades
 				corJogador = Color{100, 255, 100};
 
 			}
-
-			jogador1->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
+			if (jogador == 1) 
+			{
+				jogador1->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
+			}
+			else if (jogador == 2)
+			{
+				jogador2->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
+			}
 		}
 
 		void Mushroom::inicializaAnimacoes()
@@ -174,13 +188,22 @@ namespace Entidades
 		void Mushroom::atualizar()
 		{
 			Vector2f posJogador = jogador1->getCorpo()->getPosition();
+			Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
 			Vector2f posInimigo = corpo.getPosition();
 
 			if (!parado)
 			{
-				if (fabs(posJogador.x - posInimigo.x) <= ALCANCE_X && fabs(posJogador.y - posInimigo.y) <= ALCANCE_Y)
+				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
+				float distanciaJogador2 = sqrt(pow(posJogador2.x - posInimigo.x, 2) + pow(posJogador2.y - posInimigo.y, 2));
+
+				if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y &&
+					(distanciaJogador1 < distanciaJogador2 || distanciaJogador2 > ALCANCE_X || distanciaJogador2 > ALCANCE_Y))
 				{
 					perseguirJogador(posJogador, posInimigo);
+				}
+				else if (distanciaJogador2 <= ALCANCE_X && distanciaJogador2 <= ALCANCE_Y)
+				{
+					perseguirJogador(posJogador2, posInimigo);
 				}
 				else
 				{

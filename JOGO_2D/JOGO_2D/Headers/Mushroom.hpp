@@ -18,12 +18,12 @@ namespace Entidades
 		public:
 			Mushroom(Vector2f pos, Vector2f tam);
 			~Mushroom();
-			void atacar();
+			void atacar(int jogador);
 			void setAnimacao(int anim);
 			float getVida();
 			float getSize();
 			void atualizar();
-			void envenenar();
+			void envenenar(int jogador);
 
 
 		};

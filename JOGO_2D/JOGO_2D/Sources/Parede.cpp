@@ -25,7 +25,7 @@ namespace Entidades
 
 		}
 
-		void Parede::danar()
+		void Parede::danar(int jogador)
 		{
 		}
 	}
