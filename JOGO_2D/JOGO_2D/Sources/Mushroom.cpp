@@ -28,11 +28,11 @@ namespace Entidades
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			dano = 0.2f;
 			vida = VIDA_MAX;
-		
+
 			if (rand() % 3 == 0)
 			{
 				venenoEspecial = true;
-				sprite.setColor(Color{235, 255, 0});
+				sprite.setColor(Color{ 235, 255, 0 });
 			}
 		}
 
@@ -70,10 +70,10 @@ namespace Entidades
 			else
 			{
 				forcaVeneno = 0.035f;
-				corJogador = Color{100, 255, 100};
+				corJogador = Color{ 100, 255, 100 };
 
 			}
-			if (jogador == 1) 
+			if (jogador == 1)
 			{
 				jogador1->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
 			}
@@ -180,25 +180,25 @@ namespace Entidades
 		{
 			return VIDA_MAX;
 		}
-	
+
 		float Mushroom::getSize()
 		{
 			return SIZE;
 		}
 		void Mushroom::atualizar()
 		{
-			Vector2f posJogador = jogador1->getCorpo()->getPosition();
-			Vector2f posInimigo = corpo.getPosition();
-
-			float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
-
-			if (jogador2)
+			if (!parado)
 			{
-				Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
-				float distanciaJogador2 = sqrt(pow(posJogador2.x - posInimigo.x, 2) + pow(posJogador2.y - posInimigo.y, 2));
+				Vector2f posJogador = jogador1->getCorpo()->getPosition();
+				Vector2f posInimigo = corpo.getPosition();
 
-				if (!parado)
+				float distanciaJogador1 = sqrt(pow(posJogador.x - posInimigo.x, 2) + pow(posJogador.y - posInimigo.y, 2));
+
+				if (jogador2)
 				{
+					Vector2f posJogador2 = jogador2->getCorpo()->getPosition();
+					float distanciaJogador2 = sqrt(pow(posJogador2.x - posInimigo.x, 2) + pow(posJogador2.y - posInimigo.y, 2));
+
 					if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y &&
 						(distanciaJogador1 < distanciaJogador2 || distanciaJogador2 > ALCANCE_X || distanciaJogador2 > ALCANCE_Y))
 					{
@@ -213,10 +213,7 @@ namespace Entidades
 						moveAleatorio();
 					}
 				}
-			}
-			else
-			{
-				if (!parado)
+				else
 				{
 					if (distanciaJogador1 <= ALCANCE_X && distanciaJogador1 <= ALCANCE_Y)
 					{
@@ -241,6 +238,6 @@ namespace Entidades
 
 
 		}
-}
+	}
 
 }
