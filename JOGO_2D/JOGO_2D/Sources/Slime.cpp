@@ -17,7 +17,7 @@ namespace Entidades
 			corpo.setFillColor(Color::Red);
 
 
-			if (!textura.loadFromFile("Assets/Cenario/slime.png")) {
+			if (!textura.loadFromFile("Assets/Cenario/Trap/Slime.png")) {
 				exit(1);
 			}
 			sprite.setTexture(textura);

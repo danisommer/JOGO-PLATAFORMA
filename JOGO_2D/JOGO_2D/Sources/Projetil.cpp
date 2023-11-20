@@ -62,7 +62,7 @@ namespace Entidades
 		int largura = 64;
 
 		for (int i = 1; i < 60; i++) {
-			if (!texture.loadFromFile("Assets/Fireball/Effect2/" + std::to_string(i) + ".png"))
+			if (!texture.loadFromFile("Assets/Fireball/" + std::to_string(i) + ".png"))
 			{
 				exit(1);
 			}
@@ -70,7 +70,7 @@ namespace Entidades
 			animacaoVoar.addFrame(texture);
 		}
 
-		if (!texture.loadFromFile("Assets/Fireball/Explosao/explosao.png")) {
+		if (!texture.loadFromFile("Assets/Fireball/explosao.png")) {
 			exit(1);
 		}
 

@@ -13,6 +13,8 @@ namespace Gerenciadores
 		jogador2(nullptr)
 
 	{
+		int fase = 2;
+
 		if (janela == nullptr)
 		{
 			cout << "Erro alocando a janela!!" << endl;
@@ -21,7 +23,7 @@ namespace Gerenciadores
 		view.zoom(1.0f);
 		janela->setView(view);
 
-		if (!backgroundTexture.loadFromFile("Assets/Background/background.png")) {
+		if (!backgroundTexture.loadFromFile("Assets/Cenario/background_" + std::to_string(fase) + ".png")) {
 			exit(1);
 		}
 	}

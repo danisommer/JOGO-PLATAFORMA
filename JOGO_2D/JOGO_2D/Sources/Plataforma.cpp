@@ -8,13 +8,14 @@ namespace Entidades
         Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam, bool grande) :
             Obstaculo(pos, tam)
         {
+            int fase = 2;
 
             corpo = sf::RectangleShape(tam);
             corpo.setPosition(pos);
             corpo.setFillColor(Color::Red);
 
             if (!grande) {
-                if (!textura.loadFromFile("Assets/Cenario/plataforma.png")) {
+                if (!textura.loadFromFile("Assets/Cenario/plataformaPequena.png")) {
                     exit(1);
                 }
                 sprite.setTexture(textura);
@@ -23,11 +24,11 @@ namespace Entidades
             }
             else
             {
-                if (!textura.loadFromFile("Assets/Background/Battleground1/stones&grass.png")) {
+                if (!textura.loadFromFile("Assets/Cenario/plataformaGrande_" + std::to_string(fase) + ".png")) {
                     exit(1);
                 }
                 sprite.setTexture(textura);
-                sprite.setPosition(Vector2f(pos.x, pos.y - 525.0f));
+                sprite.setPosition(Vector2f(pos.x, pos.y - 550.0f));
                 sprite.setScale(1.0f, 1.0f);
             }
         }
