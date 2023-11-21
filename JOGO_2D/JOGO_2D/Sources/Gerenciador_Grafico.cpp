@@ -10,10 +10,11 @@ namespace Gerenciadores
 		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y)),
 		jogador(nullptr),
-		jogador2(nullptr)
+		jogador2(nullptr),
+		fase()
 
 	{
-		int fase = 2;
+		fase = 1;
 
 		if (janela == nullptr)
 		{

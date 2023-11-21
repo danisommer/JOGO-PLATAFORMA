@@ -42,6 +42,9 @@ private:
 	bool jogadorCriado;
 	int numJogadores;
 
+	int fase;
+	int numEscolhidoDeJogadores;
+
 public:
 	Principal();
 	~Principal();

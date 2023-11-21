@@ -6,9 +6,10 @@ namespace Entidades
     namespace Obstaculos
     {
         Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam, bool grande) :
-            Obstaculo(pos, tam)
+            Obstaculo(pos, tam),
+            fase()
         {
-            int fase = 2;
+            fase = 1;
 
             corpo = sf::RectangleShape(tam);
             corpo.setPosition(pos);

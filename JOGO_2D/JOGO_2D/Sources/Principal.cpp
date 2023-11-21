@@ -9,10 +9,13 @@ Principal::Principal() :
 	jogador(nullptr),
 	jogador2(nullptr),
 	jogadorCriado(false),
-	numJogadores(0)
+	numJogadores(0),
+	fase(),
+	numEscolhidoDeJogadores()
+
 {
-	int fase = 2;
-	int jogadores = 2;
+	fase = 1;
+	numEscolhidoDeJogadores = 1;
 
 	instanciaEntidades("Fases/fase" + std::to_string(fase) + "-" + std::to_string(jogadores) + "p.txt");
 }

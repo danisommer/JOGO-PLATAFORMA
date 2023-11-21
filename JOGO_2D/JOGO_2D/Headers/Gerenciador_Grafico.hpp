@@ -24,6 +24,7 @@ namespace Gerenciadores
 		static Gerenciador_Grafico* pGerenciador;
 		sf::Texture backgroundTexture;
 		Gerenciador_Grafico();
+		int fase;
 
 	public:
 		~Gerenciador_Grafico();

@@ -9,6 +9,7 @@ namespace Entidades
 		{
 		private:
 			sf::Texture textura;
+			int fase;
 
 		public:
 			Plataforma(const Vector2f pos, const Vector2f tam, bool grande);
