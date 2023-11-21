@@ -36,7 +36,8 @@ private:
 	Gerenciadores::Gerenciador_Eventos* gerenciador_eventos;
 	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
-	Fases::Ruinas fase1;
+	Fases::Floresta fase1;
+	Fases::Ruinas fase2;
 
 public:
 	Principal();

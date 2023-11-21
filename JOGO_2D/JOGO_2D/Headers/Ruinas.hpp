@@ -12,11 +12,10 @@ namespace Fases
 	public:
 		Ruinas():Fase(), concluida2(false)
 		{
-			instanciaEntidades("Fases/fase1-2p.txt");
+			fase = 2;
 		}
 		~Ruinas()
 		{
-
 		}
 	};
 }

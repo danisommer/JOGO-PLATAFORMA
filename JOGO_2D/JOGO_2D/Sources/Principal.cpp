@@ -5,6 +5,8 @@ gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()), 
 fase1()
 {
+	fase2.instanciaEntidades("Fases/fase2-2p.txt");
+	gerenciador_grafico->setFase(fase2.getFase());
 }
 
 Principal::~Principal()
@@ -19,9 +21,9 @@ void Principal::executar()
 		gerenciador_eventos->Executar();
 		gerenciador_grafico->limpaTela();
 		gerenciador_grafico->atualizaCamera();
-		fase1.AtualizarPersonagens();
+		fase2.AtualizarPersonagens();
 		gerenciador_colisoes->Executar();
-		fase1.DesenharElementos();
+		fase2.DesenharElementos();
 	}
 }
 

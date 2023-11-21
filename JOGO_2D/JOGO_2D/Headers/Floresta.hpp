@@ -12,11 +12,10 @@ namespace Fases
 	public:
 		Floresta():Fase(), concluida1(false)
 		{
-			instanciaEntidades("Fases/fase2-2p.txt");
+			fase = 1;
 		}
 		~Floresta()
 		{
-
 		}
 	};
 }

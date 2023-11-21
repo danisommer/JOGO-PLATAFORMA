@@ -39,6 +39,7 @@ namespace Gerenciadores
 		bool getOpen();
 		void setJogador(Entidades::Personagens::Jogador* jogador);
 		void setJogador2(Entidades::Personagens::Jogador* jogador);
+		void setFase(int fase);
 	};
 
 }

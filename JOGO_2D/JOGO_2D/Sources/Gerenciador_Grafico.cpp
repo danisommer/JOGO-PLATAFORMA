@@ -14,8 +14,6 @@ namespace Gerenciadores
 		fase()
 
 	{
-		fase = 1;
-
 		if (janela == nullptr)
 		{
 			cout << "Erro alocando a janela!!" << endl;
@@ -23,10 +21,6 @@ namespace Gerenciadores
 		}
 		view.zoom(1.0f);
 		janela->setView(view);
-
-		if (!backgroundTexture.loadFromFile("Assets/Cenario/background_" + std::to_string(fase) + ".png")) {
-			exit(1);
-		}
 	}
 
 	Gerenciador_Grafico::~Gerenciador_Grafico()
@@ -131,5 +125,13 @@ namespace Gerenciadores
 	void Gerenciador_Grafico::setJogador2(Entidades::Personagens::Jogador* jogador)
 	{
 		this->jogador2 = jogador;
+	}
+	void Gerenciador_Grafico::setFase(int f)
+	{
+		fase = f;
+
+		if (!backgroundTexture.loadFromFile("Assets/Cenario/background_" + std::to_string(fase) + ".png")) {
+			exit(1);
+		}
 	}
 }

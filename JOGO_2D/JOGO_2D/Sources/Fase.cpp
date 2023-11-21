@@ -9,7 +9,8 @@ namespace Fases
 		jogador(nullptr),
 		jogador2(nullptr),
 		jogadorCriado(false),
-		numJogadores(0)
+		numJogadores(0),
+		fase()
 	{
 
 	}
@@ -159,6 +160,9 @@ namespace Fases
 						if (dynamic_cast<Entidades::Personagens::Inimigo*>(entity)) {
 							gerenciador_colisoes->addInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(entity));
 							listaPersonagem.addEntidade(entity);
+						}
+						if (dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)) {
+							dynamic_cast<Entidades::Obstaculos::Plataforma*>(entity)->setFase(fase);
 						}
 						if (dynamic_cast<Entidades::Personagens::Jogador*>(entity))
 						{
@@ -332,5 +336,9 @@ namespace Fases
 			}
 		}
 		gerenciador_grafico->mostraElemento();
+	}
+	int Fase::getFase()
+	{
+		return fase;
 	}
 }

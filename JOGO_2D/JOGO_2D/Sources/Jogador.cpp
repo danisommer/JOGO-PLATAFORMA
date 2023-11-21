@@ -1,6 +1,6 @@
 #include "Jogador.hpp"
 #include <iostream>
-#define VIDA_MAX 10000.0f
+#define VIDA_MAX 100.0f
 
 namespace Entidades
 {

@@ -45,6 +45,8 @@ namespace Fases
 		bool jogadorCriado;
 		int numJogadores;
 
+		int fase;
+
 	public:
 		Fase();
 		~Fase();
@@ -53,5 +55,6 @@ namespace Fases
 		bool Aleatorizar(char character);
 		void AtualizarPersonagens();
 		void DesenharElementos();
+		int getFase();
 	};
 }

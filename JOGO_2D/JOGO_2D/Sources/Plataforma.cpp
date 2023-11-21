@@ -5,15 +5,33 @@ namespace Entidades
 {
     namespace Obstaculos
     {
-        Plataforma::Plataforma(const sf::Vector2f pos, const sf::Vector2f tam, bool grande) :
+        Plataforma::Plataforma(const sf::Vector2f p, const sf::Vector2f tam, bool g) :
             Obstaculo(pos, tam),
-            fase()
+            fase(),
+            pos(p)
         {
-            fase = 1;
-
+            grande = g;
             corpo = sf::RectangleShape(tam);
             corpo.setPosition(pos);
             corpo.setFillColor(Color::Red);
+        }
+
+        Plataforma::~Plataforma()
+        {
+        }
+
+        void Plataforma::atualizar()
+        {
+
+        }
+
+        void Plataforma::danar(int jogador)
+        {
+        }
+
+        void Plataforma::setFase(int f)
+        {
+            fase = f;
 
             if (!grande) {
                 if (!textura.loadFromFile("Assets/Cenario/plataformaPequena.png")) {
@@ -32,18 +50,6 @@ namespace Entidades
                 sprite.setPosition(Vector2f(pos.x, pos.y - 550.0f));
                 sprite.setScale(1.0f, 1.0f);
             }
-        }
-        Plataforma::~Plataforma()
-        {
-        }
-
-        void Plataforma::atualizar()
-        {
-
-        }
-
-        void Plataforma::danar(int jogador)
-        {
         }
     }
 }
