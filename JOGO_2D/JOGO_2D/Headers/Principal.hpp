@@ -21,6 +21,8 @@
 #include "Espinho.hpp"
 #include "Slime.hpp"
 #include "ListaEntidade.hpp"
+#include "Ruinas.hpp"
+#include "Floresta.hpp"
 
 using namespace sf;
 using namespace std;
@@ -34,24 +36,10 @@ private:
 	Gerenciadores::Gerenciador_Eventos* gerenciador_eventos;
 	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
-	Entidades::Personagens::Jogador* jogador;
-	Entidades::Personagens::Jogador* jogador2;
-	Lista::ListaEntidade listaPersonagem;
-	Lista::ListaEntidade listaObstaculo;
-
-	bool jogadorCriado;
-	int numJogadores;
-
-	int fase;
-	int numEscolhidoDeJogadores;
+	Fases::Ruinas fase1;
 
 public:
 	Principal();
 	~Principal();
 	void executar();
-	void instanciaEntidades(const std::string& arquivoTxt);
-	void AtualizarPersonagens();
-	void DesenharElementos();
-	bool Aleatorizar(char character);
-
 };
