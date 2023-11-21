@@ -14,6 +14,7 @@ namespace Gerenciadores
 	Gerenciador_Colisoes::~Gerenciador_Colisoes()
 	{
 		delete pJogador;
+		delete pJogador2;
 
 		for (auto inimigo : inimigos)
 		{

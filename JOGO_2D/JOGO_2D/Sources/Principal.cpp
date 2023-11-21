@@ -11,7 +11,10 @@ Principal::Principal() :
 	jogadorCriado(false),
 	numJogadores(0)
 {
-	instanciaEntidades("Fases/fase1.txt");
+	int fase = 2;
+	int jogadores = 2;
+
+	instanciaEntidades("Fases/fase" + std::to_string(fase) + "-" + std::to_string(jogadores) + "p.txt");
 }
 
 Principal::~Principal()
@@ -46,7 +49,7 @@ bool Principal::Aleatorizar(char character)
 			return true;
 		}
 		else {
-			return std::rand() % 2 == 0;
+			return !(std::rand() % 3 == 0);
 		}
 	}
 	else if (character == 'm') {
@@ -55,7 +58,7 @@ bool Principal::Aleatorizar(char character)
 			return true;
 		}
 		else {
-			return std::rand() % 2 == 0;
+			return !(std::rand() % 3 == 0);
 		}
 	}
 	else if (character == 's') {
@@ -64,7 +67,7 @@ bool Principal::Aleatorizar(char character)
 			return true;
 		}
 		else {
-			return std::rand() % 2 == 0;
+			return !(std::rand() % 3 == 0);
 		}
 	}
 	else if (character == 'e') {
@@ -73,7 +76,7 @@ bool Principal::Aleatorizar(char character)
 			return true;
 		}
 		else {
-			return std::rand() % 2 == 0;
+			return !(std::rand() % 3 == 0);
 		}
 	}
 	else if (character == 'g') {
@@ -82,7 +85,7 @@ bool Principal::Aleatorizar(char character)
 			return true;
 		}
 		else {
-			return std::rand() % 2 == 0;
+			return !(std::rand() % 3 == 0);
 		}
 	}
 
@@ -345,7 +348,6 @@ void Principal::DesenharElementos()
 			pAuxPerso->atualizarBarraVida();
 			gerenciador_grafico->desenhaSprite(pAuxPerso->getBorder());
 			gerenciador_grafico->desenhaSprite(pAuxPerso->getHealthBar());
-
 		}
 	}
 	gerenciador_grafico->mostraElemento();

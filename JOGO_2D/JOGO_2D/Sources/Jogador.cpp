@@ -1,6 +1,6 @@
 #include "Jogador.hpp"
 #include <iostream>
-#define VIDA_MAX 100.0f
+#define VIDA_MAX 10000.0f
 
 namespace Entidades
 {
@@ -26,7 +26,8 @@ namespace Entidades
 			tempoDecorridoLentidao(0),
 			tempoDecorridoVeneno(0),
 			tempoVeneno(0),
-			tempoLentidao(0)
+			tempoLentidao(0),
+			tamanhoCorpo(tam)
 		{
 			dano = 0.15f;
 			vida = VIDA_MAX;
@@ -259,8 +260,6 @@ namespace Entidades
 			}
 		}
 
-
-
 		void Jogador::inicializaAnimacoes()
 		{
 
@@ -273,7 +272,8 @@ namespace Entidades
 			Animacao animacaoTomarDano;
 			Animacao animacaoAtacar2;
 			Animacao animacaoMorte;
-			Animacao animacaoCair;
+			Animacao animacaoAgachar;
+
 			sf::Texture texture;
 			int pedacoWidth = 120; //Largura
 			int pedacoHeight = 80; //Altura
@@ -377,8 +377,8 @@ namespace Entidades
 				animacaoPulo.addFrame(pedacoTexture);
 			}
 
-			//PULO 6
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Fall.png")) {
+			//AGACHAR 7
+			if (!texture.loadFromFile("Assets/" + pasta + "/_Crouch.png")) {
 				exit(1);
 			}
 
@@ -386,7 +386,7 @@ namespace Entidades
 				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
 				sf::Texture pedacoTexture;
 				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoCair.addFrame(pedacoTexture);
+				animacaoAgachar.addFrame(pedacoTexture);
 			}
 
 
@@ -398,7 +398,7 @@ namespace Entidades
 			animacoes.push_back(animacaoAtacar2);
 			animacoes.push_back(animacaoParado);
 			animacoes.push_back(animacaoPulo);
-			animacoes.push_back(animacaoCair);
+			animacoes.push_back(animacaoAgachar);
 
 		}
 

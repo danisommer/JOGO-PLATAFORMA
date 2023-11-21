@@ -20,7 +20,7 @@ namespace Entidades
 			anterior(0),
 			atualizacao(0),
 			posAnteriorInimigo(0.0f),
-			ALCANCE_X(800.0f),
+			ALCANCE_X(500.0f),
 			ALCANCE_Y(300.0f),
 			parado(false),
 			distanciaAtaqueX(60.0f),
@@ -165,7 +165,7 @@ namespace Entidades
 				std::mt19937 gen(rd());
 
 				int min_value = 0;
-				int max_value = 2;
+				int max_value = 3;
 
 				std::uniform_int_distribution<int> distribution(min_value, max_value);
 

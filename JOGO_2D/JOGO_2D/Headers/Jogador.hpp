@@ -44,6 +44,7 @@ namespace Entidades
 			std::vector<Animacao> animacoes;
 			std::vector<Keyboard::Key> teclas;
 			Animacao* animacaoAtual;
+			const Vector2f tamanhoCorpo;
 			
 			void inicializaAnimacoes();
 			void inicializaTeclas();
@@ -63,7 +64,6 @@ namespace Entidades
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);
-
 
 		};
 	}

@@ -51,7 +51,6 @@ namespace Gerenciadores
 			{
 				pJogador->bater(false);
 
-
 				if (Keyboard::isKeyPressed(Keyboard::D))
 				{
 					pJogador->mover(true, false);
@@ -91,7 +90,6 @@ namespace Gerenciadores
 			else
 			{
 				pJogador2->bater(false);
-
 
 				if (Keyboard::isKeyPressed(Keyboard::Right))
 				{
