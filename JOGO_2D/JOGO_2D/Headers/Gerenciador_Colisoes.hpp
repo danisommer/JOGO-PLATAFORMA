@@ -18,7 +18,6 @@ namespace Gerenciadores
 		Entidades::Personagens::Jogador* pJogador2;
 		std::vector<Entidades::Personagens::Inimigo*> inimigos;
 		std::vector<sf::RectangleShape*> corpos;
-
 		std::vector<Entidades::Obstaculos::Obstaculo*> obstaculos;
 
 	public:
@@ -29,11 +28,7 @@ namespace Gerenciadores
 		void setJogador2(Entidades::Personagens::Jogador* jogador);
 		void addInimigo(Entidades::Personagens::Inimigo* inimigo);
 		void removeInimigo(int index);
-		void addPlataforma(Entidades::Obstaculos::Plataforma* plataforma);
-		void addParede(Entidades::Obstaculos::Parede* parede);
-
 		void addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo);
-
 		void addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
 		void verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);

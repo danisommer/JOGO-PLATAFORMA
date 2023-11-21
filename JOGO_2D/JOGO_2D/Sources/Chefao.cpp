@@ -26,8 +26,8 @@ namespace Entidades
 			voador = true;
 			vel = Vector2f(0.25f, 0.4f);
 			distanciaAlvo = 30.0f;
-			ALCANCE_Y = 900.0f;
-			ALCANCE_Y = 800.0f;
+			ALCANCE_Y = 1200.0f;
+			ALCANCE_X = 900.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
 			dano = 0.35f;
@@ -68,7 +68,10 @@ namespace Entidades
 				{
 					if (jogador1)
 					{
-						if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
+						sf::FloatRect boundsJogador = jogador1->getCorpo()->getGlobalBounds();
+						sf::Vector2f pontoCentralProj = projeteis.at(i)->getCorpo()->getPosition();
+
+						if (boundsJogador.contains(pontoCentralProj))
 						{
 							projeteis.at(i)->setColidiu(true);
 							jogador1->tomarDano(projeteis.at(i)->getDano());
@@ -77,7 +80,10 @@ namespace Entidades
 
 					if (jogador2)
 					{
-						if (jogador2->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
+						sf::FloatRect boundsJogador = jogador2->getCorpo()->getGlobalBounds();
+						sf::Vector2f pontoCentralProj = projeteis.at(i)->getCorpo()->getPosition();
+
+						if (boundsJogador.contains(pontoCentralProj))
 						{
 							projeteis.at(i)->setColidiu(true);
 							jogador2->tomarDano(projeteis.at(i)->getDano());

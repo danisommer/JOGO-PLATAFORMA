@@ -46,7 +46,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return std::rand() % 2 == 0;
+				return !(std::rand() % 3 == 0);
 			}
 		}
 		else if (character == 'm') {
@@ -55,7 +55,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return std::rand() % 2 == 0;
+				return !(std::rand() % 3 == 0);
 			}
 		}
 		else if (character == 's') {
@@ -64,7 +64,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return std::rand() % 2 == 0;
+				return !(std::rand() % 3 == 0);
 			}
 		}
 		else if (character == 'e') {
@@ -73,7 +73,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return std::rand() % 2 == 0;
+				return !(std::rand() % 3 == 0);
 			}
 		}
 		else if (character == 'g') {
@@ -82,7 +82,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return std::rand() % 2 == 0;
+				return !(std::rand() % 3 == 0);
 			}
 		}
 
@@ -261,21 +261,23 @@ namespace Fases
 		if (jogador)
 		{
 			if (jogador->getMorte()) {
-				jogador = nullptr;
 				gerenciador_grafico->setJogador(nullptr);
 				gerenciador_eventos->setJogador(nullptr);
 				gerenciador_colisoes->setJogador(nullptr);
+				Inimigo::setJogador(nullptr);
+				Obstaculo::setJogador(nullptr);
 			}
 		}
 
 		//Verificar se morreu
 		if (jogador2)
 		{
-			if (jogador2->getMorte()) {
-				jogador2 = nullptr;
+			if (jogador2->getMorte()) {				
 				gerenciador_grafico->setJogador2(nullptr);
 				gerenciador_eventos->setJogador2(nullptr);
 				gerenciador_colisoes->setJogador2(nullptr);
+				Inimigo::setJogador2(nullptr);
+				Obstaculo::setJogador2(nullptr);
 			}
 		}
 

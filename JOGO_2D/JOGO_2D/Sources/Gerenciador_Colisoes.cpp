@@ -89,8 +89,6 @@ namespace Gerenciadores
 						inimigos.at(i)->atacar(2);
 					}
 				}
-
-
 			}
 
 		}
@@ -114,17 +112,6 @@ namespace Gerenciadores
 	void Gerenciador_Colisoes::removeInimigo(int index)
 	{
 		inimigos[index] = nullptr;
-	}
-
-	void Gerenciador_Colisoes::addPlataforma(Entidades::Obstaculos::Plataforma* plataforma)
-	{
-		corpos.push_back(plataforma->getCorpo());
-	}
-
-	void Gerenciador_Colisoes::addParede(Entidades::Obstaculos::Parede* parede)
-	{
-		corpos.push_back(parede->getCorpo());
-
 	}
 
 	void Gerenciador_Colisoes::addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo)

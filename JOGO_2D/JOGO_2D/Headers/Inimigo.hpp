@@ -7,9 +7,6 @@
 #include <cmath>
 #include <random>
 
-//#define ALCANCE_X 800.0f
-//#define ALCANCE_Y 100.0f
-
 #define DISTANCIA_MINIMA_ANIMACAO 0.0001f
 
 namespace Entidades
