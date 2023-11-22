@@ -1,5 +1,10 @@
+/*
+
 #pragma once
-class Menu
+#include "Ente.hpp"
+
+class Menu : public Ente
 {
 };
 
+*/

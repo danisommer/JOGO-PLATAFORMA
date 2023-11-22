@@ -10,7 +10,7 @@ namespace Entidades
 	Projetil::Projetil(const Vector2f pos, const Vector2f tam, bool direita) :
 		Entidade(pos, tam),
 		vel(1.6f),
-		dano(0.15f),
+		dano(18.0f),
 		colidiu(false),
 		explodiu(false),
 		distanciaPercorrida(0.0f),
@@ -129,11 +129,23 @@ namespace Entidades
 		sprite.setTexture(animacaoAtual->getFrame(count));
 		sprite.setScale(2.3f * lado, 2.3f);
 		sprite.setPosition(corpo.getPosition().x - 80.0f * lado, corpo.getPosition().y);
+
+		desenharSprite();
 	}
 
 	const bool Projetil::getExplodiu() const
 	{
 		return explodiu;
+	}
+
+	const bool Projetil::getColidiu() const
+	{
+		return colidiu;
+	}
+
+	void Projetil::desenharSprite()
+	{
+		gerenciador_grafico->desenhaSprite(sprite);
 	}
 
 	void Projetil::setColidiu(bool c)

@@ -6,6 +6,7 @@
 #include <functional>
 #include <cstdlib>
 #include <ctime>   
+#include "Ente.hpp"
 #include "Gerenciador_Grafico.hpp"
 #include "Gerenciador_Colisoes.hpp"
 #include "Gerenciador_Eventos.hpp"
@@ -13,8 +14,8 @@
 #include "Inimigo.hpp"
 #include "Plataforma.hpp"
 #include "Personagem.hpp"
-#include "FlyingEye.hpp"
-#include "Mushroom.hpp"
+#include "OlhoVoador.hpp"
+#include "Cogumelo.hpp"
 #include "Chefao.hpp"
 #include "Parede.hpp"
 #include "Serra.hpp"
@@ -30,7 +31,7 @@ using namespace Entidades::Obstaculos;
 
 namespace Fases
 {
-	class Fase
+	class Fase : public Ente
 	{
 	protected:
 		Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
@@ -41,6 +42,8 @@ namespace Fases
 		Lista::ListaEntidade listaObstaculo;
 		Entidades::Personagens::Jogador* jogador;
 		Entidades::Personagens::Jogador* jogador2;
+
+		sf::Texture texturaFundo;
 
 		bool jogadorCriado;
 		int numJogadores;
@@ -54,7 +57,7 @@ namespace Fases
 		void desalocaEntidades();
 		bool Aleatorizar(char character);
 		void AtualizarPersonagens();
-		void DesenharElementos();
+		void atualizaCamera();
 		int getFase();
 	};
 }

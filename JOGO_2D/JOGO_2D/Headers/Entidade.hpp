@@ -1,12 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Ente.hpp"
 
 using namespace sf;
 
 namespace Entidades
 {
-	class Entidade 
+	class Entidade : public Ente
 	{
 	protected:
 		Sprite sprite;
@@ -17,9 +18,9 @@ namespace Entidades
 		Entidade();
 		virtual ~Entidade();
 		RectangleShape* getCorpo();
-		const Sprite getSprite() const;
 		virtual void atualizar() = 0;
 		Vector2f getPos();
+		virtual void desenharSprite() = 0;
 	};
 }
 

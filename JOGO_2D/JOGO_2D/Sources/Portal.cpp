@@ -33,7 +33,7 @@ namespace Entidades
 		}
 	}
 
-	Sprite Portal::atualizarAnimacao()
+	void Portal::atualizarAnimacao()
 	{
 		if (iteracoes > animacaoTeleporte.getAnimationSpeed())
 		{
@@ -54,8 +54,7 @@ namespace Entidades
 
 		sprite.setScale(1.5f, 1.5f);
 
-		return sprite;
-
+		desenharSprite();
 	}
 
 	bool Portal::getTerminou()
@@ -64,7 +63,12 @@ namespace Entidades
 	}
 	void Portal::atualizar()
 	{
+		atualizarAnimacao();
+	}
 
+	void Portal::desenharSprite()
+	{
+		gerenciador_grafico->desenhaSprite(sprite);
 	}
 
 }

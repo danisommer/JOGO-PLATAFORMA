@@ -14,9 +14,6 @@ namespace Entidades
 		private:
 			static bool jogadorCriado;
 
-			float aceleracao;
-			float desaceleracao;
-			float velocidadeMaxima;
 			float jumpStrength;
 			int n_frames;
 			int count;

@@ -31,6 +31,9 @@ namespace Entidades
 		void setColidiu(bool c);
 		const float getDano() const;
 		const bool getExplodiu() const;
+		const bool getColidiu() const;
+		void desenharSprite();
+
 
 	};
 

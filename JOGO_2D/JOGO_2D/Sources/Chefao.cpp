@@ -14,7 +14,6 @@ namespace Entidades
 
 		Chefao::Chefao(Vector2f pos, Vector2f tam) :
 			Inimigo(pos, tam),
-			gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
 			delayAtaque(2000),
 			bravo(false),
 			muitoBravo(false),
@@ -64,14 +63,11 @@ namespace Entidades
 		{
 			for (int i = 0; i < projeteis.size(); i++)
 			{
-				if (projeteis.at(i))
+				if (projeteis.at(i) && !projeteis.at(i)->getColidiu())
 				{
 					if (jogador1)
 					{
-						sf::FloatRect boundsJogador = jogador1->getCorpo()->getGlobalBounds();
-						sf::Vector2f pontoCentralProj = projeteis.at(i)->getCorpo()->getPosition();
-
-						if (boundsJogador.contains(pontoCentralProj))
+						if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
 						{
 							projeteis.at(i)->setColidiu(true);
 							jogador1->tomarDano(projeteis.at(i)->getDano());
@@ -80,10 +76,7 @@ namespace Entidades
 
 					if (jogador2)
 					{
-						sf::FloatRect boundsJogador = jogador2->getCorpo()->getGlobalBounds();
-						sf::Vector2f pontoCentralProj = projeteis.at(i)->getCorpo()->getPosition();
-
-						if (boundsJogador.contains(pontoCentralProj))
+						if (jogador2->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
 						{
 							projeteis.at(i)->setColidiu(true);
 							jogador2->tomarDano(projeteis.at(i)->getDano());
@@ -91,8 +84,6 @@ namespace Entidades
 					}
 
 					projeteis.at(i)->atualizar();
-					//gerenciador_grafico->desenhaHitbox(projeteis.at(i)->getCorpo());
-					gerenciador_grafico->desenhaSprite(projeteis.at(i)->getSprite());
 
 					if (projeteis.at(i)->getExplodiu())
 						projeteis.at(i) = nullptr;
@@ -132,7 +123,7 @@ namespace Entidades
 			{
 				if (portais.at(i))
 				{
-					gerenciador_grafico->desenhaSprite(portais.at(i)->atualizarAnimacao());
+					portais.at(i)->atualizar();
 
 					if (portais.at(i)->getTerminou())
 						portais.at(i) = nullptr;
@@ -200,6 +191,8 @@ namespace Entidades
 			atualizarPortais();
 
 			atualizarAnimacao();
+
+			desenharSprite();
 
 			if (vida <= 0.0f)
 			{

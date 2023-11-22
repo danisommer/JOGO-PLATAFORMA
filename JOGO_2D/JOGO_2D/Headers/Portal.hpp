@@ -17,9 +17,11 @@ namespace Entidades
 		Portal(const Vector2f pos, const Vector2f tam);
 		~Portal();
 		void inicializaAnimacoes();
-		Sprite atualizarAnimacao();
+		void atualizarAnimacao();
 		bool getTerminou();
 		void atualizar();
+		void desenharSprite();
+
 	};
 
 }

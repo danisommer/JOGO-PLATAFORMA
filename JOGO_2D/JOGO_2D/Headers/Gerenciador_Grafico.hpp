@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Jogador.hpp"
 
 #define TELA_X 1600.0f
 #define TELA_Y 900.0f
@@ -18,13 +17,8 @@ namespace Gerenciadores
 	private:
 		RenderWindow* janela;
 		View view;
-
-		Entidades::Personagens::Jogador* jogador;
-		Entidades::Personagens::Jogador* jogador2;
 		static Gerenciador_Grafico* pGerenciador;
-		sf::Texture backgroundTexture;
 		Gerenciador_Grafico();
-		int fase;
 
 	public:
 		~Gerenciador_Grafico();
@@ -35,11 +29,9 @@ namespace Gerenciadores
 		void desenhaSprite(const Sprite& sprite);
 		void mostraElemento();
 		void fecharJanela();
-		void atualizaCamera();
 		bool getOpen();
-		void setJogador(Entidades::Personagens::Jogador* jogador);
-		void setJogador2(Entidades::Personagens::Jogador* jogador);
-		void setFase(int fase);
+		void setCentro(sf::Vector2f centro);
+		Vector2f getViewCenter();
 	};
 
 }

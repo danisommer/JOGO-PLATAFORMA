@@ -6,26 +6,23 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		class Mushroom : public Inimigo
+		class OlhoVoador : public Inimigo
 		{
 		private:
+
 			void inicializaAnimacoes();
-			float forcaVeneno;
-			int tempoEnvenenamento;
-			bool venenoEspecial;
-			sf::Color corJogador;
+			float forcaLentidao;
+			int tempoLentidao;
+			float forcaPulo;
 
 		public:
-			Mushroom(Vector2f pos, Vector2f tam);
-			~Mushroom();
+			OlhoVoador(Vector2f pos, Vector2f tam);
+			~OlhoVoador();
 			void atacar(int jogador);
 			void setAnimacao(int anim);
 			float getVida();
 			float getSize();
 			void atualizar();
-			void envenenar(int jogador);
-
-
 		};
 
 	}

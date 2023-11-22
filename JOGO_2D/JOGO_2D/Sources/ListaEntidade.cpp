@@ -52,14 +52,3 @@ void Lista::ListaEntidade::limpar()
 {
 	LEs.limpar();
 }
-void Lista::ListaEntidade::desenharEntidades(Gerenciadores::Gerenciador_Grafico* pGG)
-{
-	for (int i = 0; i < LEs.getTam(); i++)
-	{
-		if (LEs.operator[](i)) {
-			//std::cout << "Desenhando" << std::endl;
-			pGG->desenhaSprite(LEs.operator[](i)->getSprite());
-			//pGG->desenhaHitbox(LEs.operator[](i)->getHitbox());
-		}
-	}
-}

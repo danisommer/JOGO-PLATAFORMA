@@ -39,6 +39,11 @@ namespace Entidades
 			return danoso;
 		}
 
+		void Obstaculo::desenharSprite()
+		{
+			gerenciador_grafico->desenhaSprite(sprite);
+		}
+
 	}
 }
 

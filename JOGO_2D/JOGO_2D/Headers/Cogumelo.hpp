@@ -6,23 +6,26 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		class FlyingEye : public Inimigo
+		class Cogumelo : public Inimigo
 		{
 		private:
-
 			void inicializaAnimacoes();
-			float forcaLentidao;
-			int tempoLentidao;
-			float forcaPulo;
+			float forcaVeneno;
+			int tempoEnvenenamento;
+			bool venenoEspecial;
+			sf::Color corJogador;
 
 		public:
-			FlyingEye(Vector2f pos, Vector2f tam);
-			~FlyingEye();
+			Cogumelo(Vector2f pos, Vector2f tam);
+			~Cogumelo();
 			void atacar(int jogador);
 			void setAnimacao(int anim);
 			float getVida();
 			float getSize();
 			void atualizar();
+			void envenenar(int jogador);
+
+
 		};
 
 	}

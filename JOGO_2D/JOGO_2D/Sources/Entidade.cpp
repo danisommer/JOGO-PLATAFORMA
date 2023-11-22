@@ -2,14 +2,12 @@
 
 namespace Entidades
 {
-	Entidade::Entidade(const Vector2f pos, const Vector2f tam)
+	Entidade::Entidade(const Vector2f pos, const Vector2f tam):
+		Ente()
 	{
+		id = 1;
 	}
 
-	Entidade::Entidade()
-	{
-	}
-	
 	Entidade::~Entidade()
 	{
 	}
@@ -18,10 +16,7 @@ namespace Entidades
 	{
 		return &corpo;
 	}	
-	const Sprite Entidade::getSprite() const
-	{
-		return sprite;
-	}
+
 	Vector2f Entidade::getPos()
 	{
 		return corpo.getPosition();

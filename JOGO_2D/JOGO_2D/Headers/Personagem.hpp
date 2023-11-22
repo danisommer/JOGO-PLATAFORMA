@@ -50,9 +50,9 @@ namespace Entidades
 			bool getMorte();
 			bool getMoveu();
 			void atualizarBarraVida();
-			Sprite getHealthBar();
-			Sprite getBorder();
 			virtual float getVida() = 0;
+			void desenharSprite();
+
 		};
 	}
 

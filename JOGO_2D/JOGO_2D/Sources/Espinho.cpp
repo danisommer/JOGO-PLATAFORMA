@@ -81,6 +81,7 @@ namespace Entidades
 		void Espinho::atualizar()
 		{
 			atualizaAnimacao();
+			desenharSprite();
 		}
 
 		void Espinho::danar(int jogador)

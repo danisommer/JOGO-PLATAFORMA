@@ -8,11 +8,7 @@ namespace Gerenciadores
 
 	Gerenciador_Grafico::Gerenciador_Grafico() :
 		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
-		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y)),
-		jogador(nullptr),
-		jogador2(nullptr),
-		fase()
-
+		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y))
 	{
 		if (janela == nullptr)
 		{
@@ -71,67 +67,18 @@ namespace Gerenciadores
 			janela->close();
 	}
 
-	void Gerenciador_Grafico::atualizaCamera()
-	{
-		sf::Vector2f cameraCenter = view.getCenter();
-		sf::Sprite sprite(backgroundTexture);
-		sprite.setScale(0.9f, 0.9f);
-
-		if (jogador2 && jogador) 
-		{
-			sf::Vector2f playerPosition = jogador->getPos();
-			sf::Vector2f player2Position = jogador2->getPos();
-
-			float middleX = (playerPosition.x + player2Position.x) / 2.0f;
-
-			cameraCenter.x = middleX;
-
-			sprite.setPosition(middleX - (TELA_X / 2), -30.0f);
-		}
-		else if (jogador2) 
-		{
-			sf::Vector2f player2Position = jogador2->getPos();
-
-			cameraCenter.x = player2Position.x;
-
-			sprite.setPosition(player2Position.x - (TELA_X / 2), -30.0f);
-
-		}
-		else if (jogador) 
-		{
-			sf::Vector2f playerPosition = jogador->getPos();
-
-			cameraCenter.x = playerPosition.x;
-
-			sprite.setPosition(playerPosition.x - (TELA_X / 2), -30.0f);
-		}
-
-		view.setCenter(cameraCenter);
-		janela->setView(view);
-		janela->draw(sprite);
-	}
-
-
-
 	bool Gerenciador_Grafico::getOpen()
 	{
 		return janela->isOpen();
 	}
 
-	void Gerenciador_Grafico::setJogador(Entidades::Personagens::Jogador* jogador)
+	void Gerenciador_Grafico::setCentro(sf::Vector2f centro)
 	{
-		this->jogador = jogador;
+		view.setCenter(centro);
+		janela->setView(view);
 	}
-	void Gerenciador_Grafico::setJogador2(Entidades::Personagens::Jogador* jogador)
+	Vector2f Gerenciador_Grafico::getViewCenter()
 	{
-		this->jogador2 = jogador;
-	}
-	void Gerenciador_Grafico::setFase(int f)
-	{
-		fase = f;
-
-		if (!backgroundTexture.loadFromFile("Assets/Cenario/background_" + std::to_string(fase) + ".png")) {
-			exit(1);
-		}
+		return view.getCenter();
 	}
 }

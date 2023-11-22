@@ -23,6 +23,8 @@ namespace Entidades
 			static void setJogador2(Personagens::Jogador* j);
 			bool getColidir();
 			bool getDanoso();
+			void desenharSprite();
+
 
 		};
 	}

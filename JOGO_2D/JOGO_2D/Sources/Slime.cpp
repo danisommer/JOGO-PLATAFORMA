@@ -32,7 +32,7 @@ namespace Entidades
 
 		void Slime::atualizar()
 		{
-
+			desenharSprite();
 		}
 
 		void Slime::danar(int jogador)

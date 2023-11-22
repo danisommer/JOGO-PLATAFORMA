@@ -22,7 +22,7 @@ namespace Entidades
 
         void Plataforma::atualizar()
         {
-
+            desenharSprite();
         }
 
         void Plataforma::danar(int jogador)

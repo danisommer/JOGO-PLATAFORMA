@@ -1,4 +1,4 @@
-#include "Mushroom.hpp"
+#include "Cogumelo.hpp"
 
 #include "iostream"
 #define VIDA_MAX 100.0f
@@ -12,7 +12,7 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		Mushroom::Mushroom(Vector2f pos, Vector2f tam) :
+		Cogumelo::Cogumelo(Vector2f pos, Vector2f tam) :
 			Inimigo(pos, tam),
 			forcaVeneno(0.035f),
 			tempoEnvenenamento(700),
@@ -36,11 +36,11 @@ namespace Entidades
 			}
 		}
 
-		Mushroom::~Mushroom()
+		Cogumelo::~Cogumelo()
 		{
 		}
 
-		void Mushroom::atacar(int jogador)
+		void Cogumelo::atacar(int jogador)
 		{
 			if (!morto)
 				if (concluida)
@@ -60,7 +60,7 @@ namespace Entidades
 			animacao = 3;
 		}
 
-		void Mushroom::envenenar(int jogador)
+		void Cogumelo::envenenar(int jogador)
 		{
 			if (venenoEspecial)
 			{
@@ -83,7 +83,7 @@ namespace Entidades
 			}
 		}
 
-		void Mushroom::inicializaAnimacoes()
+		void Cogumelo::inicializaAnimacoes()
 		{
 			Animacao animacaoAndando;
 			Animacao animacaoTomarDano;
@@ -99,7 +99,7 @@ namespace Entidades
 			sprite.setOrigin(spriteOrigin);
 
 			//WALK 0 
-			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Run.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Run.png")) {
 				exit(1);
 			}
 
@@ -111,7 +111,7 @@ namespace Entidades
 			}
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/Monsters/Mushroom/TakeHit.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/TakeHit.png")) {
 				exit(1);
 			}
 
@@ -125,7 +125,7 @@ namespace Entidades
 			animacaoTomarDano.setAnimationSpeed(25.0f);
 
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Death.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Death.png")) {
 				exit(1);
 			}
 
@@ -139,7 +139,7 @@ namespace Entidades
 			animacaoMorte.setAnimationSpeed(90.0f);
 
 			//ATACAR 3
-			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Attack.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Attack.png")) {
 				exit(1);
 			}
 
@@ -153,7 +153,7 @@ namespace Entidades
 			animacaoAtacar.setAnimationSpeed(12.0f);
 
 			//PARADO 4
-			if (!texture.loadFromFile("Assets/Monsters/Mushroom/Idle.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Idle.png")) {
 				exit(1);
 			}
 
@@ -171,21 +171,21 @@ namespace Entidades
 			animacoes.push_back(animacaoParado);
 
 		}
-		void Mushroom::setAnimacao(int anim)
+		void Cogumelo::setAnimacao(int anim)
 		{
 			animacaoAtual = &animacoes[anim];
 		}
 
-		float Mushroom::getVida()
+		float Cogumelo::getVida()
 		{
 			return VIDA_MAX;
 		}
 
-		float Mushroom::getSize()
+		float Cogumelo::getSize()
 		{
 			return SIZE;
 		}
-		void Mushroom::atualizar()
+		void Cogumelo::atualizar()
 		{
 			if (!parado)
 			{
@@ -250,6 +250,7 @@ namespace Entidades
 				//corpo.move(0.0f, 0.9f);
 			}
 
+			desenharSprite();
 
 		}
 	}

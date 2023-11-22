@@ -1,4 +1,4 @@
-#include "FlyingEye.hpp"
+#include "OlhoVoador.hpp"
 #include "iostream"
 #define VIDA_MAX 60.0f
 #define SIZE 1.8f
@@ -10,7 +10,7 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		FlyingEye::FlyingEye(Vector2f pos, Vector2f tam):
+		OlhoVoador::OlhoVoador(Vector2f pos, Vector2f tam):
 			Inimigo(pos, tam),
 			tempoLentidao(700),
 			forcaLentidao(0.5f),
@@ -32,11 +32,11 @@ namespace Entidades
 
 		}
 
-		FlyingEye::~FlyingEye()
+		OlhoVoador::~OlhoVoador()
 		{
 		}
 
-		void FlyingEye::atacar(int jogador)
+		void OlhoVoador::atacar(int jogador)
 		{
 			if (!morto)
 				if (concluida)
@@ -57,7 +57,7 @@ namespace Entidades
 			animacao = 3;
 		}
 
-		void FlyingEye::inicializaAnimacoes()
+		void OlhoVoador::inicializaAnimacoes()
 		{
 			Animacao animacaoVoando;
 			Animacao animacaoTomarDano;
@@ -73,7 +73,7 @@ namespace Entidades
 			sprite.setOrigin(spriteOrigin);
 
 			//VOANDO 0 
-			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Flight.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/Flight.png")) {
 				exit(1);
 			}
 
@@ -85,7 +85,7 @@ namespace Entidades
 			}
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/TakeHit.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/TakeHit.png")) {
 				exit(1);
 			}
 
@@ -99,7 +99,7 @@ namespace Entidades
 			animacaoTomarDano.setAnimationSpeed(25.0f);
 
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Death.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/Death.png")) {
 				exit(1);
 			}
 
@@ -113,7 +113,7 @@ namespace Entidades
 			animacaoMorte.setAnimationSpeed(90.0f);
 
 			//ATACAR 3
-			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Attack.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/Attack.png")) {
 				exit(1);
 			}
 
@@ -127,7 +127,7 @@ namespace Entidades
 			animacaoAtacar.setAnimationSpeed(15.0f);
 
 			//PARADO 4 
-			if (!texture.loadFromFile("Assets/Monsters/FlyingEye/Flight.png")) {
+			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/Flight.png")) {
 				exit(1);
 			}
 
@@ -146,21 +146,21 @@ namespace Entidades
 
 		}
 
-		void FlyingEye::setAnimacao(int anim)
+		void OlhoVoador::setAnimacao(int anim)
 		{
 			animacaoAtual = &animacoes[anim];
 		}
 
-		float FlyingEye::getVida()
+		float OlhoVoador::getVida()
 		{
 			return VIDA_MAX;
 		}
 
-		float FlyingEye::getSize()
+		float OlhoVoador::getSize()
 		{
 			return SIZE;
 		}
-		void FlyingEye::atualizar()
+		void OlhoVoador::atualizar()
 		{
 			if (!parado)
 			{
@@ -224,6 +224,9 @@ namespace Entidades
 				voador = false;
 				// corpo.move(0.0f, 0.9f);
 			}
+
+			desenharSprite();
+
 		}
 
 

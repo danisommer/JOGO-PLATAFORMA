@@ -9,9 +9,6 @@ namespace Entidades
 		bool Jogador::jogadorCriado = false;
 
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam) :
-			aceleracao(900.0f),
-			desaceleracao(900.0f),
-			velocidadeMaxima(450.0f),
 			jumpStrength(-0.16f),
 			Personagem(),
 			n_frames(0),
@@ -147,6 +144,8 @@ namespace Entidades
 			sprite.setTexture(animacaoAtual->getFrame(count));
 			sprite.setScale(lado * 2.5f, 2.5f);
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
+
+			desenharSprite();
 		}
 
 		void Jogador::setAnimacao(int anim)

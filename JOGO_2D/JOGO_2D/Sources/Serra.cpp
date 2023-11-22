@@ -70,6 +70,7 @@ namespace Entidades
 		void Serra::atualizar()
 		{
 			atualizaAnimacao();
+			desenharSprite();
 		}
 
 		void Serra::danar(int jogador)

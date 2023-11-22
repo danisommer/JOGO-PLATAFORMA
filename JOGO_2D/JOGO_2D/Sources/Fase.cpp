@@ -1,7 +1,9 @@
 #include "../Headers/Fase.hpp"
 namespace Fases
 {
-	Fase::Fase() :gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
+	Fase::Fase() :
+		Ente(),
+		gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
 		gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 		gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
 		listaPersonagem(),
@@ -10,9 +12,10 @@ namespace Fases
 		jogador2(nullptr),
 		jogadorCriado(false),
 		numJogadores(0),
-		fase()
+		fase(),
+		texturaFundo()
 	{
-
+		id = 2;
 	}
 
 	Fase::~Fase()
@@ -115,13 +118,13 @@ namespace Fases
 			return new Entidades::Personagens::Jogador(Vector2f(posX, posY), Vector2f(30.0f, 90.0f));
 			};
 		entityCreators['f'] = [](float posX, float posY) -> Entidades::Entidade* {
-			return new Entidades::Personagens::FlyingEye(Vector2f(posX, posY), Vector2f(40.0f, 50.0f));
+			return new Entidades::Personagens::OlhoVoador(Vector2f(posX, posY), Vector2f(40.0f, 50.0f));
 			};
 		entityCreators['c'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Personagens::Chefao(Vector2f(posX, posY), Vector2f(100.0f, 120.0f));
 			};
 		entityCreators['m'] = [](float posX, float posY) -> Entidades::Entidade* {
-			return new Entidades::Personagens::Mushroom(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
+			return new Entidades::Personagens::Cogumelo(Vector2f(posX, posY), Vector2f(40.0f, 80.0f));
 			};
 		entityCreators['p'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Obstaculos::Plataforma(Vector2f(posX, posY), Vector2f(300.0f, 50.0f), false);
@@ -170,7 +173,6 @@ namespace Fases
 							{
 								jogador = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
 								listaPersonagem.addEntidade(entity);
-								gerenciador_grafico->setJogador(jogador);
 								gerenciador_eventos->setJogador(jogador);
 								gerenciador_colisoes->setJogador(jogador);
 
@@ -180,7 +182,6 @@ namespace Fases
 							{
 								jogador2 = dynamic_cast<Entidades::Personagens::Jogador*>(entity);
 								listaPersonagem.addEntidade(entity);
-								gerenciador_grafico->setJogador2(jogador2);
 								gerenciador_eventos->setJogador2(jogador2);
 								gerenciador_colisoes->setJogador2(jogador2);
 							}
@@ -214,16 +215,13 @@ namespace Fases
 
 	void Fase::AtualizarPersonagens()
 	{
-		//listaPersonagem.executar(gerenciador_grafico->getJanela());
-		//listaObstaculo.executar(gerenciador_grafico->getJanela());
-
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
 		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
 		Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
 
 
 		//Verificar se tomou dano
-		if (jogador->getAtacando())
+		if (jogador && jogador->getAtacando())
 		{
 			for (int i = 1; i < listaPersonagem.getTam(); i++)
 			{
@@ -261,23 +259,33 @@ namespace Fases
 		if (jogador)
 		{
 			if (jogador->getMorte()) {
-				gerenciador_grafico->setJogador(nullptr);
 				gerenciador_eventos->setJogador(nullptr);
 				gerenciador_colisoes->setJogador(nullptr);
 				Inimigo::setJogador(nullptr);
 				Obstaculo::setJogador(nullptr);
+				jogador = nullptr;
 			}
 		}
 
 		//Verificar se morreu
 		if (jogador2)
 		{
-			if (jogador2->getMorte()) {				
-				gerenciador_grafico->setJogador2(nullptr);
+			if (jogador2->getMorte()) {
 				gerenciador_eventos->setJogador2(nullptr);
 				gerenciador_colisoes->setJogador2(nullptr);
 				Inimigo::setJogador2(nullptr);
 				Obstaculo::setJogador2(nullptr);
+				jogador2 = nullptr;
+			}
+		}
+
+		//atualizar obstaculos
+		for (int i = 0; i < listaObstaculo.getTam(); i++)
+		{
+			pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
+			if (pAuxObst)
+			{
+				pAuxObst->atualizar();
 			}
 		}
 
@@ -298,47 +306,61 @@ namespace Fases
 			pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
 			if (pAuxPerso)
 			{
-
 				pAuxPerso->atualizar();
 				pAuxPerso->cair();
-
-			}
-		}
-
-		//atualizar obstaculos
-		for (int i = 0; i < listaObstaculo.getTam(); i++)
-		{
-			pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
-			if (pAuxObst)
-			{
-				pAuxObst->atualizar();
-				gerenciador_grafico->desenhaSprite(pAuxObst->getSprite());
-				//gerenciador_grafico->desenhaHitbox(*pAuxObst->getCorpo());
-
 			}
 		}
 	}
 
-	void Fase::DesenharElementos()
+	void Fase::atualizaCamera()
 	{
-		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
+		sf::Sprite sprite(texturaFundo);
+		sprite.setScale(0.9f, 0.9f);
 
-		listaObstaculo.desenharEntidades(gerenciador_grafico);
-		listaPersonagem.desenharEntidades(gerenciador_grafico);
+		sf::Vector2f cameraCenter = gerenciador_grafico->getViewCenter();
+		sf::Vector2f pos;
 
-		for (int i = 0; i < listaPersonagem.getTam(); i++)
+		if (jogador2 && jogador)
 		{
-			pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
-			if (pAuxPerso)
-			{
-				pAuxPerso->atualizarBarraVida();
-				gerenciador_grafico->desenhaSprite(pAuxPerso->getBorder());
-				gerenciador_grafico->desenhaSprite(pAuxPerso->getHealthBar());
+			sf::Vector2f playerPosition = jogador->getPos();
+			sf::Vector2f player2Position = jogador2->getPos();
 
-			}
+			float middleX = (playerPosition.x + player2Position.x) / 2.0f;
+
+			cameraCenter.x = middleX;
+
+			pos.x = (middleX - (TELA_X / 2));
+			pos.y = -30.0f;
 		}
-		gerenciador_grafico->mostraElemento();
+		else if (jogador2)
+		{
+			sf::Vector2f player2Position = jogador2->getPos();
+
+			cameraCenter.x = player2Position.x;
+
+			pos.x = player2Position.x - (TELA_X / 2);
+			pos.y = -30.0f;
+
+		}
+		else if (jogador)
+		{
+			sf::Vector2f playerPosition = jogador->getPos();
+
+			cameraCenter.x = playerPosition.x;
+
+			pos.x = playerPosition.x - (TELA_X / 2);
+			pos.y = -30.0f;
+		}
+		else
+		{
+
+		}
+
+		sprite.setPosition(pos);
+		gerenciador_grafico->desenhaSprite(sprite);
+		gerenciador_grafico->setCentro(cameraCenter);
 	}
+
 	int Fase::getFase()
 	{
 		return fase;

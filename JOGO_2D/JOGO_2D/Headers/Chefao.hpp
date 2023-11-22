@@ -19,10 +19,8 @@ namespace Entidades
 			void inicializaAnimacoes();
 			std::vector<Entidades::Projetil*> projeteis;
 			std::vector<Entidades::Portal*> portais;
-
 			std::chrono::steady_clock::time_point ultimoAtaque;
 			int delayAtaque;
-			Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
 			bool bravo;
 			bool muitoBravo;
 			bool enfurecido;

@@ -74,11 +74,6 @@ namespace Entidades
 			corpo.setPosition(X, Y);
 		}
 
-		//Vector2f Personagem::getPos()
-		//{
-			//return corpo.getPosition();
-		//}
-
 		void Personagem::tomarDano(float dano)
 		{
 			if (animacao != 2)
@@ -141,20 +136,17 @@ namespace Entidades
 			}
 		}
 
-		Sprite Personagem::getBorder()
+		void Personagem::desenharSprite()
 		{
-			if (animacao != 2)
-				return border;
-			else
-				return Sprite();
-		}
+			atualizarBarraVida();
 
-		Sprite Personagem::getHealthBar()
-		{
+			gerenciador_grafico->desenhaSprite(sprite);
+		
 			if (animacao != 2)
-				return healthBar;
-			else
-				return Sprite();
+			{
+				gerenciador_grafico->desenhaSprite(border);
+				gerenciador_grafico->desenhaSprite(healthBar);
+			}
 		}
 	}
 
