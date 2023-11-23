@@ -1,6 +1,6 @@
 #include "Menu.hpp"
 
-Menu::Menu():
+Menu::Menu() :
 	posicaoTela(gerenciador_grafico->getViewCenter())
 {
 
@@ -64,7 +64,7 @@ void Menu::executar()
 			{
 			case 1:
 				evento = telaInicial.verificaEventoTela();
-				
+
 				if (evento == 0)
 				{
 					telaAtual.push(2);
@@ -73,7 +73,7 @@ void Menu::executar()
 				{
 					telaAtual.push(3);
 				}
-				else if (evento == 2) 
+				else if (evento == 2)
 				{
 					telaAtual.push(4);
 				}
@@ -123,7 +123,7 @@ void Menu::executar()
 				}
 				else if (evento == 2)
 				{
-				}				
+				}
 				else if (evento == 3)
 				{
 					popTela();
@@ -152,11 +152,17 @@ void Menu::executar()
 				{
 					objPrincipal.executarFase1(n_jogadores);
 
+					if (objPrincipal.getConcluida()) 
+					{
+						objPrincipal.executarFase2(n_jogadores);
+					}
+
 					for (int i = 0; i < telaAtual.size(); i++)
 					{
 						popTela();
 					}
 					pushTela(1);
+
 				}
 				else if (evento == 1)
 				{
@@ -264,9 +270,9 @@ void Menu::inicializaTextos()
 
 		tela3.addTexto(novoTexto);
 
-	}	
-	
-	opcoes = { "Fase 1", "Fase 2", "Voltar"};
+	}
+
+	opcoes = { "Fase 1", "Fase 2", "Voltar" };
 	coordenadas = { { 70, 300}, { 70, 390 }, { 70, 480 } };
 	tamanhos = { 38, 38, 38 };
 

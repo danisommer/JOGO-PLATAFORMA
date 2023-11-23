@@ -17,7 +17,8 @@ namespace Entidades
 			delayAtaque(2000),
 			bravo(false),
 			muitoBravo(false),
-			enfurecido(false)
+			enfurecido(false),
+			morrendo(false)
 
 		{
 			sprite.setPosition(pos);
@@ -26,7 +27,7 @@ namespace Entidades
 			vel = Vector2f(0.25f, 0.4f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_Y = 1200.0f;
-			ALCANCE_X = 900.0f;
+			ALCANCE_X = 1200.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
 			dano = 0.35f;
@@ -199,10 +200,10 @@ namespace Entidades
 				parado = true;
 				animacao = 2;
 				voador = false;
-				//corpo.move(0.0f, 0.9f);
+
+				chefaoMorreu = true;
+				posChefao = corpo.getPosition();
 			}
-
-
 		}
 
 		void Chefao::teleportar()
@@ -217,12 +218,12 @@ namespace Entidades
 			else
 				lado1 = -1.0;
 
-			Portal* p1 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
+			Obstaculos::Portal* p1 = new Entidades::Obstaculos::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f), false, false);
 			portais.push_back(p1);
 
 			corpo.move(lado1 * (float)(300.0f + rand() % 400), lado2 * (float)(rand() % 300));
 
-			Portal* p2 = new Entidades::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f));
+			Obstaculos::Portal* p2 = new Entidades::Obstaculos::Portal(Vector2f(corpo.getPosition().x - 40.0f, corpo.getPosition().y - 20.0f), Vector2f(50.0f, 50.0f), false, false);
 			portais.push_back(p2);
 		}
 

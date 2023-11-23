@@ -30,8 +30,7 @@ namespace Gerenciadores
 		void removeInimigo(int index);
 		void addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo);
-		void verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
-		void verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
+		void verificaColisao(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
 		void limparListas();
 	};
 }

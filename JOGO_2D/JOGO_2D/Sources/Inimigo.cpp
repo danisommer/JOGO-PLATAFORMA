@@ -7,6 +7,9 @@ namespace Entidades
 	{
 		Jogador* Inimigo::jogador1 = nullptr;
 		Jogador* Inimigo::jogador2 = nullptr;
+		bool Inimigo::chefaoMorreu = false;
+		Vector2f Inimigo::posChefao = Vector2f(0.0f, 0.0f);
+
 
 		Inimigo::Inimigo(Vector2f pos, Vector2f	tam) :
 			iteracoes(0),
@@ -20,8 +23,8 @@ namespace Entidades
 			anterior(0),
 			atualizacao(0),
 			posAnteriorInimigo(0.0f),
-			ALCANCE_X(700.0f),
-			ALCANCE_Y(300.0f),
+			ALCANCE_X(800.0f),
+			ALCANCE_Y(500.0f),
 			parado(false),
 			distanciaAtaqueX(60.0f),
 			distanciaAtaqueY(30.0f),
@@ -226,6 +229,18 @@ namespace Entidades
 		const float Inimigo::getDistanciaAtaqueY() const
 		{
 			return distanciaAtaqueY;
+		}
+		bool Inimigo::getChefaoMorreu()
+		{
+			return chefaoMorreu;
+		}
+		void Inimigo::setChefaoMorreu(bool cm)
+		{
+			chefaoMorreu = cm;
+		}
+		Vector2f Inimigo::getPosChefao()
+		{
+			return posChefao;
 		}
 	}
 

@@ -15,7 +15,13 @@ namespace Fases
 		fase(),
 		texturaFundo(),
 		concluida(false),
-		derrota(false)
+		derrota(false),
+		numCogumelosCriados(0),
+		numVoadoresCriados(0),
+		numSerrasCriadas(0),
+		numEspinhosCriados(0),
+		numSlimesCriados(0),
+		morreu(false)
 	{
 		id = 2;
 	}
@@ -27,12 +33,6 @@ namespace Fases
 
 	bool Fase::Aleatorizar(char character)
 	{
-		static int numCogumelosCriados = 0;
-		static int numVoadoresCriados = 0;
-		static int numSerrasCriadas = 0;
-		static int numEspinhosCriados = 0;
-		static int numSlimesCriados = 0;
-
 		const int numMinimoCogumelos = 3;
 		const int numMinimoVoadores = 3;
 		const int numMinimoSerras = 3;
@@ -135,7 +135,7 @@ namespace Fases
 			return new Entidades::Obstaculos::Plataforma(Vector2f(posX, posY), Vector2f(1900.0f, 50.0f), true);
 			};
 		entityCreators['w'] = [](float posX, float posY) -> Entidades::Entidade* {
-			return new Entidades::Obstaculos::Parede(Vector2f(posX, posY), Vector2f(50.0f, 1200.0f));
+			return new Entidades::Obstaculos::Parede(Vector2f(posX, posY), Vector2f(50.0f, 3600.0f));
 			};
 		entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Obstaculos::Serra(Vector2f(posX, posY), Vector2f(100.0f, 100.0f));
@@ -143,8 +143,11 @@ namespace Fases
 		entityCreators['e'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Obstaculos::Espinho(Vector2f(posX, posY), Vector2f(100.0f, 50.0f));
 			};
-		entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
-			return new Entidades::Obstaculos::Slime(Vector2f(posX, posY), Vector2f(300.0f, 50.0f));
+		entityCreators['t'] = [](float posX, float posY) -> Entidades::Entidade* {
+			return new Entidades::Obstaculos::Portal(Vector2f(posX, posY), Vector2f(50.0f, 50.0f), true, true);
+			};
+		entityCreators['T'] = [](float posX, float posY) -> Entidades::Entidade* {
+			return new Entidades::Obstaculos::Portal(Vector2f(posX, posY), Vector2f(50.0f, 50.0f), true, false);
 			};
 		for (int x = 0; x < matriz.size(); x++) {
 			for (int y = 0; y < matriz[x].size(); y++) {
@@ -245,6 +248,14 @@ namespace Fases
 
 		Jogador::setJogadorCriado(false);
 
+		int numCogumelosCriados = 0;
+		int numVoadoresCriados = 0;
+		int numSerrasCriadas = 0;
+		int numEspinhosCriados = 0;
+		int numSlimesCriados = 0;
+
+		Inimigo::setChefaoMorreu(false);
+
 	}
 
 	void Fase::AtualizarPersonagens()
@@ -253,6 +264,16 @@ namespace Fases
 		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
 		Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
 
+
+		if (Inimigo::getChefaoMorreu() && !morreu)
+		{
+			Obstaculos::Portal* p1 = new Entidades::Obstaculos::Portal(Inimigo::getPosChefao(), Vector2f(50.0f, 50.0f),true,true);
+			gerenciador_colisoes->addObstaculo(p1);
+			gerenciador_colisoes->addCorpo(p1);
+			listaObstaculo.addEntidade(p1);
+
+			morreu = true;
+		}
 
 		//Verificar se tomou dano
 		if (jogador && jogador->getAtacando())
@@ -418,16 +439,14 @@ namespace Fases
 
 	void Fase::verificaFase()
 	{
-		if ((jogador == nullptr) && (jogador2 == nullptr))
-		{
-			derrota = true;
-			return;
-		}
-
-		if (listaPersonagem.getTam() == numJogadores)
+		if ((jogador && jogador->getConcluiuFase()) || (jogador2 && jogador2->getConcluiuFase()))
 		{
 			concluida = true;
-			return;
+		}
+		
+		if(jogador == nullptr && jogador2 == nullptr)
+		{
+			derrota = true;
 		}
 	}
 }

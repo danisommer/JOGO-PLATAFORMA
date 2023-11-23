@@ -15,7 +15,6 @@ namespace Entidades
 
 	public:
 		Entidade(const Vector2f pos, const Vector2f tam);
-		Entidade();
 		virtual ~Entidade();
 		RectangleShape* getCorpo();
 		virtual void atualizar() = 0;

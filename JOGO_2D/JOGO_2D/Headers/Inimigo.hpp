@@ -44,6 +44,8 @@ namespace Entidades
 			float distanciaAtaqueY;
 			bool parado;
 			bool teleportando;
+			static bool chefaoMorreu;
+			static Vector2f posChefao;
 
 		public:
 			Inimigo(Vector2f pos, Vector2f tam);
@@ -62,6 +64,9 @@ namespace Entidades
 			const bool getParado() const;
 			const float getDistanciaAtaqueX() const;
 			const float getDistanciaAtaqueY() const;
+			static bool getChefaoMorreu();
+			static void setChefaoMorreu(bool cm);
+			static Vector2f getPosChefao();
 		};
 	}
 }

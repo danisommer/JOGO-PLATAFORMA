@@ -22,11 +22,11 @@ namespace Entidades
 
 		void Parede::atualizar()
 		{
-
 		}
 
 		void Parede::danar(int jogador)
 		{
+
 		}
 	}
 }

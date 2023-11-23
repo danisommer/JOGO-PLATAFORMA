@@ -5,7 +5,8 @@ gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
 fase1(),
 fase2(),
-derrota(false)
+derrota(false),
+concluida(false)
 {
 	inicializaMenu();
 }
@@ -37,6 +38,9 @@ void Principal::executarFase1(int n_jogadores)
 			gerenciador_colisoes->Executar();
 			gerenciador_grafico->mostraElemento();
 			fase1.verificaFase();
+
+			if (fase1.getConcluida())
+				concluida = true;
 		}
 		else
 		{
@@ -55,7 +59,7 @@ void Principal::executarFase2(int n_jogadores)
 	derrota = false;
 
 	fase2.desalocaEntidades();
-	fase2.instanciaEntidades("Fases/fase1-" + to_string(n_jogadores) + "p.txt");
+	fase2.instanciaEntidades("Fases/fase2-" + to_string(n_jogadores) + "p.txt");
 
 	while (!fase2.getConcluida() && !fase2.getDerrota() && gerenciador_grafico->getOpen())
 	{
@@ -80,6 +84,8 @@ void Principal::executarFase2(int n_jogadores)
 		fase2.setDerrota(derrota);
 
 	}
+	concluida = false;
+
 }
 
 void Principal::exibirMenuPausa()
@@ -185,4 +191,9 @@ void Principal::inicializaMenu()
 	telaPausa.addBotao(recuperar);
 	telaPausa.addBotao(salvar);
 	telaPausa.addBotao(sair);
+}
+
+bool Principal::getConcluida()
+{
+	return concluida;
 }

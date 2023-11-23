@@ -28,6 +28,7 @@ private:
 	Texture* imagemFundo;
 
 	bool derrota;
+	bool concluida;
 
 public:
 	Principal();
@@ -37,4 +38,5 @@ public:
 	void executarFase2(int n_jogadores);
 	void exibirMenuPausa();
 	void inicializaMenu();
+	bool getConcluida();
 };

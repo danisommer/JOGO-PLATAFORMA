@@ -1,27 +1,32 @@
 #pragma once
-#include "Entidade.hpp"
+#include "Obstaculo.hpp"
 #include "Animacao.hpp"
 
 namespace Entidades
 {
-
-	class Portal : public Entidade
+	namespace Obstaculos
 	{
-	private:
-		Animacao animacaoTeleporte;
-		int cont;
-		int iteracoes;
-		bool terminou;
+		class Portal : public Obstaculo
+		{
+		private:
+			Animacao animacaoTeleporte;
+			int cont;
+			int iteracoes;
+			bool terminou;
+			bool infinito;
 
-	public:
-		Portal(const Vector2f pos, const Vector2f tam);
-		~Portal();
-		void inicializaAnimacoes();
-		void atualizarAnimacao();
-		bool getTerminou();
-		void atualizar();
-		void desenharSprite();
+		public:
+			Portal(const Vector2f pos, const Vector2f tam, bool i, bool d);
+			~Portal();
+			void inicializaAnimacoes();
+			void atualizarAnimacao();
+			bool getTerminou();
+			void atualizar();
+			void desenharSprite();
+			void danar(int jogador);
 
-	};
+		};
+	}
+	
 
 }

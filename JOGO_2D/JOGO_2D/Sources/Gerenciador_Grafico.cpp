@@ -7,7 +7,7 @@ namespace Gerenciadores
 	Gerenciador_Grafico* Gerenciador_Grafico::pGerenciador = nullptr;
 
 	Gerenciador_Grafico::Gerenciador_Grafico() :
-		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest", sf::Style::Titlebar | sf::Style::Close)),
+		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y))
 	{
 		if (janela == nullptr)

@@ -24,7 +24,8 @@ namespace Entidades
 			tempoDecorridoVeneno(0),
 			tempoVeneno(0),
 			tempoLentidao(0),
-			tamanhoCorpo(tam)
+			tamanhoCorpo(tam),
+			concluiuFase(false)
 		{
 			dano = 0.15f;
 			vida = VIDA_MAX;
@@ -262,6 +263,16 @@ namespace Entidades
 		void Jogador::setJogadorCriado(bool jc)
 		{
 			jogadorCriado = jc;
+		}
+
+		void Jogador::setConcluiuFase(bool cf)
+		{
+			concluiuFase = cf;
+		}
+
+		bool Jogador::getConcluiuFase()
+		{
+			return concluiuFase;
 		}
 
 		void Jogador::inicializaAnimacoes()

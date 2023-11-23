@@ -43,6 +43,12 @@ namespace Fases
 		Entidades::Personagens::Jogador* jogador;
 		Entidades::Personagens::Jogador* jogador2;
 
+		int numCogumelosCriados;
+		int numVoadoresCriados;
+		int numSerrasCriadas;
+		int numEspinhosCriados;
+		int numSlimesCriados;
+
 		sf::Texture texturaFundo;
 
 		bool jogadorCriado;
@@ -52,6 +58,7 @@ namespace Fases
 		bool derrota;
 
 		int fase;
+		bool morreu;
 
 	public:
 		Fase();

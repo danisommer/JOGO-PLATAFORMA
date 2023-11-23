@@ -24,6 +24,7 @@ namespace Entidades
 			vel = Vector2f(0.4f, 0.45f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_Y = 900.0f;
+			ALCANCE_Y = 900.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
 			dano = 0.35f;

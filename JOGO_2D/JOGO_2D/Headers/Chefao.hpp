@@ -18,12 +18,13 @@ namespace Entidades
 		private:
 			void inicializaAnimacoes();
 			std::vector<Entidades::Projetil*> projeteis;
-			std::vector<Entidades::Portal*> portais;
+			std::vector<Entidades::Obstaculos::Portal*> portais;
 			std::chrono::steady_clock::time_point ultimoAtaque;
 			int delayAtaque;
 			bool bravo;
 			bool muitoBravo;
 			bool enfurecido;
+			bool morrendo;
 			Animacao animacaoTeleporte;
 
 		public:

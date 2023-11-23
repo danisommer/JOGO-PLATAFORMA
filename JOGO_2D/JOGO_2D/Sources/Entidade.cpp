@@ -8,9 +8,7 @@ namespace Entidades
 		id = 1;
 	}
 
-	Entidade::~Entidade()
-	{
-	}
+	Entidade::~Entidade() = default;
 
 	RectangleShape* Entidade::getCorpo()
 	{
