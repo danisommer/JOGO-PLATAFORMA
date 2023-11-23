@@ -208,8 +208,17 @@ namespace Entidades
 
 		void Chefao::salvar()
 		{
-			cout << "salvou chefao" << endl;
+			std::ofstream arquivo("Saves/save_chefao.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Vida: " << vida << "\n";
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+
+				std::cout << "Chefao salvo com sucesso!\n";
+			}
 		}
 
 		void Chefao::teleportar()

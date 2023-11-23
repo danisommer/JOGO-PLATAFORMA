@@ -1,0 +1,6 @@
+Vida: 100
+Posicao: 1487.4 560
+Vida: 100
+Posicao: 1450 560
+Vida: 100
+Posicao: 1450 560

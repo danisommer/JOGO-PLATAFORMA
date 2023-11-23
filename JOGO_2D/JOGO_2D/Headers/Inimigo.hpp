@@ -2,6 +2,7 @@
 #include "Personagem.hpp"
 #include "Jogador.hpp"
 #include <SFML/Graphics.hpp>
+#include <fstream>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>

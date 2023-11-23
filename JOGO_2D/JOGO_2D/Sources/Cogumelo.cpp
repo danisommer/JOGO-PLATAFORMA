@@ -86,8 +86,17 @@ namespace Entidades
 
 		void Cogumelo::salvar()
 		{
-			cout << "salvou cogumelo" << endl;
+			std::ofstream arquivo("Saves/save_cogumelo.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Vida: " << vida << "\n";
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+
+				std::cout << "Cogumelo salvo com sucesso!\n";
+			}
 		}
 
 		void Cogumelo::inicializaAnimacoes()

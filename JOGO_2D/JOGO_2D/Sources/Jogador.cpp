@@ -277,7 +277,17 @@ namespace Entidades
 
 		void Jogador::salvar()
 		{
-			cout << "salvou jogador" << endl;
+			std::ofstream arquivo("Saves/save_jogador.txt", std::ios::app);
+
+			if (arquivo.is_open())
+			{
+				arquivo << "Vida: " << vida << "\n";
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+
+				std::cout << "Jogador salvo com sucesso!\n";
+			}
 		}
 
 		void Jogador::inicializaAnimacoes()

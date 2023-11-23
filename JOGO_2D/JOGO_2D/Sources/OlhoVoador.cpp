@@ -232,8 +232,17 @@ namespace Entidades
 
 		void OlhoVoador::salvar()
 		{
-			cout << "salvou olho voador" << endl;
+			std::ofstream arquivo("Saves/save_olhoVoador.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Vida: " << vida << "\n";
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+
+				std::cout << "olhoVoador salvo com sucesso!\n";
+			}
 		}
 
 

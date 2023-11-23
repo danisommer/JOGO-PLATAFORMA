@@ -1,6 +1,7 @@
 #pragma once
 #include "Personagem.hpp"
 #include "Animacao.hpp"
+#include <fstream>
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
