@@ -15,6 +15,7 @@ namespace Entidades
 			~Parede();
 			void atualizar();
 			void danar(int jogador);
+			void salvar();
 
 		};
 	}

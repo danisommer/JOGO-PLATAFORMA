@@ -104,5 +104,10 @@ namespace Entidades
 			}
 			pisou = true;
 		}
+		void Espinho::salvar()
+		{
+			cout << "salvou espinho" << endl;
+
+		}
 	}
 }

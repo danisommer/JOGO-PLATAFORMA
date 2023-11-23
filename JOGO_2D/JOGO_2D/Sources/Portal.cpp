@@ -98,6 +98,11 @@ namespace Entidades
 				}
 			}
 		}
+		void Portal::salvar()
+		{
+			cout << "salvou portal" << endl;
+
+		}
 	}
 }
 

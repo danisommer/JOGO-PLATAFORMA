@@ -28,5 +28,10 @@ namespace Entidades
 		{
 
 		}
+		void Parede::salvar()
+		{
+			cout << "salvou parede" << endl;
+
+		}
 	}
 }

@@ -84,6 +84,12 @@ namespace Entidades
 			}
 		}
 
+		void Cogumelo::salvar()
+		{
+			cout << "salvou cogumelo" << endl;
+
+		}
+
 		void Cogumelo::inicializaAnimacoes()
 		{
 			Animacao animacaoAndando;

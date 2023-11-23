@@ -24,8 +24,7 @@ namespace Entidades
 			bool getColidir();
 			bool getDanoso();
 			void desenharSprite();
-
-
+			void salvar() = 0;
 		};
 	}
 }

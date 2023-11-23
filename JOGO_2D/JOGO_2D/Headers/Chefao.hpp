@@ -39,6 +39,9 @@ namespace Entidades
 			void atualizaVida();
 			void teleportar();
 			void atualizar();
+
+			void salvar();
+
 		};
 
 	}

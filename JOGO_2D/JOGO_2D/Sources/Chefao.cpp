@@ -206,6 +206,12 @@ namespace Entidades
 			}
 		}
 
+		void Chefao::salvar()
+		{
+			cout << "salvou chefao" << endl;
+
+		}
+
 		void Chefao::teleportar()
 		{
 			teleportando = true;

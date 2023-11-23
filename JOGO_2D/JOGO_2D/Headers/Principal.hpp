@@ -29,6 +29,7 @@ private:
 
 	bool derrota;
 	bool concluida;
+	bool salvar;
 
 public:
 	Principal();
@@ -36,7 +37,7 @@ public:
 	void executar();
 	void executarFase1(int n_jogadores);
 	void executarFase2(int n_jogadores);
-	void exibirMenuPausa();
+	int exibirMenuPausa();
 	void inicializaMenu();
 	bool getConcluida();
 };

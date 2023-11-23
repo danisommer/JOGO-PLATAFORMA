@@ -24,6 +24,7 @@ namespace Entidades
 			void atualizaAnimacao();
 			void atualizar();
 			void danar(int jogador);
+			void salvar();
 
 		};
 	}

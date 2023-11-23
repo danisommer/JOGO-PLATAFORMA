@@ -73,5 +73,8 @@ namespace Fases
 		bool getDerrota();
 		void setDerrota(bool d);
 		void verificaFase();
+
+		void salvarJogo();
+		void recuperarJogo();
 	};
 }

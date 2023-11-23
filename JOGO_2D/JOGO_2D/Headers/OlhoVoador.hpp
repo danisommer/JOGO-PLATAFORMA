@@ -23,6 +23,8 @@ namespace Entidades
 			float getVida();
 			float getSize();
 			void atualizar();
+
+			void salvar();
 		};
 
 	}

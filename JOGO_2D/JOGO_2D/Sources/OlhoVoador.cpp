@@ -230,6 +230,12 @@ namespace Entidades
 
 		}
 
+		void OlhoVoador::salvar()
+		{
+			cout << "salvou olho voador" << endl;
+
+		}
+
 
 	}
 }

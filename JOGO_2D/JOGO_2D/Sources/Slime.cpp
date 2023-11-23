@@ -48,5 +48,10 @@ namespace Entidades
 			}
 
 		}
+		void Slime::salvar()
+		{
+			cout << "salvou slime" << endl;
+
+		}
 	}
 }

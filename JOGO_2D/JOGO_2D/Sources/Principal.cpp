@@ -6,7 +6,8 @@ gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
 fase1(),
 fase2(),
 derrota(false),
-concluida(false)
+concluida(false),
+salvar(false)
 {
 	inicializaMenu();
 }
@@ -47,7 +48,15 @@ void Principal::executarFase1(int n_jogadores)
 			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
 			tituloPausa.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
-			exibirMenuPausa();
+			int opcao = exibirMenuPausa();
+
+			if (salvar)
+			{
+				fase1.salvarJogo();
+				salvar = false;
+			}
+				
+
 		}
 		fase1.setDerrota(derrota);
 
@@ -79,7 +88,15 @@ void Principal::executarFase2(int n_jogadores)
 			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
 			tituloPausa.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
-			exibirMenuPausa();
+			int opcao = exibirMenuPausa();
+
+			if (salvar)
+			{
+				fase2.salvarJogo();
+				salvar = false;
+			}
+				
+
 		}
 		fase2.setDerrota(derrota);
 
@@ -88,30 +105,32 @@ void Principal::executarFase2(int n_jogadores)
 
 }
 
-void Principal::exibirMenuPausa()
+int Principal::exibirMenuPausa()
 {
+	int opcao = -1;
+
 	while (gerenciador_eventos->getJogoPausado())
 	{
-		int opcao;
 		opcao = telaPausa.verificaEventoTela();
 
 		switch (opcao)
 		{
+		case 3:
+			derrota = true;
+			gerenciador_eventos->despausarJogo();
+			break;
 		case 0:
 			gerenciador_eventos->despausarJogo();
 			break;
 
 		case 1:
+
 			break;
 
 		case 2:
-			break;
-
-		case 3:
-			derrota = true;
+			salvar = true;
 			gerenciador_eventos->despausarJogo();
 			break;
-
 		}
 
 		gerenciador_grafico->limpaTela();
@@ -119,6 +138,8 @@ void Principal::exibirMenuPausa()
 		telaPausa.desenharTela();
 		gerenciador_grafico->mostraElemento();
 	}
+	
+	return opcao;
 }
 
 void Principal::inicializaMenu()

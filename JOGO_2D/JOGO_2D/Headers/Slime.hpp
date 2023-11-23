@@ -17,6 +17,7 @@ namespace Entidades
 			~Slime();
 			void atualizar();
 			void danar(int jogador);
+			void salvar();
 
 		};
 	}

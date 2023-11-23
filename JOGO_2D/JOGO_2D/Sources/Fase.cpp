@@ -139,6 +139,9 @@ namespace Fases
 			};
 		entityCreators['s'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Obstaculos::Serra(Vector2f(posX, posY), Vector2f(100.0f, 100.0f));
+			};		
+		entityCreators['g'] = [](float posX, float posY) -> Entidades::Entidade* {
+			return new Entidades::Obstaculos::Slime(Vector2f(posX, posY), Vector2f(300.0f, 50.0f));
 			};
 		entityCreators['e'] = [](float posX, float posY) -> Entidades::Entidade* {
 			return new Entidades::Obstaculos::Espinho(Vector2f(posX, posY), Vector2f(100.0f, 50.0f));
@@ -448,5 +451,40 @@ namespace Fases
 		{
 			derrota = true;
 		}
+	}
+	void Fase::salvarJogo()
+	{
+		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
+		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
+		Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
+
+		for (int i = 0; i < listaPersonagem.getTam(); i++)
+		{
+			if (listaPersonagem.operator[](i))
+			{
+				pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
+				if (pAuxPerso) 
+				{
+					pAuxPerso->salvar();
+				}
+			}
+		}
+
+		for (int i = 0; i < listaObstaculo.getTam(); i++)
+		{
+			if (listaObstaculo.operator[](i))
+			{
+				pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
+				if (pAuxObst)
+				{
+					pAuxObst->salvar();
+				}
+			}
+		}
+	}
+
+	void Fase::recuperarJogo()
+	{
+
 	}
 }

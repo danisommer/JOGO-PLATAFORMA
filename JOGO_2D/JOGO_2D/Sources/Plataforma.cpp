@@ -51,5 +51,10 @@ namespace Entidades
                 sprite.setScale(1.0f, 1.0f);
             }
         }
+        void Plataforma::salvar()
+        {
+            cout << "salvou plataforma" << endl;
+
+        }
     }
 }

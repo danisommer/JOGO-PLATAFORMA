@@ -24,6 +24,7 @@ namespace Entidades
 			void atualizar();
 			void desenharSprite();
 			void danar(int jogador);
+			void salvar();
 
 		};
 	}

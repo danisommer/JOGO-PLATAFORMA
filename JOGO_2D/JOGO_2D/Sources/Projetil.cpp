@@ -148,6 +148,12 @@ namespace Entidades
 		gerenciador_grafico->desenhaSprite(sprite);
 	}
 
+	void Projetil::salvar()
+	{
+		cout << "salvou projetil" << endl;
+
+	}
+
 	void Projetil::setColidiu(bool c)
 	{
 		colidiu = c;

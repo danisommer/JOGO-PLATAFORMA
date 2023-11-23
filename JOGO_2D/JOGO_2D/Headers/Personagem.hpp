@@ -37,13 +37,12 @@ namespace Entidades
 		public:
 			Personagem();
 			~Personagem();
-			virtual void atualizar() = 0;
+			void atualizar() = 0;
 
 			void cair();
 			void setIsJumping(bool IJ);
 			void setY(float Y);
 			void setPos(float X, float Y);
-			//Vector2f getPos();
 			void tomarDano(float dano);
 			virtual void setAnimacao(int anim) = 0;
 			void morrer();
@@ -52,6 +51,7 @@ namespace Entidades
 			void atualizarBarraVida();
 			virtual float getVida() = 0;
 			void desenharSprite();
+			void salvar() = 0;
 
 		};
 	}

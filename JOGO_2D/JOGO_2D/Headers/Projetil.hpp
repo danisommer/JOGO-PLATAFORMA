@@ -34,6 +34,7 @@ namespace Entidades
 		const bool getColidiu() const;
 		void desenharSprite();
 
+		void salvar();
 
 	};
 

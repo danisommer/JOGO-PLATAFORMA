@@ -275,9 +275,13 @@ namespace Entidades
 			return concluiuFase;
 		}
 
+		void Jogador::salvar()
+		{
+			cout << "salvou jogador" << endl;
+		}
+
 		void Jogador::inicializaAnimacoes()
 		{
-
 			String pasta = jogadorCriado ? "Jogador2" : "Jogador";
 
 			Animacao animacaoParado;

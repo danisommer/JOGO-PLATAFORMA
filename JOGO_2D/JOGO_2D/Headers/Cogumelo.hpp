@@ -25,6 +25,7 @@ namespace Entidades
 			void atualizar();
 			void envenenar(int jogador);
 
+			void salvar();
 
 		};
 
