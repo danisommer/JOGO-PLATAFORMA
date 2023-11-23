@@ -20,7 +20,7 @@ namespace Entidades
 			anterior(0),
 			atualizacao(0),
 			posAnteriorInimigo(0.0f),
-			ALCANCE_X(500.0f),
+			ALCANCE_X(700.0f),
 			ALCANCE_Y(300.0f),
 			parado(false),
 			distanciaAtaqueX(60.0f),

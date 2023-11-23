@@ -13,7 +13,9 @@ namespace Fases
 		jogadorCriado(false),
 		numJogadores(0),
 		fase(),
-		texturaFundo()
+		texturaFundo(),
+		concluida(false),
+		derrota(false)
 	{
 		id = 2;
 	}
@@ -213,6 +215,38 @@ namespace Fases
 
 	}
 
+	void Fase::desalocaEntidades()
+	{
+		gerenciador_eventos->setJogador(nullptr);
+		gerenciador_colisoes->setJogador(nullptr);
+
+		gerenciador_eventos->setJogador2(nullptr);
+		gerenciador_colisoes->setJogador2(nullptr);
+
+		gerenciador_colisoes->limparListas();
+
+		Inimigo::setJogador(nullptr);
+		Obstaculo::setJogador(nullptr);		
+		
+		Inimigo::setJogador2(nullptr);
+		Obstaculo::setJogador2(nullptr);
+
+		listaPersonagem.limpar();
+		listaObstaculo.limpar();
+
+		jogador = nullptr;
+		jogador2 = nullptr;
+
+		jogadorCriado = false;
+		numJogadores = 0;
+
+		concluida = false;
+		derrota = false;
+
+		Jogador::setJogadorCriado(false);
+
+	}
+
 	void Fase::AtualizarPersonagens()
 	{
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
@@ -314,9 +348,6 @@ namespace Fases
 
 	void Fase::atualizaCamera()
 	{
-		sf::Sprite sprite(texturaFundo);
-		sprite.setScale(0.9f, 0.9f);
-
 		sf::Vector2f cameraCenter = gerenciador_grafico->getViewCenter();
 		sf::Vector2f pos;
 
@@ -356,7 +387,10 @@ namespace Fases
 
 		}
 
+		sf::Sprite sprite(texturaFundo);
+		sprite.setScale(0.9f, 0.9f);
 		sprite.setPosition(pos);
+		
 		gerenciador_grafico->desenhaSprite(sprite);
 		gerenciador_grafico->setCentro(cameraCenter);
 	}
@@ -364,5 +398,36 @@ namespace Fases
 	int Fase::getFase()
 	{
 		return fase;
+	}
+	
+	bool Fase::getConcluida()
+	{
+		return concluida;
+	}
+
+	bool Fase::getDerrota()
+	{
+		return derrota;
+	}
+
+	void Fase::setDerrota(bool d)
+	{
+		if(!derrota)
+			derrota = d;
+	}
+
+	void Fase::verificaFase()
+	{
+		if ((jogador == nullptr) && (jogador2 == nullptr))
+		{
+			derrota = true;
+			return;
+		}
+
+		if (listaPersonagem.getTam() == numJogadores)
+		{
+			concluida = true;
+			return;
+		}
 	}
 }

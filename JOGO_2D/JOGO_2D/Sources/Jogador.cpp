@@ -259,6 +259,11 @@ namespace Entidades
 			}
 		}
 
+		void Jogador::setJogadorCriado(bool jc)
+		{
+			jogadorCriado = jc;
+		}
+
 		void Jogador::inicializaAnimacoes()
 		{
 
@@ -334,8 +339,8 @@ namespace Entidades
 				animacaoAtacar.addFrame(pedacoTexture);
 			}
 
-			animacaoAtacar.setAnimationSpeed(20.0f);
-			animacaoAtacar2.setAnimationSpeed(20.0f);
+			animacaoAtacar.setAnimationSpeed(15.0f);
+			animacaoAtacar2.setAnimationSpeed(15.0f);
 
 			//ATAQUE LEVE 4
 			if (!texture.loadFromFile("Assets/" + pasta + "/_Attack2.png")) {

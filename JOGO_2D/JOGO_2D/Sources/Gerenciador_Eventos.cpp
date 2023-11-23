@@ -8,7 +8,9 @@ namespace Gerenciadores
 
 	Gerenciador_Eventos::Gerenciador_Eventos() :
 		pJogador(nullptr),
-		pJogador2(nullptr)
+		pJogador2(nullptr),
+		jogoPausado(false),
+		escPressionadoAnteriormente(false)
 	{
 
 	}
@@ -40,91 +42,113 @@ namespace Gerenciadores
 
 		gerenciador_grafico->getJanela()->pollEvent(evento);
 
-		if (pJogador)
+		bool escPressionadoAtualmente = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
+
+		if (escPressionadoAtualmente && !escPressionadoAnteriormente)
 		{
-			if (Keyboard::isKeyPressed(Keyboard::E))
+			jogoPausado = !jogoPausado;
+		}
+
+		escPressionadoAnteriormente = escPressionadoAtualmente;
+
+		if (!jogoPausado)
+		{
+			if (pJogador)
 			{
-				pJogador->bater(true);
-
-			}
-			else
-			{
-				pJogador->bater(false);
-
-				if (Keyboard::isKeyPressed(Keyboard::D))
+				if (Keyboard::isKeyPressed(Keyboard::E))
 				{
-					pJogador->mover(true, false);
-				}
-
-				if (Keyboard::isKeyPressed(Keyboard::A))
-				{
-					pJogador->mover(false, true);
-
-				}
-
-				if (!(Keyboard::isKeyPressed(Keyboard::D)) && !(Keyboard::isKeyPressed(Keyboard::A)))
-				{
-					pJogador->mover(false, false);
-				}
-
-				if (Keyboard::isKeyPressed(Keyboard::W))
-				{
-					pJogador->pular(true);
+					pJogador->bater(true);
 
 				}
 				else
 				{
-					pJogador->pular(false);
+					pJogador->bater(false);
 
+					if (Keyboard::isKeyPressed(Keyboard::D))
+					{
+						pJogador->mover(true, false);
+					}
+
+					if (Keyboard::isKeyPressed(Keyboard::A))
+					{
+						pJogador->mover(false, true);
+
+					}
+
+					if (!(Keyboard::isKeyPressed(Keyboard::D)) && !(Keyboard::isKeyPressed(Keyboard::A)))
+					{
+						pJogador->mover(false, false);
+					}
+
+					if (Keyboard::isKeyPressed(Keyboard::W))
+					{
+						pJogador->pular(true);
+
+					}
+					else
+					{
+						pJogador->pular(false);
+
+					}
 				}
 			}
-		}
 
-		if (pJogador2)
-		{
-			if (Keyboard::isKeyPressed(Keyboard::M))
+			if (pJogador2)
 			{
-				pJogador2->bater(true);
-
-			}
-			else
-			{
-				pJogador2->bater(false);
-
-				if (Keyboard::isKeyPressed(Keyboard::Right))
+				if (Keyboard::isKeyPressed(Keyboard::M))
 				{
-					pJogador2->mover(true, false);
-				}
-
-				if (Keyboard::isKeyPressed(Keyboard::Left))
-				{
-					pJogador2->mover(false, true);
-
-				}
-
-				if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)))
-				{
-					pJogador2->mover(false, false);
-				}
-
-				if (Keyboard::isKeyPressed(Keyboard::Up))
-				{
-					pJogador2->pular(true);
+					pJogador2->bater(true);
 
 				}
 				else
 				{
-					pJogador2->pular(false);
+					pJogador2->bater(false);
 
+					if (Keyboard::isKeyPressed(Keyboard::Right))
+					{
+						pJogador2->mover(true, false);
+					}
+
+					if (Keyboard::isKeyPressed(Keyboard::Left))
+					{
+						pJogador2->mover(false, true);
+
+					}
+
+					if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)))
+					{
+						pJogador2->mover(false, false);
+					}
+
+					if (Keyboard::isKeyPressed(Keyboard::Up))
+					{
+						pJogador2->pular(true);
+
+					}
+					else
+					{
+						pJogador2->pular(false);
+
+					}
 				}
 			}
-		}
 
+		}
+		
 
 		if (evento.type == sf::Event::Closed)
 		{
 			gerenciador_grafico->fecharJanela();
 		}
+	}
+	bool Gerenciador_Eventos::getJogoPausado()
+	{
+		return jogoPausado;
+	}
+	void Gerenciador_Eventos::despausarJogo()
+	{
+		escPressionadoAnteriormente = false;
+		jogoPausado = false;
 	}
 }
 

@@ -27,6 +27,8 @@ namespace Gerenciadores
 		void limpaTela();
 		void desenhaHitbox(const RectangleShape& corpo);
 		void desenhaSprite(const Sprite& sprite);
+		void desenhaTela(sf::Drawable* tela);
+		void desenhaTexto(sf::Text texto);
 		void mostraElemento();
 		void fecharJanela();
 		bool getOpen();

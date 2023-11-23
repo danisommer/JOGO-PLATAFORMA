@@ -266,7 +266,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(25.0f);
+			animacaoTomarDano.setAnimationSpeed(20.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Chefao/Death.png")) {

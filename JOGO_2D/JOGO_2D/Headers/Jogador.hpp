@@ -61,6 +61,7 @@ namespace Entidades
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);
+			static void setJogadorCriado(bool jc);
 
 		};
 	}

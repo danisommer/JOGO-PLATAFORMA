@@ -1,6 +1,6 @@
 #include "OlhoVoador.hpp"
 #include "iostream"
-#define VIDA_MAX 60.0f
+#define VIDA_MAX 45.0f
 #define SIZE 1.8f
 
 using namespace std;
@@ -96,7 +96,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(25.0f);
+			animacaoTomarDano.setAnimationSpeed(20.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/OlhoVoador/Death.png")) {

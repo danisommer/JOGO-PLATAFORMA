@@ -164,6 +164,15 @@ namespace Gerenciadores
 			corpo->setPos(corpo->getPos().x, plataforma->getGlobalBounds().top - corpo->getCorpo()->getGlobalBounds().height);
 		}
 	}
+	void Gerenciador_Colisoes::limparListas() {
+
+		inimigos.clear();
+
+		corpos.clear(); 
+
+		obstaculos.clear();
+	}
+
 }
 
 

@@ -1,28 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <map>
-#include <fstream>
-#include <functional>
-#include <cstdlib>
-#include <ctime>   
 #include "Gerenciador_Grafico.hpp"
 #include "Gerenciador_Colisoes.hpp"
 #include "Gerenciador_Eventos.hpp"
-#include "Jogador.hpp"
-#include "Inimigo.hpp"
-#include "Plataforma.hpp"
-#include "Personagem.hpp"
-#include "OlhoVoador.hpp"
-#include "Cogumelo.hpp"
-#include "Chefao.hpp"
-#include "Parede.hpp"
-#include "Serra.hpp"
-#include "Espinho.hpp"
-#include "Slime.hpp"
-#include "ListaEntidade.hpp"
 #include "Ruinas.hpp"
 #include "Floresta.hpp"
+#include "Tela.hpp"
 
 using namespace sf;
 using namespace std;
@@ -39,8 +22,19 @@ private:
 	Fases::Floresta fase1;
 	Fases::Ruinas fase2;
 
+	Tela telaPausa;
+	sf::Text tituloPausa;
+	sf::Sprite* fundoPausa;
+	Texture* imagemFundo;
+
+	bool derrota;
+
 public:
 	Principal();
 	~Principal();
 	void executar();
+	void executarFase1(int n_jogadores);
+	void executarFase2(int n_jogadores);
+	void exibirMenuPausa();
+	void inicializaMenu();
 };

@@ -1,7 +1,7 @@
 #include "Cogumelo.hpp"
 
 #include "iostream"
-#define VIDA_MAX 100.0f
+#define VIDA_MAX 60.0f
 #define SIZE 1.8f
 
 
@@ -33,6 +33,7 @@ namespace Entidades
 			{
 				venenoEspecial = true;
 				sprite.setColor(Color{ 235, 255, 0 });
+				vida += 20.0f;
 			}
 		}
 
@@ -122,7 +123,7 @@ namespace Entidades
 				animacaoTomarDano.addFrame(pedacoTexture);
 			}
 
-			animacaoTomarDano.setAnimationSpeed(25.0f);
+			animacaoTomarDano.setAnimationSpeed(20.0f);
 
 			//MORTE 2
 			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Death.png")) {
@@ -178,6 +179,9 @@ namespace Entidades
 
 		float Cogumelo::getVida()
 		{
+			if (venenoEspecial)
+				return VIDA_MAX + 20.0f;
+
 			return VIDA_MAX;
 		}
 

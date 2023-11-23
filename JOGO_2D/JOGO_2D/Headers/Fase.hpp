@@ -48,6 +48,9 @@ namespace Fases
 		bool jogadorCriado;
 		int numJogadores;
 
+		bool concluida;
+		bool derrota;
+
 		int fase;
 
 	public:
@@ -59,5 +62,9 @@ namespace Fases
 		void AtualizarPersonagens();
 		void atualizaCamera();
 		int getFase();
+		bool getConcluida();
+		bool getDerrota();
+		void setDerrota(bool d);
+		void verificaFase();
 	};
 }

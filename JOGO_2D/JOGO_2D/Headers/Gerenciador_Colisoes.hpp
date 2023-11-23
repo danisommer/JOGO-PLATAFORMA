@@ -32,6 +32,7 @@ namespace Gerenciadores
 		void addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void verificaColisaoJogador(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
 		void verificaColisaoInimigo(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);
+		void limparListas();
 	};
 }
 

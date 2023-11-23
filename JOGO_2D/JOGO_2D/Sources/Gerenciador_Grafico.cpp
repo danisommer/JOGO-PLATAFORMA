@@ -7,7 +7,7 @@ namespace Gerenciadores
 	Gerenciador_Grafico* Gerenciador_Grafico::pGerenciador = nullptr;
 
 	Gerenciador_Grafico::Gerenciador_Grafico() :
-		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
+		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest", sf::Style::Titlebar | sf::Style::Close)),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y))
 	{
 		if (janela == nullptr)
@@ -54,6 +54,16 @@ namespace Gerenciadores
 	void Gerenciador_Grafico::desenhaSprite(const Sprite& sprite)
 	{
 		janela->draw(sprite);
+	}
+
+	void Gerenciador_Grafico::desenhaTela(sf::Drawable* tela)
+	{
+		janela->draw(*tela);
+	}
+
+	void Gerenciador_Grafico::desenhaTexto(sf::Text texto)
+	{
+		janela->draw(texto);
 	}
 
 	void Gerenciador_Grafico::mostraElemento()

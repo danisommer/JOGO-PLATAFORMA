@@ -23,7 +23,6 @@ namespace Lista
 		void removerEntidade(int pos);
 		const int getTam() const;
 		Entidades::Entidade* operator[](int pos);
-		void executar(sf::RenderWindow* window);
 		void limpar();
 	};
 }

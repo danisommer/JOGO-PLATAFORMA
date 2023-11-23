@@ -35,19 +35,7 @@ Entidades::Entidade* Lista::ListaEntidade::operator[](int pos)
 {
 	return LEs.operator[](pos);
 }
-void Lista::ListaEntidade::executar(sf::RenderWindow* window)
-{
-	int tam = LEs.getTam();
-	Entidades::Entidade* aux = nullptr;
-	
-	for (int i = 0; i < tam; i++)
-	{
-		aux = LEs.operator[](i);
-		//aux->atualizar();
-	
-		//window->draw(aux->getSprite());
-	}
-}
+
 void Lista::ListaEntidade::limpar()
 {
 	LEs.limpar();
