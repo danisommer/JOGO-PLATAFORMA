@@ -85,14 +85,25 @@ namespace Entidades
 
 			}
 		}
-		void Serra::salvar(int save)
-		{
-			cout << "salvou serra" << endl;
-
-		}
 		void Serra::limparArquivo(int save)
 		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_serra.txt", std::ofstream::out);
 
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
+		}
+		void Serra::salvar(int save)
+		{
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_serra.txt", std::ios::app);
+
+			if (arquivo.is_open())
+			{
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+			}
 		}
 
 	}

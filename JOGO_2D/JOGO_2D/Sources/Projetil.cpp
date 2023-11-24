@@ -150,12 +150,23 @@ namespace Entidades
 
 	void Projetil::limparArquivo(int save)
 	{
-	}
+		std::ofstream arquivo("Saves/save" + std::to_string(save) + "_projetil.txt", std::ofstream::out);
 
+		if (arquivo.is_open())
+		{
+			arquivo.close();
+		}
+	}
 	void Projetil::salvar(int save)
 	{
-		cout << "salvou projetil" << endl;
+		std::ofstream arquivo("Saves/save" + to_string(save) + "_projetil.txt", std::ios::app);
 
+		if (arquivo.is_open())
+		{
+			arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+			arquivo.close();
+		}
 	}
 
 	void Projetil::setColidiu(bool c)

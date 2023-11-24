@@ -1,0 +1,3 @@
+Posicao: 2900 550
+Posicao: 4500 400
+Posicao: 5750 550

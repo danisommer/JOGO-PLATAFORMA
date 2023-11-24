@@ -1,2 +1,4 @@
-Vida: 84.7601
-Posicao: 1483 560
+Vida: 100
+Posicao: 1450 192.244
+Vida: 100
+Posicao: 1500 192.244

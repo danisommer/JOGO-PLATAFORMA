@@ -459,7 +459,7 @@ namespace Fases
 			cout << "save inexistente" << endl;
 			exit(1);
 		}
-		cout << save << endl;
+
 		limparArquivo(save);
 
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;

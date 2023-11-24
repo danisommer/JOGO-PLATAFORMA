@@ -50,11 +50,23 @@ namespace Entidades
 		}
 		void Slime::limparArquivo(int save)
 		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_slime.txt", std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
 		}
 		void Slime::salvar(int save)
 		{
-			cout << "salvou slime" << endl;
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_slime.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+			}
 		}
 	}
 }

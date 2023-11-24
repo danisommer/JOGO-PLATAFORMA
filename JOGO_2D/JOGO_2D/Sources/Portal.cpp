@@ -100,11 +100,23 @@ namespace Entidades
 		}
 		void Portal::limparArquivo(int save)
 		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_portal.txt", std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
 		}
 		void Portal::salvar(int save)
 		{
-			cout << "salvou portal" << endl;
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_portal.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+			}
 		}
 	}
 }

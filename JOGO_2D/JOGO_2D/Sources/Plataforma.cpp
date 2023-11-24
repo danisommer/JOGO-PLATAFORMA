@@ -53,11 +53,23 @@ namespace Entidades
         }
         void Plataforma::limparArquivo(int save)
         {
+            std::ofstream arquivo("Saves/save" + std::to_string(save) + "_plataforma.txt", std::ofstream::out);
+
+            if (arquivo.is_open())
+            {
+                arquivo.close();
+            }
         }
         void Plataforma::salvar(int save)
         {
-            cout << "salvou plataforma" << endl;
+            std::ofstream arquivo("Saves/save" + to_string(save) + "_plataforma.txt", std::ios::app);
 
+            if (arquivo.is_open())
+            {
+                arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+                arquivo.close();
+            }
         }
     }
 }

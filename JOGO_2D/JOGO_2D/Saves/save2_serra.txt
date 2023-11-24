@@ -1,0 +1,11 @@
+Posicao: 2400 300
+Posicao: 2500 300
+Posicao: 3500 350
+Posicao: 4350 150
+Posicao: 4450 150
+Posicao: 5600 500
+Posicao: 5600 600
+Posicao: 7000 550
+Posicao: 7350 150
+Posicao: 7700 450
+Posicao: 7800 400

@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ente.hpp"
+#include <fstream>
+
 
 using namespace sf;
 

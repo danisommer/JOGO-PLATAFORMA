@@ -106,11 +106,23 @@ namespace Entidades
 		}
 		void Espinho::limparArquivo(int save)
 		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_espinho.txt", std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
 		}
 		void Espinho::salvar(int save)
 		{
-			cout << "salvou espinho" << endl;
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_espinho.txt", std::ios::app);
 
+			if (arquivo.is_open())
+			{
+				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+
+				arquivo.close();
+			}
 		}
 	}
 }
