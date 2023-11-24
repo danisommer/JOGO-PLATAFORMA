@@ -55,14 +55,12 @@ void Principal::executarFase1(int n_jogadores)
 		else
 		{
 			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-			tituloPausa.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
 			int opcao = exibirMenuPausa();
 
 			if (salvar)
 			{
 				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-				tituloMundos.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
 				int op = exibirMenuMundos();
 				op++;
@@ -105,14 +103,12 @@ void Principal::executarFase2(int n_jogadores)
 		else
 		{
 			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-			tituloPausa.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
 			int opcao = exibirMenuPausa();
 
 			if (salvar)
 			{
 				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-				tituloMundos.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
 
 				int op = exibirMenuMundos();
 				op++;
@@ -166,7 +162,6 @@ int Principal::exibirMenuPausa()
 		}
 
 		gerenciador_grafico->limpaTela();
-		gerenciador_grafico->desenhaTexto(tituloPausa);
 		telaPausa.desenharTela();
 		gerenciador_grafico->mostraElemento();
 	}
@@ -189,7 +184,6 @@ int Principal::exibirMenuMundos()
 		}
 
 		gerenciador_grafico->limpaTela();
-		gerenciador_grafico->desenhaTexto(tituloMundos);
 		telaMundos.desenharTela();
 		gerenciador_grafico->mostraElemento();
 	}
@@ -229,12 +223,16 @@ void Principal::inicializaMenu()
 	telaPausa.setLarguraSelecionado(4);
 	telaPausa.setLarguraPadrao(2);
 
+	Text tituloPausa;
+
 	tituloPausa.setFont(*fonte);
 	tituloPausa.setString("Jogo Pausado");
 	tituloPausa.setPosition(1100, 170);
 	tituloPausa.setCharacterSize(55);
 	tituloPausa.setOutlineColor(Color::Black);
 	tituloPausa.setFillColor(Color::White);
+
+	telaPausa.setTitulo(tituloPausa);
 
 	continuar = new sf::RectangleShape();
 	continuar->setSize(sf::Vector2f(200.0f, 50.0f));
@@ -264,12 +262,16 @@ void Principal::inicializaMenu()
 
 void Principal::inicializaMundos()
 {
+	sf::Text tituloMundos;
+
 	tituloMundos.setFont(*fonte);
 	tituloMundos.setString("Escolha um mundo:");
 	tituloMundos.setPosition(1100, 170);
 	tituloMundos.setCharacterSize(55);
 	tituloMundos.setOutlineColor(Color::Black);
 	tituloMundos.setFillColor(Color::White);
+
+	telaMundos.setTitulo(tituloMundos);
 
 	Text novoTexto;
 

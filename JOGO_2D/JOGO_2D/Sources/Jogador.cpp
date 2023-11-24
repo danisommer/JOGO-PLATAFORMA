@@ -33,7 +33,7 @@ namespace Entidades
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
 			corpo.setFillColor(sf::Color::Red);
-			vel = Vector2f(1.1f, 1.1f);
+			vel = Vector2f(5.1f, 1.1f);
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
 			inicializaTeclas();

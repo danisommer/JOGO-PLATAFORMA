@@ -1,0 +1,15 @@
+Posicao: 0 800
+Posicao: 1450 650
+Posicao: 1750 500
+Posicao: 1900 800
+Posicao: 2550 550
+Posicao: 3100 650
+Posicao: 3500 500
+Posicao: 3800 800
+Posicao: 4200 550
+Posicao: 4650 450
+Posicao: 5050 400
+Posicao: 5350 300
+Posicao: 5700 300
+Posicao: 5700 800
+Posicao: 5950 450

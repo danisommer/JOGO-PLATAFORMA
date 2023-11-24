@@ -1,0 +1,9 @@
+Posicao: 3200 630
+Posicao: 3300 780
+Posicao: 3400 780
+Posicao: 3500 780
+Posicao: 3600 780
+Posicao: 4450 780
+Posicao: 5300 780
+Posicao: 5450 280
+Posicao: 5600 780

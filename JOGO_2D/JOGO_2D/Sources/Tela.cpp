@@ -3,13 +3,13 @@
 Tela::Tela():
 	Ente(),
 	larguraPadrao(0),
-	larguraSelecionado(3)
+	larguraSelecionado(3),
+	titulo()
 {
 }
 
 Tela::~Tela()
 {
-
 	for (sf::Text& texto : textos) {
 		delete &texto;
 	}
@@ -23,6 +23,8 @@ Tela::~Tela()
 
 void Tela::desenharTela()
 {	
+	gerenciador_grafico->desenhaTexto(titulo);
+
 	for (auto t : textos)
 	{	
 		gerenciador_grafico->desenhaTexto(t);
@@ -75,8 +77,14 @@ void Tela::addTexto(sf::Text texto)
 	textos.push_back(texto);
 }
 
+void Tela::setTitulo(sf::Text texto)
+{
+	titulo = texto;
+}
+
 void Tela::setPosX(float X)
 {	
+	titulo.setPosition(X, titulo.getPosition().y);
 
 	for (int i = 0; i < textos.size(); i++)
 	{

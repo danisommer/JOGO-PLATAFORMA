@@ -3,11 +3,15 @@
 Menu::Menu() :
 	posicaoTela(gerenciador_grafico->getViewCenter())
 {
-
-
 	fonte = new sf::Font();
 	imagemFundo = new sf::Texture();
 	sprite = new sf::Sprite();
+	Text titulo;
+
+	if (!fonte->loadFromFile("Menu/antiquity-print.ttf"))
+	{
+		exit(1);
+	}
 
 	titulo.setFont(*fonte);
 	titulo.setString("Knight's Quest");
@@ -16,12 +20,20 @@ Menu::Menu() :
 	titulo.setOutlineColor(Color::Black);
 	titulo.setStyle(sf::Text::Bold);
 
+	telaInicial.setTitulo(titulo);
 
+	titulo.setPosition(470, 70);
+	titulo.setString(" Fim de Jogo");
 
-	if (!fonte->loadFromFile("Menu/antiquity-print.ttf"))
-	{
-		exit(1);
-	}
+	telaGameOver.setTitulo(titulo);
+
+	textoCarregamento.setFont(*fonte);
+	textoCarregamento.setString("Carregando...");
+	textoCarregamento.setPosition(50, 800);
+	textoCarregamento.setCharacterSize(50);
+	textoCarregamento.setOutlineColor(Color::Black);
+	textoCarregamento.setStyle(sf::Text::Bold);
+	textoCarregamento.setFillColor(Color::White);
 
 	if (!imagemFundo->loadFromFile("Menu/menu.png"))
 	{
@@ -84,7 +96,6 @@ void Menu::executar()
 
 				gerenciador_grafico->limpaTela();
 				gerenciador_grafico->desenhaSprite(*sprite);
-				gerenciador_grafico->desenhaTexto(titulo);
 				telaInicial.desenharTela();
 
 				break;
@@ -148,12 +159,26 @@ void Menu::executar()
 				break;
 			case 5:
 				evento = tela4.verificaEventoTela();
+
+				if (evento == 0 || evento == 1)
+				{
+					textoCarregamento.setPosition(gerenciador_grafico->getViewCenter().x - 750.0f, textoCarregamento.getPosition().y);
+					gerenciador_grafico->limpaTela();
+					gerenciador_grafico->desenhaTexto(textoCarregamento);
+					gerenciador_grafico->mostraElemento();
+				}
+
 				if (evento == 0)
 				{
 					objPrincipal.executarFase1(n_jogadores);
 
-					if (objPrincipal.getConcluida()) 
+					if (objPrincipal.getConcluida())
 					{
+						textoCarregamento.setPosition(gerenciador_grafico->getViewCenter().x - 750.0f, textoCarregamento.getPosition().y);
+						gerenciador_grafico->limpaTela();
+						gerenciador_grafico->desenhaTexto(textoCarregamento);
+						gerenciador_grafico->mostraElemento();
+
 						objPrincipal.executarFase2(n_jogadores);
 					}
 
@@ -161,7 +186,7 @@ void Menu::executar()
 					{
 						popTela();
 					}
-					pushTela(1);
+					pushTela(6);
 
 				}
 				else if (evento == 1)
@@ -172,7 +197,7 @@ void Menu::executar()
 					{
 						popTela();
 					}
-					pushTela(1);
+					pushTela(6);
 				}
 				else if (evento == 2)
 				{
@@ -182,6 +207,28 @@ void Menu::executar()
 				gerenciador_grafico->limpaTela();
 				gerenciador_grafico->desenhaSprite(*sprite);
 				tela4.desenharTela();
+
+				break;
+
+			case 6:
+				evento = telaGameOver.verificaEventoTela();
+
+				if (evento == 0)
+				{
+
+				}
+				else if (evento == 1)
+				{
+					for (int i = 0; i < telaAtual.size(); i++)
+					{
+						popTela();
+					}
+					pushTela(1);
+				}
+
+				gerenciador_grafico->limpaTela();
+				gerenciador_grafico->desenhaSprite(*sprite);
+				telaGameOver.desenharTela();
 
 				break;
 			default:
@@ -288,6 +335,23 @@ void Menu::inicializaTextos()
 		tela4.addTexto(novoTexto);
 
 	}
+
+	opcoes = { "Gravar pontuacao", "Sair" };
+	coordenadas = { { 70, 300}, { 70, 390 } };
+	tamanhos = { 38, 38 };
+
+	for (size_t i = 0; i < opcoes.size(); i++)
+	{
+
+		novoTexto.setFont(*fonte);
+		novoTexto.setString(opcoes[i]);
+		novoTexto.setPosition(coordenadas[i]);
+		novoTexto.setCharacterSize(tamanhos[i]);
+		novoTexto.setOutlineColor(Color::Black);
+
+		telaGameOver.addTexto(novoTexto);
+
+	}
 }
 
 void Menu::inicializaBotoes()
@@ -311,6 +375,10 @@ void Menu::inicializaBotoes()
 	sf::RectangleShape* fase1;
 	sf::RectangleShape* fase2;
 	sf::RectangleShape* voltar4;
+
+	sf::RectangleShape* tentarNovamente;
+	sf::RectangleShape* gravarJogada;
+	sf::RectangleShape* sair1;
 
 	//TELA INICIAL
 	novoJogo = new sf::RectangleShape();
@@ -414,6 +482,21 @@ void Menu::inicializaBotoes()
 	tela4.addBotao(fase1);
 	tela4.addBotao(fase2);
 	tela4.addBotao(voltar4);
+
+	//TELA 4
+
+	gravarJogada = new sf::RectangleShape();
+	gravarJogada->setSize(sf::Vector2f(420.0f, 50.0f));
+	gravarJogada->setPosition(sf::Vector2f(70, 300));
+	gravarJogada->setFillColor(sf::Color::Red);
+
+	sair1 = new sf::RectangleShape();
+	sair1->setSize(sf::Vector2f(120.0f, 50.0f));
+	sair1->setPosition(sf::Vector2f(70, 390));
+	sair1->setFillColor(sf::Color::Red);
+
+	telaGameOver.addBotao(gravarJogada);
+	telaGameOver.addBotao(sair1);
 }
 
 void Menu::pushTela(int tela)

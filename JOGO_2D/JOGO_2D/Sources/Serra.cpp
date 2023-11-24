@@ -40,7 +40,7 @@ namespace Entidades
 				animacao.addFrame(pedacoTexture);
 			}
 
-			animacao.setAnimationSpeed(2.0f);
+			animacao.setAnimationSpeed(8.0f);
 
 		}
 

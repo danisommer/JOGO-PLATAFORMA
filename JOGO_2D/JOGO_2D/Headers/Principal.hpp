@@ -25,10 +25,7 @@ private:
 	sf::Font* fonte;
 
 	Tela telaPausa;
-	sf::Text tituloPausa;
-
 	Tela telaMundos;
-	sf::Text tituloMundos;
 
 	bool derrota;
 	bool concluida;

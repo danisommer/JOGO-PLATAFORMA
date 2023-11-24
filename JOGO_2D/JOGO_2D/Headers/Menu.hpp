@@ -14,6 +14,7 @@ private:
 	Tela tela2;
 	Tela tela3;
 	Tela tela4;
+	Tela telaGameOver;
 
 	int n_jogadores;
 
@@ -24,10 +25,9 @@ private:
 	std::stack<int> telaAtual; 
 	sf::Font* fonte;
 
-	Text titulo;
-
 	sf::Texture* imagemFundo;
 	sf::Sprite* sprite;
+	sf::Text textoCarregamento;
 
 	sf::Vector2i posMouse;
 	sf::Vector2f coordenadasMouse;

@@ -1,0 +1,28 @@
+Vida: 45
+Posicao: 2697.23 50
+Vida: 45
+Posicao: 2957.28 0
+Vida: 45
+Posicao: 3472.89 150
+Vida: 45
+Posicao: 3730.18 50
+Vida: 45
+Posicao: 3930.18 700
+Vida: 45
+Posicao: 4612.83 500
+Vida: 45
+Posicao: 4800 100
+Vida: 45
+Posicao: 4747.23 0
+Vida: 45
+Posicao: 5387.17 450
+Vida: 45
+Posicao: 5879.88 650
+Vida: 45
+Posicao: 5017.34 0
+Vida: 45
+Posicao: 7289.65 400
+Vida: 45
+Posicao: 4510.35 650
+Vida: 45
+Posicao: 5822.89 450
