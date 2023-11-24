@@ -19,7 +19,8 @@ namespace Entidades
 			void atualizar();
 			void danar(int jogador);
 			void setFase(int f);
-			void salvar();
+			void salvar(int save);
+			void limparArquivo(int save);
 
 		};
 	}

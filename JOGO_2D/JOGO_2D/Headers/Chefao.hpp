@@ -40,8 +40,8 @@ namespace Entidades
 			void teleportar();
 			void atualizar();
 
-			void salvar();
-
+			void salvar(int save);
+			void limparArquivo(int save);
 		};
 
 	}

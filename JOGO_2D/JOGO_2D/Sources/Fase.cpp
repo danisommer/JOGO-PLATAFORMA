@@ -452,8 +452,16 @@ namespace Fases
 			derrota = true;
 		}
 	}
-	void Fase::salvarJogo()
+	void Fase::salvarJogo(int save)
 	{
+		if (save > 3 || save <= 0)
+		{
+			cout << "save inexistente" << endl;
+			exit(1);
+		}
+		cout << save << endl;
+		limparArquivo(save);
+
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
 		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
 		Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
@@ -465,7 +473,7 @@ namespace Fases
 				pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
 				if (pAuxPerso) 
 				{
-					pAuxPerso->salvar();
+					pAuxPerso->salvar(save);
 				}
 			}
 		}
@@ -477,13 +485,43 @@ namespace Fases
 				pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
 				if (pAuxObst)
 				{
-					pAuxObst->salvar();
+					pAuxObst->salvar(save);
 				}
 			}
 		}
 	}
 
-	void Fase::recuperarJogo()
+	void Fase::limparArquivo(int save)
+	{
+		Entidades::Personagens::Personagem* pAuxPerso = nullptr;
+		Entidades::Obstaculos::Obstaculo* pAuxObst = nullptr;
+
+		for (int i = 0; i < listaPersonagem.getTam(); i++)
+		{
+			if (listaPersonagem.operator[](i))
+			{
+				pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
+				if (pAuxPerso)
+				{
+					pAuxPerso->limparArquivo(save);
+				}
+			}
+		}
+
+		for (int i = 0; i < listaObstaculo.getTam(); i++)
+		{
+			if (listaObstaculo.operator[](i))
+			{
+				pAuxObst = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(listaObstaculo.operator[](i));
+				if (pAuxObst)
+				{
+					pAuxObst->limparArquivo(save);
+				}
+			}
+		}
+	}
+
+	void Fase::recuperarJogo(int save)
 	{
 
 	}

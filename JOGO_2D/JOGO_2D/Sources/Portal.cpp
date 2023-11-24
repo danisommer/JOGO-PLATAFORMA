@@ -98,7 +98,10 @@ namespace Entidades
 				}
 			}
 		}
-		void Portal::salvar()
+		void Portal::limparArquivo(int save)
+		{
+		}
+		void Portal::salvar(int save)
 		{
 			cout << "salvou portal" << endl;
 

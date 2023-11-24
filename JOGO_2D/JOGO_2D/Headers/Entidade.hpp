@@ -20,7 +20,8 @@ namespace Entidades
 		virtual void atualizar() = 0;
 		Vector2f getPos();
 		virtual void desenharSprite() = 0;
-		virtual void salvar() = 0;
+		virtual void salvar(int save) = 0;
+		virtual void limparArquivo(int save) = 0;
 	};
 }
 

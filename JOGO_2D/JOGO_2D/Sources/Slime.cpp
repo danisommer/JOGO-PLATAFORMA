@@ -48,7 +48,10 @@ namespace Entidades
 			}
 
 		}
-		void Slime::salvar()
+		void Slime::limparArquivo(int save)
+		{
+		}
+		void Slime::salvar(int save)
 		{
 			cout << "salvou slime" << endl;
 

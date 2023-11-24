@@ -85,10 +85,15 @@ namespace Entidades
 
 			}
 		}
-		void Serra::salvar()
+		void Serra::salvar(int save)
 		{
 			cout << "salvou serra" << endl;
 
 		}
+		void Serra::limparArquivo(int save)
+		{
+
+		}
+
 	}
 }

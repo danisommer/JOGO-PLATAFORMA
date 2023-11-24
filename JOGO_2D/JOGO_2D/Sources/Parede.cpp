@@ -28,7 +28,10 @@ namespace Entidades
 		{
 
 		}
-		void Parede::salvar()
+		void Parede::limparArquivo(int save)
+		{
+		}
+		void Parede::salvar(int save)
 		{
 			cout << "salvou parede" << endl;
 

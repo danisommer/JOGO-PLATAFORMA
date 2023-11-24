@@ -148,7 +148,11 @@ namespace Entidades
 		gerenciador_grafico->desenhaSprite(sprite);
 	}
 
-	void Projetil::salvar()
+	void Projetil::limparArquivo(int save)
+	{
+	}
+
+	void Projetil::salvar(int save)
 	{
 		cout << "salvou projetil" << endl;
 

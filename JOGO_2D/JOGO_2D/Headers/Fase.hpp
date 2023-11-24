@@ -74,7 +74,8 @@ namespace Fases
 		void setDerrota(bool d);
 		void verificaFase();
 
-		void salvarJogo();
-		void recuperarJogo();
+		void limparArquivo(int save);
+		void salvarJogo(int save);
+		void recuperarJogo(int save);
 	};
 }

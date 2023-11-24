@@ -22,14 +22,18 @@ private:
 	Fases::Floresta fase1;
 	Fases::Ruinas fase2;
 
+	sf::Font* fonte;
+
 	Tela telaPausa;
 	sf::Text tituloPausa;
-	sf::Sprite* fundoPausa;
-	Texture* imagemFundo;
+
+	Tela telaMundos;
+	sf::Text tituloMundos;
 
 	bool derrota;
 	bool concluida;
 	bool salvar;
+	bool carregar;
 
 public:
 	Principal();
@@ -38,6 +42,8 @@ public:
 	void executarFase1(int n_jogadores);
 	void executarFase2(int n_jogadores);
 	int exibirMenuPausa();
+	int exibirMenuMundos();
 	void inicializaMenu();
+	void inicializaMundos();
 	bool getConcluida();
 };

@@ -68,7 +68,9 @@ namespace Entidades
 			void setConcluiuFase(bool cf);
 			bool getConcluiuFase();
 
-			void salvar();
+			void salvar(int save);
+			void limparArquivo(int save);
+
 
 		};
 	}

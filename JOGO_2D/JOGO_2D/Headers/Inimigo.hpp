@@ -68,6 +68,8 @@ namespace Entidades
 			static bool getChefaoMorreu();
 			static void setChefaoMorreu(bool cm);
 			static Vector2f getPosChefao();
+			void limparArquivo(int save) = 0;
+			void salvar(int save) = 0;
 		};
 	}
 }

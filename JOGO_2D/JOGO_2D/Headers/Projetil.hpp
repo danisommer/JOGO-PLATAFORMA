@@ -34,7 +34,8 @@ namespace Entidades
 		const bool getColidiu() const;
 		void desenharSprite();
 
-		void salvar();
+		void salvar(int save);
+		void limparArquivo(int save);
 
 	};
 

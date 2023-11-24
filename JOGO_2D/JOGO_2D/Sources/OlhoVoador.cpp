@@ -230,9 +230,19 @@ namespace Entidades
 
 		}
 
-		void OlhoVoador::salvar()
+		void OlhoVoador::limparArquivo(int save)
 		{
-			std::ofstream arquivo("Saves/save_olhoVoador.txt", std::ios::app);
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_olhoVoador.txt",  std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
+		}
+
+		void OlhoVoador::salvar(int save)
+		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_olhoVoador.txt", std::ios::app);
 
 			if (arquivo.is_open())
 			{
@@ -240,11 +250,7 @@ namespace Entidades
 				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
 
 				arquivo.close();
-
-				std::cout << "olhoVoador salvo com sucesso!\n";
 			}
 		}
-
-
 	}
 }

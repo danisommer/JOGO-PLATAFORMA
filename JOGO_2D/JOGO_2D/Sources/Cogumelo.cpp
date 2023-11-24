@@ -84,9 +84,9 @@ namespace Entidades
 			}
 		}
 
-		void Cogumelo::salvar()
+		void Cogumelo::salvar(int save)
 		{
-			std::ofstream arquivo("Saves/save_cogumelo.txt", std::ios::app);
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_cogumelo.txt", std::ios::app);
 
 			if (arquivo.is_open())
 			{
@@ -94,8 +94,16 @@ namespace Entidades
 				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
 
 				arquivo.close();
+			}
+		}
 
-				std::cout << "Cogumelo salvo com sucesso!\n";
+		void Cogumelo::limparArquivo(int save)
+		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_cogumelo.txt", std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
 			}
 		}
 

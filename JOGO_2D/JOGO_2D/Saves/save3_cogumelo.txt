@@ -1,0 +1,32 @@
+Vida: 19.5495
+Posicao: 1512.72 570
+Vida: 60
+Posicao: 2162.79 720
+Vida: 80
+Posicao: 2689.94 720
+Vida: 60
+Posicao: 3410.06 108256
+Vida: 60
+Posicao: 3289.94 720
+Vida: 60
+Posicao: 3672.85 420
+Vida: 80
+Posicao: 3989.94 720
+Vida: 80
+Posicao: 4687.21 720
+Vida: 60
+Posicao: 5337.21 720
+Vida: 80
+Posicao: 5360.06 720
+Vida: 80
+Posicao: 5727.15 720
+Vida: 80
+Posicao: 5810.06 720
+Vida: 60
+Posicao: 5439.94 720
+Vida: 80
+Posicao: 6710.06 720
+Vida: 60
+Posicao: 6810 720
+Vida: 60
+Posicao: 6489.94 720

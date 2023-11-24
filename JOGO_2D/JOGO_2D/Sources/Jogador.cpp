@@ -275,9 +275,9 @@ namespace Entidades
 			return concluiuFase;
 		}
 
-		void Jogador::salvar()
+		void Jogador::salvar(int save)
 		{
-			std::ofstream arquivo("Saves/save_jogador.txt", std::ios::app);
+			std::ofstream arquivo("Saves/save"+ to_string(save) + "_jogador.txt", std::ios::app);
 
 			if (arquivo.is_open())
 			{
@@ -285,8 +285,16 @@ namespace Entidades
 				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
 
 				arquivo.close();
+			}
+		}
 
-				std::cout << "Jogador salvo com sucesso!\n";
+		void Jogador::limparArquivo(int save)
+		{
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_jogador.txt", std::ofstream::out);
+
+			if (arquivo.is_open()) 
+			{
+				arquivo.close();
 			}
 		}
 

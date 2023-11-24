@@ -24,7 +24,8 @@ namespace Entidades
 			float getSize();
 			void atualizar();
 
-			void salvar();
+			void salvar(int save);
+			void limparArquivo(int save);
 		};
 
 	}

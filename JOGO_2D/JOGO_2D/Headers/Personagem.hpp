@@ -51,7 +51,8 @@ namespace Entidades
 			void atualizarBarraVida();
 			virtual float getVida() = 0;
 			void desenharSprite();
-			void salvar() = 0;
+			void salvar(int save) = 0;
+			void limparArquivo(int save) = 0;
 
 		};
 	}

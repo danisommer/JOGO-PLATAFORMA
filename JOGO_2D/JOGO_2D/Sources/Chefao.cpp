@@ -206,9 +206,19 @@ namespace Entidades
 			}
 		}
 
-		void Chefao::salvar()
+		void Chefao::limparArquivo(int save)
 		{
-			std::ofstream arquivo("Saves/save_chefao.txt", std::ios::app);
+			std::ofstream arquivo("Saves/save" + std::to_string(save) + "_chefao.txt", std::ofstream::out);
+
+			if (arquivo.is_open())
+			{
+				arquivo.close();
+			}
+		}
+
+		void Chefao::salvar(int save)
+		{
+			std::ofstream arquivo("Saves/save" + to_string(save) + "_chefao.txt", std::ios::app);
 
 			if (arquivo.is_open())
 			{
@@ -216,8 +226,6 @@ namespace Entidades
 				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
 
 				arquivo.close();
-
-				std::cout << "Chefao salvo com sucesso!\n";
 			}
 		}
 

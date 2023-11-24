@@ -7,9 +7,18 @@ fase1(),
 fase2(),
 derrota(false),
 concluida(false),
-salvar(false)
+salvar(false),
+carregar(false)
 {
+
+	fonte = new sf::Font();
+	if (!fonte->loadFromFile("Menu/antiquity-print.ttf"))
+	{
+		exit(1);
+	}
+
 	inicializaMenu();
+	inicializaMundos();
 }
 
 Principal::~Principal()
@@ -52,8 +61,18 @@ void Principal::executarFase1(int n_jogadores)
 
 			if (salvar)
 			{
-				fase1.salvarJogo();
-				salvar = false;
+				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+				tituloMundos.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
+
+				int op = exibirMenuMundos();
+				op++;
+				fase1.salvarJogo(op);
+			}
+			else if (carregar)
+			{
+				int op = exibirMenuMundos();
+				op++;
+				fase1.recuperarJogo(op);
 			}
 				
 
@@ -92,8 +111,18 @@ void Principal::executarFase2(int n_jogadores)
 
 			if (salvar)
 			{
-				fase2.salvarJogo();
-				salvar = false;
+				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+				tituloMundos.setPosition(gerenciador_grafico->getViewCenter().x - 250.0f, 170);
+
+				int op = exibirMenuMundos();
+				op++;
+				fase2.salvarJogo(op);
+			}
+			else if (carregar)
+			{
+				int op = exibirMenuMundos();
+				op++;
+				fase2.recuperarJogo(op);
 			}
 				
 
@@ -124,12 +153,15 @@ int Principal::exibirMenuPausa()
 			break;
 
 		case 1:
+			carregar = true;
+			gerenciador_eventos->despausarJogo();
 
 			break;
 
 		case 2:
 			salvar = true;
 			gerenciador_eventos->despausarJogo();
+
 			break;
 		}
 
@@ -142,15 +174,31 @@ int Principal::exibirMenuPausa()
 	return opcao;
 }
 
-void Principal::inicializaMenu()
+int Principal::exibirMenuMundos()
 {
+	int opcao = -1;
 
-	sf::Font* fonte = new sf::Font();
-	if (!fonte->loadFromFile("Menu/antiquity-print.ttf"))
+	while (salvar)
 	{
-		exit(1);
+		opcao = telaMundos.verificaEventoTela();
+
+		if (opcao != -1)
+		{
+			salvar = false;
+			return opcao;
+		}
+
+		gerenciador_grafico->limpaTela();
+		gerenciador_grafico->desenhaTexto(tituloMundos);
+		telaMundos.desenharTela();
+		gerenciador_grafico->mostraElemento();
 	}
 
+	return opcao;
+}
+
+void Principal::inicializaMenu()
+{
 	Text novoTexto;
 
 	std::vector<const char*> opcoes;
@@ -212,6 +260,72 @@ void Principal::inicializaMenu()
 	telaPausa.addBotao(recuperar);
 	telaPausa.addBotao(salvar);
 	telaPausa.addBotao(sair);
+}
+
+void Principal::inicializaMundos()
+{
+	tituloMundos.setFont(*fonte);
+	tituloMundos.setString("Escolha um mundo:");
+	tituloMundos.setPosition(1100, 170);
+	tituloMundos.setCharacterSize(55);
+	tituloMundos.setOutlineColor(Color::Black);
+	tituloMundos.setFillColor(Color::White);
+
+	Text novoTexto;
+
+	std::vector<const char*> opcoes;
+	std::vector<sf::Vector2f> coordenadas;
+	std::vector<std::size_t> tamanhos;
+
+	sf::RectangleShape* mundo1;
+	sf::RectangleShape* mundo2;
+	sf::RectangleShape* mundo3;
+	sf::RectangleShape* sair;
+
+	opcoes = { "Mundo 1", "Mundo 2 ","Mundo 3", "Sair" };
+	coordenadas = { { 300, 300}, { 300, 390 }, { 300, 480 }, { 300,570 } };
+	tamanhos = { 30, 30, 30, 30 };
+
+	for (size_t i = 0; i < opcoes.size(); i++)
+	{
+
+		novoTexto.setFont(*fonte);
+		novoTexto.setString(opcoes[i]);
+		novoTexto.setPosition(coordenadas[i]);
+		novoTexto.setCharacterSize(tamanhos[i]);
+		novoTexto.setOutlineColor(Color::White);
+		novoTexto.setFillColor(Color::Black);
+
+		telaMundos.addTexto(novoTexto);
+	}
+	telaMundos.setLarguraSelecionado(4);
+	telaMundos.setLarguraPadrao(2);
+
+	mundo1 = new sf::RectangleShape();
+	mundo1->setSize(sf::Vector2f(200.0f, 50.0f));
+	mundo1->setPosition(sf::Vector2f(300, 300));
+	mundo1->setFillColor(sf::Color::Red);
+
+	mundo2 = new sf::RectangleShape();
+	mundo2->setSize(sf::Vector2f(205.0f, 50.0f));
+	mundo2->setPosition(sf::Vector2f(300, 390));
+	mundo2->setFillColor(sf::Color::Red);
+
+	mundo3 = new sf::RectangleShape();
+	mundo3->setSize(sf::Vector2f(145.0f, 50.0f));
+	mundo3->setPosition(sf::Vector2f(300, 480));
+	mundo3->setFillColor(sf::Color::Red);
+
+	sair = new sf::RectangleShape();
+	sair->setSize(sf::Vector2f(95.0f, 50.0f));
+	sair->setPosition(sf::Vector2f(300, 570));
+	sair->setFillColor(sf::Color::Red);
+
+	telaMundos.addBotao(mundo1);
+	telaMundos.addBotao(mundo2);
+	telaMundos.addBotao(mundo3);
+	telaMundos.addBotao(sair);
+
 }
 
 bool Principal::getConcluida()
