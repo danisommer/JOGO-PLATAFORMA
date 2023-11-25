@@ -7,6 +7,7 @@ namespace Entidades
 	namespace Personagens
 	{
 		bool Jogador::jogadorCriado = false;
+		int Jogador::nJogadoresRecuperados = 0;
 
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam) :
 			jumpStrength(-0.16f),
@@ -25,7 +26,8 @@ namespace Entidades
 			tempoVeneno(0),
 			tempoLentidao(0),
 			tamanhoCorpo(tam),
-			concluiuFase(false)
+			concluiuFase(false),
+			nVariaveisSalvas(3)
 		{
 			dano = 0.15f;
 			vida = VIDA_MAX;
@@ -33,7 +35,7 @@ namespace Entidades
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
 			corpo.setFillColor(sf::Color::Red);
-			vel = Vector2f(5.1f, 1.1f);
+			vel = Vector2f(1.1f, 1.1f);
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
 			inicializaTeclas();
@@ -281,8 +283,31 @@ namespace Entidades
 
 			if (arquivo.is_open())
 			{
-				arquivo << "Vida: " << vida << "\n";
-				arquivo << "Posicao: " << corpo.getPosition().x << " " << corpo.getPosition().y << "\n";
+				arquivo << vida << "\n";
+				arquivo << corpo.getPosition().x << "\n";
+				arquivo << corpo.getPosition().y << "\n";
+
+				//arquivo << jumpStrength << "\n";
+				//arquivo << n_frames << "\n";
+				//arquivo << count << "\n";
+				//arquivo << lado << "\n";
+				//arquivo << anterior << "\n";
+				//arquivo << iteracoes << "\n";
+				//arquivo << ataque << "\n";
+				//arquivo << vidaAnterior << "\n";
+				//arquivo << atacando << "\n";
+				//arquivo << tomandoDano << "\n";
+
+				//arquivo << envenenado << "\n";
+				//arquivo << tempoVeneno << "\n";
+				//arquivo << tempoDecorridoVeneno << "\n";
+				//arquivo << forcaVeneno << "\n";
+
+				//arquivo << lento << "\n";
+				//arquivo << tempoLentidao << "\n";
+				//arquivo << tempoDecorridoLentidao << "\n";
+				//arquivo << forcaLentidao << "\n";
+				//arquivo << forcaPulo << "\n";
 
 				arquivo.close();
 			}
@@ -297,6 +322,64 @@ namespace Entidades
 				arquivo.close();
 			}
 		}
+
+		void Jogador::carregar(int save)
+		{
+			std::ifstream arquivo("Saves/save" + std::to_string(save) + "_jogador.txt");
+
+			if (arquivo.is_open())
+			{
+				float lixo;
+
+				for (int i = 0; i < nVariaveisSalvas * nJogadoresRecuperados; i++)
+				{
+					arquivo >> lixo;
+				}
+
+				float x;
+				float y;
+
+				arquivo >> vida;
+				
+				arquivo >> x;
+				arquivo >> y;
+
+				corpo.setPosition(x, y);
+
+				cout << "recuperei " << nJogadoresRecuperados << endl;
+
+				//arquivo >> jumpStrength;
+				//arquivo >> n_frames;
+				//arquivo >> count;
+				//arquivo >> lado;
+				//arquivo >> anterior;
+				//arquivo >> iteracoes;
+				//arquivo >> ataque;
+				//arquivo >> vidaAnterior;
+				//arquivo >> atacando;
+				//arquivo >> tomandoDano;
+
+				//arquivo >> envenenado;
+				//arquivo >> tempoVeneno;
+				//arquivo >> tempoDecorridoVeneno;
+				//arquivo >> forcaVeneno;
+
+				//arquivo >> lento;
+				//arquivo >> tempoLentidao;
+				//arquivo >> tempoDecorridoLentidao;
+				//arquivo >> forcaLentidao;
+				//arquivo >> forcaPulo;
+
+				nJogadoresRecuperados++;
+
+				arquivo.close();
+			}
+			else
+			{
+				std::cerr << "Erro ao abrir o arquivo de save." << std::endl;
+			}
+		}
+
 
 		void Jogador::inicializaAnimacoes()
 		{

@@ -19,115 +19,72 @@ carregar(false)
 
 	inicializaMenu();
 	inicializaMundos();
+
+
+	textoCarregamento.setFont(*fonte);
+	textoCarregamento.setString("Carregando...");
+	textoCarregamento.setPosition(50, 800);
+	textoCarregamento.setCharacterSize(50);
+	textoCarregamento.setOutlineColor(Color::Black);
+	textoCarregamento.setStyle(sf::Text::Bold);
+	textoCarregamento.setFillColor(Color::White);
+
 }
 
 Principal::~Principal()
 {
 }
-
-void Principal::executar()
+void Principal::telaCarregamento()
 {
+	textoCarregamento.setPosition(gerenciador_grafico->getViewCenter().x - 750.0f, textoCarregamento.getPosition().y);
+	gerenciador_grafico->limpaTela();
+	gerenciador_grafico->desenhaTexto(textoCarregamento);
+	gerenciador_grafico->mostraElemento();
 }
 
-void Principal::executarFase1(int n_jogadores)
+void Principal::alocaFase1(int n_jogadores)
 {
-	derrota = false;
-
 	fase1.desalocaEntidades();
 	fase1.instanciaEntidades("Fases/fase1-" + to_string(n_jogadores) + "p.txt");
-
-	while (!fase1.getConcluida() && !fase1.getDerrota() && gerenciador_grafico->getOpen())
-	{
-		gerenciador_eventos->Executar();
-
-		if (!gerenciador_eventos->getJogoPausado())
-		{
-			gerenciador_grafico->limpaTela();
-			fase1.atualizaCamera();
-			fase1.AtualizarPersonagens();
-			gerenciador_colisoes->Executar();
-			gerenciador_grafico->mostraElemento();
-			fase1.verificaFase();
-
-			if (fase1.getConcluida())
-				concluida = true;
-		}
-		else
-		{
-			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-
-			int opcao = exibirMenuPausa();
-
-			if (salvar)
-			{
-				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-
-				int op = exibirMenuMundos();
-				op++;
-				fase1.salvarJogo(op);
-			}
-			else if (carregar)
-			{
-				int op = exibirMenuMundos();
-				op++;
-				fase1.recuperarJogo(op);
-			}
-				
-
-		}
-		fase1.setDerrota(derrota);
-
-	}
 }
 
-void Principal::executarFase2(int n_jogadores)
+void Principal::alocaFase2(int n_jogadores)
 {
-	derrota = false;
-
 	fase2.desalocaEntidades();
 	fase2.instanciaEntidades("Fases/fase2-" + to_string(n_jogadores) + "p.txt");
+}
 
-	while (!fase2.getConcluida() && !fase2.getDerrota() && gerenciador_grafico->getOpen())
+void Principal::recuperaFase(int save)
+{
+	std::ifstream arquivo("Saves/save" + std::to_string(save) + ".txt");
+
+	if (arquivo.is_open())
 	{
-		gerenciador_eventos->Executar();
+		int f;
+		int nj;
 
-		if (!gerenciador_eventos->getJogoPausado())
+		arquivo >> f;
+		arquivo >> nj;
+
+		if (f == 1)
 		{
-			gerenciador_grafico->limpaTela();
-			fase2.atualizaCamera();
-			fase2.AtualizarPersonagens();
-			gerenciador_colisoes->Executar();
-			gerenciador_grafico->mostraElemento();
-			fase2.verificaFase();
+			fase1.recuperarJogo(save, f, nj);
 		}
-		else
+		else if (f == 2)
 		{
-			telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-
-			int opcao = exibirMenuPausa();
-
-			if (salvar)
-			{
-				telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
-
-				int op = exibirMenuMundos();
-				op++;
-				fase2.salvarJogo(op);
-			}
-			else if (carregar)
-			{
-				int op = exibirMenuMundos();
-				op++;
-				fase2.recuperarJogo(op);
-			}
-				
-
+			fase2.recuperarJogo(save, f, nj);
 		}
-		fase2.setDerrota(derrota);
 
+		arquivo.close();
+
+		executarFase(f, nj);
 	}
-	concluida = false;
+	else
+	{
+		cout << "save inexistente" << endl;
+	}
 
+	
 }
 
 int Principal::exibirMenuPausa()
@@ -143,11 +100,12 @@ int Principal::exibirMenuPausa()
 		case 3:
 			derrota = true;
 			gerenciador_eventos->despausarJogo();
+
 			break;
 		case 0:
 			gerenciador_eventos->despausarJogo();
-			break;
 
+			break;
 		case 1:
 			carregar = true;
 			gerenciador_eventos->despausarJogo();
@@ -169,6 +127,112 @@ int Principal::exibirMenuPausa()
 	return opcao;
 }
 
+void Principal::executarFase(int fase, int n_jogadores)
+{
+	if (fase == 1)
+	{
+		telaCarregamento();
+
+		derrota = false;
+
+		alocaFase1(n_jogadores);
+
+		while (!fase1.getConcluida() && !fase1.getDerrota() && gerenciador_grafico->getOpen())
+		{
+			gerenciador_eventos->Executar();
+
+			if (!gerenciador_eventos->getJogoPausado())
+			{
+				gerenciador_grafico->limpaTela();
+				fase1.atualizaCamera();
+				fase1.AtualizarPersonagens();
+				gerenciador_colisoes->Executar();
+				gerenciador_grafico->mostraElemento();
+				fase1.verificaFase();
+
+				if (fase1.getConcluida())
+					fase = 2;
+			}
+			else
+			{
+				telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+
+				int opcao = exibirMenuPausa();
+
+				if (salvar)
+				{
+					telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+
+					int op = exibirMenuMundos();
+					op++;
+					fase1.salvarJogo(op);
+				}
+				else if (carregar)
+				{
+					telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+
+					int op = exibirMenuMundos();
+					op++;
+					fase1.recuperarJogo(op, fase, n_jogadores);
+				}
+			}
+			fase1.setDerrota(derrota);
+
+		}
+	}
+	
+	if (fase == 2)
+	{
+		telaCarregamento();
+
+		derrota = false;
+
+		alocaFase2(n_jogadores);
+
+		while (!fase2.getConcluida() && !fase2.getDerrota() && gerenciador_grafico->getOpen())
+		{
+			gerenciador_eventos->Executar();
+
+			if (!gerenciador_eventos->getJogoPausado())
+			{
+				gerenciador_grafico->limpaTela();
+				fase2.atualizaCamera();
+				fase2.AtualizarPersonagens();
+				gerenciador_colisoes->Executar();
+				gerenciador_grafico->mostraElemento();
+				fase2.verificaFase();
+			}
+			else
+			{
+				telaPausa.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+
+				int opcao = exibirMenuPausa();
+
+				if (salvar)
+				{
+					telaMundos.setPosX(gerenciador_grafico->getViewCenter().x - 700.0f);
+
+					int op = exibirMenuMundos();
+					op++;
+					fase2.salvarJogo(op);
+				}
+				else if (carregar)
+				{
+					int op = exibirMenuMundos();
+					op++;
+					fase2.recuperarJogo(op, fase, n_jogadores);
+				}
+
+
+			}
+			fase2.setDerrota(derrota);
+
+		}
+		concluida = false;
+
+	}
+}
+
 int Principal::exibirMenuMundos()
 {
 	int opcao = -1;
@@ -180,6 +244,21 @@ int Principal::exibirMenuMundos()
 		if (opcao != -1)
 		{
 			salvar = false;
+			return opcao;
+		}
+
+		gerenciador_grafico->limpaTela();
+		telaMundos.desenharTela();
+		gerenciador_grafico->mostraElemento();
+	}
+
+	while (carregar)
+	{
+		opcao = telaMundos.verificaEventoTela();
+
+		if (opcao != -1)
+		{
+			carregar = false;
 			return opcao;
 		}
 

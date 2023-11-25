@@ -1,32 +1,30 @@
 Vida: 60
-Posicao: 1616.09 720
+Posicao: 1809.15 720
 Vida: 60
-Posicao: 2900 720
+Posicao: 2129.15 720
 Vida: 60
-Posicao: 3169.86 720
-Vida: 60
-Posicao: 2449.71 720
+Posicao: 2114.89 720
 Vida: 80
-Posicao: 3689.98 720
+Posicao: 2700.16 720
 Vida: 60
-Posicao: 5010.32 720
+Posicao: 3659.9 577.83
 Vida: 60
-Posicao: 4920.15 720
+Posicao: 3339.94 570
+Vida: 60
+Posicao: 4220.12 720
 Vida: 80
-Posicao: 4720.12 720
+Posicao: 4370.12 720
 Vida: 60
-Posicao: 5480.14 720
+Posicao: 4610.06 720
+Vida: 60
+Posicao: 5210.22 720
+Vida: 60
+Posicao: 5919.96 720
+Vida: 60
+Posicao: 6059.9 720
 Vida: 80
-Posicao: 4079.59 720
+Posicao: 6610.06 720
 Vida: 60
-Posicao: 5650 720
-Vida: 60
-Posicao: 5579.92 720
-Vida: 60
-Posicao: 6420.08 720
-Vida: 60
-Posicao: 6269.8 720
-Vida: 60
-Posicao: 6299.97 720
-Vida: 60
-Posicao: 6810 720
+Posicao: 6589.78 720
+Vida: 80
+Posicao: 7000.16 720

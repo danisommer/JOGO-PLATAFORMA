@@ -14,6 +14,8 @@ namespace Entidades
 		{
 		private:
 			static bool jogadorCriado;
+			static int nJogadoresRecuperados;
+			const int nVariaveisSalvas;
 
 			float jumpStrength;
 			int n_frames;
@@ -70,7 +72,7 @@ namespace Entidades
 
 			void salvar(int save);
 			void limparArquivo(int save);
-
+			void carregar(int save);
 
 		};
 	}

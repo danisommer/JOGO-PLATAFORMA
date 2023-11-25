@@ -1,2 +1,4 @@
-Posicao: 2150 400
-Posicao: 3850 450
+Posicao: 2900 550
+Posicao: 4500 400
+Posicao: 5750 550
+Posicao: 8400 500

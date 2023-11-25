@@ -27,14 +27,6 @@ Menu::Menu() :
 
 	telaGameOver.setTitulo(titulo);
 
-	textoCarregamento.setFont(*fonte);
-	textoCarregamento.setString("Carregando...");
-	textoCarregamento.setPosition(50, 800);
-	textoCarregamento.setCharacterSize(50);
-	textoCarregamento.setOutlineColor(Color::Black);
-	textoCarregamento.setStyle(sf::Text::Bold);
-	textoCarregamento.setFillColor(Color::White);
-
 	if (!imagemFundo->loadFromFile("Menu/menu.png"))
 	{
 		exit(1);
@@ -126,14 +118,15 @@ void Menu::executar()
 				evento = tela2.verificaEventoTela();
 				if (evento == 0)
 				{
-
+					objPrincipal.recuperaFase(1);
 				}
 				else if (evento == 1)
 				{
-
+					objPrincipal.recuperaFase(2);
 				}
 				else if (evento == 2)
 				{
+					objPrincipal.recuperaFase(3);
 				}
 				else if (evento == 3)
 				{
@@ -160,27 +153,9 @@ void Menu::executar()
 			case 5:
 				evento = tela4.verificaEventoTela();
 
-				if (evento == 0 || evento == 1)
-				{
-					textoCarregamento.setPosition(gerenciador_grafico->getViewCenter().x - 750.0f, textoCarregamento.getPosition().y);
-					gerenciador_grafico->limpaTela();
-					gerenciador_grafico->desenhaTexto(textoCarregamento);
-					gerenciador_grafico->mostraElemento();
-				}
-
 				if (evento == 0)
 				{
-					objPrincipal.executarFase1(n_jogadores);
-
-					if (objPrincipal.getConcluida())
-					{
-						textoCarregamento.setPosition(gerenciador_grafico->getViewCenter().x - 750.0f, textoCarregamento.getPosition().y);
-						gerenciador_grafico->limpaTela();
-						gerenciador_grafico->desenhaTexto(textoCarregamento);
-						gerenciador_grafico->mostraElemento();
-
-						objPrincipal.executarFase2(n_jogadores);
-					}
+					objPrincipal.executarFase(1, n_jogadores);
 
 					for (int i = 0; i < telaAtual.size(); i++)
 					{
@@ -191,7 +166,7 @@ void Menu::executar()
 				}
 				else if (evento == 1)
 				{
-					objPrincipal.executarFase2(n_jogadores);
+					objPrincipal.executarFase(2, n_jogadores);
 
 					for (int i = 0; i < telaAtual.size(); i++)
 					{

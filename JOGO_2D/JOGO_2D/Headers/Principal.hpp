@@ -24,6 +24,8 @@ private:
 
 	sf::Font* fonte;
 
+	sf::Text textoCarregamento;
+
 	Tela telaPausa;
 	Tela telaMundos;
 
@@ -35,12 +37,16 @@ private:
 public:
 	Principal();
 	~Principal();
-	void executar();
-	void executarFase1(int n_jogadores);
-	void executarFase2(int n_jogadores);
+	void alocaFase1(int n_jogadores);
+	void alocaFase2(int n_jogadores);
+	void recuperaFase(int save);
+
+	void executarFase(int fase, int n_jogadores);
+
 	int exibirMenuPausa();
 	int exibirMenuMundos();
 	void inicializaMenu();
 	void inicializaMundos();
 	bool getConcluida();
+	void telaCarregamento();
 };

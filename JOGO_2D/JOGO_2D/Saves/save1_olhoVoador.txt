@@ -1,28 +1,52 @@
 Vida: 45
-Posicao: 2697.23 50
+Posicao: 1530 530.106
 Vida: 45
-Posicao: 2957.28 0
+Posicao: 1809.19 680.46
 Vida: 45
-Posicao: 3472.89 150
+Posicao: 2539.94 0
 Vida: 45
-Posicao: 3730.18 50
+Posicao: 2821.16 100
 Vida: 45
-Posicao: 3930.18 700
+Posicao: 1998.94 680.151
 Vida: 45
-Posicao: 4612.83 500
+Posicao: 3039.94 50
 Vida: 45
-Posicao: 4800 100
+Posicao: 2710.06 150
 Vida: 45
-Posicao: 4747.23 0
+Posicao: 3289.94 0
 Vida: 45
-Posicao: 5387.17 450
+Posicao: 3518.78 450
 Vida: 45
-Posicao: 5879.88 650
+Posicao: 3961.1 0
 Vida: 45
-Posicao: 5017.34 0
+Posicao: 3588.9 250
 Vida: 45
-Posicao: 7289.65 400
+Posicao: 4028.84 100
 Vida: 45
-Posicao: 4510.35 650
+Posicao: 4789.94 500
 Vida: 45
-Posicao: 5822.89 450
+Posicao: 4889.94 250
+Vida: 45
+Posicao: 4650 700
+Vida: 45
+Posicao: 4818.78 200
+Vida: 45
+Posicao: 4860.06 0
+Vida: 45
+Posicao: 5558.72 450
+Vida: 45
+Posicao: 6079.88 200
+Vida: 45
+Posicao: 6121.16 300
+Vida: 45
+Posicao: 6771.16 0
+Vida: 45
+Posicao: 7889.94 400
+Vida: 45
+Posicao: 7670.12 0
+Vida: 45
+Posicao: 8390.18 50
+Vida: 45
+Posicao: 7941.21 600
+Vida: 45
+Posicao: 8059.93 350

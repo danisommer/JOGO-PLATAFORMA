@@ -76,6 +76,6 @@ namespace Fases
 
 		void limparArquivo(int save);
 		void salvarJogo(int save);
-		void recuperarJogo(int save);
+		void recuperarJogo(int save, int fase, int n_jogadores);
 	};
 }

@@ -460,6 +460,11 @@ namespace Fases
 			exit(1);
 		}
 
+		std::ofstream arquivo("Saves/save" + std::to_string(save) + ".txt", std::ofstream::out);
+
+		arquivo << fase << "\n";
+		arquivo << numJogadores << "\n";
+
 		limparArquivo(save);
 
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
@@ -521,8 +526,13 @@ namespace Fases
 		}
 	}
 
-	void Fase::recuperarJogo(int save)
+	void Fase::recuperarJogo(int save, int fase, int n_jogadores)
 	{
+		desalocaEntidades();
+		instanciaEntidades("Fases/fase" + to_string(fase) + "-" + to_string(n_jogadores) + "p.txt");
 
+		jogador->carregar(save);
+		jogador2->carregar(save);
 	}
+
 }

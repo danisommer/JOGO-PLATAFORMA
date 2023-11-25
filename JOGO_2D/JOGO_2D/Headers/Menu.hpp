@@ -27,7 +27,6 @@ private:
 
 	sf::Texture* imagemFundo;
 	sf::Sprite* sprite;
-	sf::Text textoCarregamento;
 
 	sf::Vector2i posMouse;
 	sf::Vector2f coordenadasMouse;
