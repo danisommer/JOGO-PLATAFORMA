@@ -224,8 +224,14 @@ void Menu::executar()
 
 				if (evento == 0)
 				{
-
 					Fases::Fase::gravarPontuacao(telaGameOver.coletarNome(), telaGameOver.coletarNome2());
+
+					for (int i = 0; i < telaAtual.size(); i++)
+					{
+						popTela();
+					}
+					pushTela(1);
+					pushTela(4);
 				}
 				else if (evento == 1)
 				{

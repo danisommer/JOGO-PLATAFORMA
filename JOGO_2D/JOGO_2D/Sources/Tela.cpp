@@ -77,20 +77,20 @@ int Tela::verificaEventoTela()
 
 		if (campoTexto.getGlobalBounds().contains(coordenadasMouse))
 		{
-			caixa1selecionada = true;
-			caixa2selecionada = false;
+			if (evento.type == sf::Event::MouseButtonReleased && evento.mouseButton.button == sf::Mouse::Left)
+			{
+				caixa1selecionada = true;
+				caixa2selecionada = false;
+			}
 		}
 		else if (campoTexto2.getGlobalBounds().contains(coordenadasMouse))
 		{
-			caixa1selecionada = false;
-			caixa2selecionada = true;
+			if (evento.type == sf::Event::MouseButtonReleased && evento.mouseButton.button == sf::Mouse::Left)
+			{
+				caixa1selecionada = false;
+				caixa2selecionada = true;
+			}
 		}
-		else
-		{
-			caixa1selecionada = false;
-			caixa2selecionada = false;
-		}
-
 
 		if (evento.type == sf::Event::TextEntered)
 		{
