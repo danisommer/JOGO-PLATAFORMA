@@ -144,18 +144,18 @@ void Menu::executar()
 
 				gerenciador_grafico->limpaTela();
 
+				mostrarRanking();
+
+
 				if (evento == 0)
 				{
-					popTela();
-					ordenado = false;
+					limparRanking();
 				}
-
-
-				if (!ordenado)
+				else if (evento == 1)
 				{
-					mostrarRanking();
-					ordenado = true;
+					popTela();
 				}
+
 				gerenciador_grafico->desenhaSprite(*sprite);
 
 
@@ -312,9 +312,9 @@ void Menu::inicializaTextos()
 	}
 
 
-	opcoes = { "Voltar" };
-	coordenadas = { { 70, 300} };
-	tamanhos = { 38 };
+	opcoes = { "Limpar Ranking", "Voltar" };
+	coordenadas = { { 70, 300}, {70, 390} };
+	tamanhos = { 38, 38 };
 
 	for (size_t i = 0; i < opcoes.size(); i++)
 	{
@@ -390,6 +390,8 @@ void Menu::inicializaBotoes()
 	sf::RectangleShape* mundo3;
 	sf::RectangleShape* voltar2;
 
+
+	sf::RectangleShape* limparRanking;
 	sf::RectangleShape* voltar3;
 
 	sf::RectangleShape* fase1;
@@ -475,11 +477,17 @@ void Menu::inicializaBotoes()
 
 
 	//TELA 3
+	limparRanking = new sf::RectangleShape();
+	limparRanking->setSize(sf::Vector2f(380.0f, 50.0f));
+	limparRanking->setPosition(sf::Vector2f(70, 300));
+	limparRanking->setFillColor(sf::Color::Red);
+
 	voltar3 = new sf::RectangleShape();
 	voltar3->setSize(sf::Vector2f(155.0f, 50.0f));
-	voltar3->setPosition(sf::Vector2f(70, 300));
+	voltar3->setPosition(sf::Vector2f(70, 390));
 	voltar3->setFillColor(sf::Color::Red);
 
+	tela3.addBotao(limparRanking);
 	tela3.addBotao(voltar3);
 
 	//TELA 4
@@ -575,5 +583,15 @@ void Menu::mostrarRanking()
 	else
 	{
 		std::cerr << "Erro ao abrir o arquivo de ranking." << std::endl;
+	}
+}
+
+void Menu::limparRanking()
+{
+	std::ofstream arquivo("Saves/ranking.txt", std::ofstream::out);
+
+	if (arquivo.is_open())
+	{
+		arquivo.close();
 	}
 }

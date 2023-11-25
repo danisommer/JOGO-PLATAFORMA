@@ -61,4 +61,5 @@ public:
 	void popTela();
 
 	void mostrarRanking();
+	void limparRanking();
 };
