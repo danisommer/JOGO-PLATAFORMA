@@ -1,6 +1,12 @@
 #include "../Headers/Fase.hpp"
 namespace Fases
 {
+	int Fase::pontuacaoP1 = 0;
+	int Fase::pontuacaoP2 = 0;
+
+	string Fase::nomeP1{"P1"};
+	string Fase::nomeP2{"P2"};
+
 	Fase::Fase() :
 		Ente(),
 		gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
@@ -261,6 +267,16 @@ namespace Fases
 
 	}
 
+	void Fase::ZeraPontuacao()
+	{
+		pontuacaoP1 = 0;
+		pontuacaoP2 = 0;
+
+		nomeP1 = "P1";
+		nomeP2 = "P2";
+
+	}
+
 	void Fase::AtualizarPersonagens()
 	{
 		Entidades::Personagens::Inimigo* pAuxInim = nullptr;
@@ -289,7 +305,10 @@ namespace Fases
 					if (pAuxInim) {
 						if (fabs(pAuxInim->getPos().x - jogador->getRegiaoAtaque().x) < 80.0f &&
 							fabs(pAuxInim->getPos().y - jogador->getRegiaoAtaque().y) < 80.0f)
+						{
 							pAuxInim->tomarDano(jogador->getDano());
+							pontuacaoP1 += 10;
+						}
 					}
 
 				}
@@ -306,7 +325,12 @@ namespace Fases
 					if (pAuxInim) {
 						if (fabs(pAuxInim->getPos().x - jogador2->getRegiaoAtaque().x) < 80.0f &&
 							fabs(pAuxInim->getPos().y - jogador2->getRegiaoAtaque().y) < 80.0f)
+						{
 							pAuxInim->tomarDano(jogador2->getDano());
+							pontuacaoP2 += 10;
+						}
+							
+
 					}
 
 				}
@@ -523,6 +547,25 @@ namespace Fases
 					pAuxObst->limparArquivo(save);
 				}
 			}
+		}
+	}
+
+	void Fase::gravarPontuacao(const std::string& nomeJogador, const std::string& nomeJogador2)
+	{
+		std::ofstream arquivo("Saves/ranking.txt", std::ios::app);
+
+		if (arquivo.is_open())
+		{
+			if (pontuacaoP1 != 0)
+			{
+				arquivo << pontuacaoP1 << "-" << nomeJogador << "\n";
+
+			}
+			if (pontuacaoP2 != 0)
+			{
+				arquivo << pontuacaoP2 << "-" << nomeJogador2 << "\n";
+			}
+		
 		}
 	}
 

@@ -129,6 +129,8 @@ int Principal::exibirMenuPausa()
 
 void Principal::executarFase(int fase, int n_jogadores)
 {
+	Fases::Fase::ZeraPontuacao();
+
 	if (fase == 1)
 	{
 		telaCarregamento();
@@ -173,7 +175,7 @@ void Principal::executarFase(int fase, int n_jogadores)
 
 					int op = exibirMenuMundos();
 					op++;
-					fase1.recuperarJogo(op, fase, n_jogadores);
+					//fase1.recuperarJogo(op, fase, n_jogadores);
 				}
 			}
 			fase1.setDerrota(derrota);
@@ -220,7 +222,7 @@ void Principal::executarFase(int fase, int n_jogadores)
 				{
 					int op = exibirMenuMundos();
 					op++;
-					fase2.recuperarJogo(op, fase, n_jogadores);
+					//fase2.recuperarJogo(op, fase, n_jogadores);
 				}
 
 

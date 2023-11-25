@@ -34,6 +34,11 @@ namespace Fases
 	class Fase : public Ente
 	{
 	protected:
+		static int pontuacaoP1;
+		static int pontuacaoP2;
+
+		static string nomeP1;
+		static string nomeP2;
 		Gerenciadores::Gerenciador_Grafico* gerenciador_grafico;
 		Gerenciadores::Gerenciador_Eventos* gerenciador_eventos;
 		Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
@@ -77,5 +82,8 @@ namespace Fases
 		void limparArquivo(int save);
 		void salvarJogo(int save);
 		void recuperarJogo(int save, int fase, int n_jogadores);
+
+		static void gravarPontuacao(const std::string& nomeJogador, const std::string& nomeJogador2);
+		static void ZeraPontuacao();
 	};
 }

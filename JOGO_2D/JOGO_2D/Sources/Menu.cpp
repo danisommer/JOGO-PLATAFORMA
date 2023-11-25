@@ -1,7 +1,8 @@
 #include "Menu.hpp"
 
 Menu::Menu() :
-	posicaoTela(gerenciador_grafico->getViewCenter())
+	posicaoTela(gerenciador_grafico->getViewCenter()),
+	ordenado(false)
 {
 	fonte = new sf::Font();
 	imagemFundo = new sf::Texture();
@@ -118,15 +119,15 @@ void Menu::executar()
 				evento = tela2.verificaEventoTela();
 				if (evento == 0)
 				{
-					objPrincipal.recuperaFase(1);
+					//objPrincipal.recuperaFase(1);
 				}
 				else if (evento == 1)
 				{
-					objPrincipal.recuperaFase(2);
+					//objPrincipal.recuperaFase(2);
 				}
 				else if (evento == 2)
 				{
-					objPrincipal.recuperaFase(3);
+					//objPrincipal.recuperaFase(3);
 				}
 				else if (evento == 3)
 				{
@@ -140,18 +141,51 @@ void Menu::executar()
 				break;
 			case 4:
 				evento = tela3.verificaEventoTela();
+
+				gerenciador_grafico->limpaTela();
+
 				if (evento == 0)
 				{
 					popTela();
+					ordenado = false;
 				}
 
-				gerenciador_grafico->limpaTela();
+
+				if (!ordenado)
+				{
+					mostrarRanking();
+					ordenado = true;
+				}
 				gerenciador_grafico->desenhaSprite(*sprite);
+
+
+				for (int i = 0; i < ranking.size(); i++)
+				{
+					ranking.at(i).setFont(*fonte);
+					ranking.at(i).setCharacterSize(39);
+					ranking.at(i).setOutlineColor(Color::Black);
+					ranking.at(i).setOutlineThickness(0);
+					ranking.at(i).setPosition(500, 50 + 40 * i);
+
+					gerenciador_grafico->desenhaTexto(ranking.at(i));
+				}
+
 				tela3.desenharTela();
 
 				break;
 			case 5:
 				evento = tela4.verificaEventoTela();
+
+				if (n_jogadores == 1)
+				{
+					telaGameOver.setEntradaAtiva(true);
+					telaGameOver.setEntradaAtiva2(false);
+				}
+				else if (n_jogadores == 2)
+				{
+					telaGameOver.setEntradaAtiva(true);
+					telaGameOver.setEntradaAtiva2(true);
+				}
 
 				if (evento == 0)
 				{
@@ -191,6 +225,7 @@ void Menu::executar()
 				if (evento == 0)
 				{
 
+					Fases::Fase::gravarPontuacao(telaGameOver.coletarNome(), telaGameOver.coletarNome2());
 				}
 				else if (evento == 1)
 				{
@@ -311,8 +346,8 @@ void Menu::inicializaTextos()
 
 	}
 
-	opcoes = { "Gravar pontuacao", "Sair" };
-	coordenadas = { { 70, 300}, { 70, 390 } };
+	opcoes = { "Gravar pontuacao", "Sair"};
+	coordenadas = { { 70, 300}, { 70, 390 }};
 	tamanhos = { 38, 38 };
 
 	for (size_t i = 0; i < opcoes.size(); i++)
@@ -331,6 +366,16 @@ void Menu::inicializaTextos()
 
 void Menu::inicializaBotoes()
 {
+	telaGameOver.configurarTextoEntrada(*fonte, 50, Color::Black, sf::Vector2f(600, 605));
+	telaGameOver.configurarCampoTexto(sf::Vector2f(800, 70), Color::White, sf::Vector2f(600, 600));
+	telaGameOver.setTextoCaixa(*fonte, 35, Vector2f(180, 605), "Nome do Jogador 1:");
+
+	telaGameOver.configurarTextoEntrada2(*fonte, 50, Color::Black, sf::Vector2f(600, 705));
+	telaGameOver.configurarCampoTexto2(sf::Vector2f(800, 70), Color::White, sf::Vector2f(600, 700));
+	telaGameOver.setTextoCaixa2(*fonte, 35, Vector2f(180, 705), "Nome do Jogador 2:");
+
+
+
 	sf::RectangleShape* novoJogo;
 	sf::RectangleShape* continuar;
 	sf::RectangleShape* ranking;
@@ -351,7 +396,6 @@ void Menu::inicializaBotoes()
 	sf::RectangleShape* fase2;
 	sf::RectangleShape* voltar4;
 
-	sf::RectangleShape* tentarNovamente;
 	sf::RectangleShape* gravarJogada;
 	sf::RectangleShape* sair1;
 
@@ -484,5 +528,52 @@ void Menu::popTela()
 	if (!telaAtual.empty())
 	{
 		telaAtual.pop();
+	}
+}
+
+void Menu::mostrarRanking()
+{
+	std::ifstream arquivo("Saves/ranking.txt");
+	std::vector<PlayerScore> scores; 
+
+	if (arquivo.is_open())
+	{
+		std::string linha;
+		while (std::getline(arquivo, linha))
+		{
+			size_t pos = linha.find('-');
+			if (pos != std::string::npos)
+			{
+				std::string scoreStr = linha.substr(0, pos);
+				std::string name = linha.substr(pos + 1);
+
+				int score;
+				std::istringstream iss(scoreStr);
+				if (iss >> score)
+				{
+					scores.push_back({ score, name });
+				}
+			}
+		}
+
+		arquivo.close();
+
+		std::sort(scores.begin(), scores.end(), [](const PlayerScore& a, const PlayerScore& b)
+			{
+				return a.score > b.score;
+			});
+
+		ranking.clear(); 
+
+		for (const PlayerScore& player : scores)
+		{
+			sf::Text texto;
+			texto.setString(std::to_string(player.score) + " - " + player.name);
+			ranking.push_back(texto);
+		}
+	}
+	else
+	{
+		std::cerr << "Erro ao abrir o arquivo de ranking." << std::endl;
 	}
 }
