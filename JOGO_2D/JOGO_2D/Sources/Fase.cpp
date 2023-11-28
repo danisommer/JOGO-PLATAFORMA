@@ -480,8 +480,7 @@ namespace Fases
 	{
 		if (save > 3 || save <= 0)
 		{
-			cout << "save inexistente" << endl;
-			exit(1);
+			return;
 		}
 
 		std::ofstream arquivo("Saves/save" + std::to_string(save) + ".txt", std::ofstream::out);

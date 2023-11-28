@@ -107,7 +107,7 @@ int Principal::exibirMenuPausa()
 
 			break;
 		case 1:
-			carregar = true;
+			//carregar = true;
 			gerenciador_eventos->despausarJogo();
 
 			break;

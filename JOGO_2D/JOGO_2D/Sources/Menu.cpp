@@ -85,6 +85,7 @@ void Menu::executar()
 				else if (evento == 3)
 				{
 					gerenciador_grafico->fecharJanela();
+					exit(1);
 				}
 
 				gerenciador_grafico->limpaTela();
@@ -374,11 +375,11 @@ void Menu::inicializaBotoes()
 {
 	telaGameOver.configurarTextoEntrada(*fonte, 50, Color::Black, sf::Vector2f(600, 605));
 	telaGameOver.configurarCampoTexto(sf::Vector2f(800, 70), Color::White, sf::Vector2f(600, 600));
-	telaGameOver.setTextoCaixa(*fonte, 35, Vector2f(180, 605), "Nome do Jogador 1:");
+	telaGameOver.setTextoCaixa(*fonte, 35, Vector2f(180, 620), "Nome do Jogador 1:");
 
 	telaGameOver.configurarTextoEntrada2(*fonte, 50, Color::Black, sf::Vector2f(600, 705));
 	telaGameOver.configurarCampoTexto2(sf::Vector2f(800, 70), Color::White, sf::Vector2f(600, 700));
-	telaGameOver.setTextoCaixa2(*fonte, 35, Vector2f(180, 705), "Nome do Jogador 2:");
+	telaGameOver.setTextoCaixa2(*fonte, 35, Vector2f(180, 720), "Nome do Jogador 2:");
 
 
 
