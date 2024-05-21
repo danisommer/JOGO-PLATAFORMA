@@ -57,7 +57,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return !(std::rand() % 3 == 0);
+				return !(std::rand() % 2 == 0);
 			}
 		}
 		else if (character == 'm') {
@@ -66,7 +66,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return !(std::rand() % 3 == 0);
+				return !(std::rand() % 2 == 0);
 			}
 		}
 		else if (character == 's') {
@@ -75,7 +75,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return !(std::rand() % 3 == 0);
+				return !(std::rand() % 2 == 0);
 			}
 		}
 		else if (character == 'e') {
@@ -84,7 +84,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return !(std::rand() % 3 == 0);
+				return !(std::rand() % 2 == 0);
 			}
 		}
 		else if (character == 'g') {
@@ -93,7 +93,7 @@ namespace Fases
 				return true;
 			}
 			else {
-				return !(std::rand() % 3 == 0);
+				return !(std::rand() % 2 == 0);
 			}
 		}
 
