@@ -3,6 +3,10 @@
 /JOGO_2D/build/
 /build/**/
 /JOGO_2D/build/**/
+/build/CMakeFiles/
+/build/cmake_install.cmake
+/build/CMakeCache.txt
+/build/Makefile
 
 /# Ignore CMake files
 CMakeCache.txt
@@ -33,9 +37,6 @@ CMakeFiles/
 # Ignore specific folders or files
 build/.cmake/
 build/.cmake/api/
-
-# Ignore game saves and player rankings
-build/Saves/ranking.txt
 
 # Ignore editor-specific files
 .idea/
