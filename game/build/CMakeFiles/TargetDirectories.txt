@@ -1,0 +1,3 @@
+/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles/JOGO_2D.dir
+/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles/edit_cache.dir
+/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles/rebuild_cache.dir
