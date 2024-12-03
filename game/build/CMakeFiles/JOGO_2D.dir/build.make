@@ -73,379 +73,379 @@ CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o: CMakeFiles/JOGO_2D.dir/fl
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Animacao.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Animacao.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Chefao.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Chefao.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Cogumelo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Cogumelo.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Ente.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Ente.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Entidade.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Entidade.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Espinho.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Espinho.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Fase.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Fase.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Colisoes.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Colisoes.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Eventos.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Eventos.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Gerenciador_Grafico.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Gerenciador_Grafico.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Inimigo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Inimigo.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Jogador.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Jogador.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Lista.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Lista.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/ListaEntidade.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/ListaEntidade.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Menu.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Menu.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Obstaculo.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Obstaculo.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/OlhoVoador.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/OlhoVoador.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Parede.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Parede.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Personagem.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Personagem.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Plataforma.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Plataforma.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Portal.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Portal.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Principal.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Principal.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Projetil.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Projetil.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Serra.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Serra.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Slime.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Slime.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/Tela.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/Tela.cpp.s
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o: CMakeFiles/JOGO_2D.dir/flags.make
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o: /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o: CMakeFiles/JOGO_2D.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/danizs/Programacao/JOGO-PLATAFORMA/game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o -MF CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o.d -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.o -c /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp > CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.i
 
 CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/danizs/Programacao/JOGO-PLATAFORMA/game/JOGO_2D/Sources/main.cpp -o CMakeFiles/JOGO_2D.dir/JOGO_2D/Sources/main.cpp.s
 
 # Object files for target JOGO_2D
 JOGO_2D_OBJECTS = \

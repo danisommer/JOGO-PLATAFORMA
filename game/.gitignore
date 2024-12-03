@@ -1,0 +1,42 @@
+# Ignore build directories
+/build/
+/JOGO_2D/build/
+/build/**/
+/JOGO_2D/build/**/
+
+/# Ignore CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+Makefile
+Makefile2
+CMakeLists.txt.user
+
+# Ignore temporary and backup files
+*.swp
+*.bak
+*.tmp
+*.log
+*.dSYM/
+*.DS_Store
+
+# Ignore generated assets and files in build directory
+build/Assets/
+/build/.*.swp
+build/**/*.log
+
+# Ignore CMake-related generated files
+cmake/
+CMakeFiles/
+
+# Ignore specific folders or files
+build/.cmake/
+build/.cmake/api/
+
+# Ignore game saves and player rankings
+build/Saves/ranking.txt
+
+# Ignore editor-specific files
+.idea/
+.vscode/
