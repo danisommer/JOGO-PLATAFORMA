@@ -8,7 +8,6 @@ namespace Entidades
 		class Plataforma : public Obstaculo
 		{
 		private:
-			sf::Texture textura;
 			const sf::Vector2f pos;
 			int fase;
 			bool grande;

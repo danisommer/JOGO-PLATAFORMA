@@ -8,20 +8,22 @@ namespace Entidades
 	namespace Personagens
 	{
 		Personagem::Personagem() :
-			isJumping(true),
-			gravity(GRAVIDADE),
-			velocity(0.0f, 0.0f),
+			Entidade(Vector2f(), Vector2f()),
+			vel(),
 			direcao(0.0f, 0.0f),
-			Entidade(position, corpo.getSize()),
-			voador(false),
-			vida(VIDA),
-			morto(false),
-			animacao(0),
-			moveu(true),
+			position(),
+			velocity(0.0f, 0.0f),
 			posAnterior(),
+			isJumping(true),
+			voador(false),
+			morto(false),
+			moveu(true),
 			concluida(true),
+			inimigo(false),
+			gravity(GRAVIDADE),
+			vida(VIDA),
 			dano(),
-			inimigo(false)
+			animacao(0)
 		{
 			if (!healthBarTexture.loadFromFile("Assets/vida.png")) {
 				exit(1);

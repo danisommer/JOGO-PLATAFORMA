@@ -155,7 +155,7 @@ namespace Entidades
 			else
 				lado = -1;
 
-			sprite.setTexture(animacaoAtual->getFrame(count));
+			animacaoAtual->aplicar(sprite, count);
 			sprite.setScale(getSize() * lado, getSize());
 			sprite.setPosition(corpo.getPosition().x + 20.0f, corpo.getPosition().y - 10.0f);
 		}

@@ -1,42 +1,48 @@
 #include "ListaEntidade.hpp"
-#include "Gerenciador_Grafico.hpp"
 
-Lista::ListaEntidade::ListaEntidade()
+namespace Lista
 {
-
-}
-Lista::ListaEntidade::~ListaEntidade()
-{
-
-}
-void Lista::ListaEntidade::addEntidade(Entidades::Entidade* entidade)
-{
-	if (entidade) {
-		LEs.addElemento(entidade);
-	}
-	
-}
-void Lista::ListaEntidade::removerEntidade(Entidades::Entidade* entidade)
-{
-	if (entidade)
+	void ListaEntidade::addEntidade(Entidades::Entidade* entidade)
 	{
-		LEs.removerElemento(entidade);
+		if (entidade)
+			entidades.emplace_back(entidade);
 	}
-}
-void Lista::ListaEntidade::removerEntidade(int pos)
-{
 
-}
-const int Lista::ListaEntidade::getTam() const
-{
-	return LEs.getTam();
-}
-Entidades::Entidade* Lista::ListaEntidade::operator[](int pos)
-{
-	return LEs.operator[](pos);
-}
+	void ListaEntidade::removerEntidade(Entidades::Entidade* entidade)
+	{
+		if (!entidade)
+			return;
 
-void Lista::ListaEntidade::limpar()
-{
-	LEs.limpar();
+		entidades.erase(
+			std::remove_if(entidades.begin(), entidades.end(),
+				[entidade](const std::unique_ptr<Entidades::Entidade>& e)
+				{
+					return e.get() == entidade;
+				}),
+			entidades.end());
+	}
+
+	void ListaEntidade::removerEntidade(int pos)
+	{
+		if (pos >= 0 && pos < static_cast<int>(entidades.size()))
+			entidades.erase(entidades.begin() + pos);
+	}
+
+	int ListaEntidade::getTam() const
+	{
+		return static_cast<int>(entidades.size());
+	}
+
+	Entidades::Entidade* ListaEntidade::operator[](int pos)
+	{
+		if (pos < 0 || pos >= static_cast<int>(entidades.size()))
+			return nullptr;
+
+		return entidades[pos].get();
+	}
+
+	void ListaEntidade::limpar()
+	{
+		entidades.clear();
+	}
 }

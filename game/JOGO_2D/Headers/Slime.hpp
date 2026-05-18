@@ -8,7 +8,6 @@ namespace Entidades
 		class Slime : public Obstaculo
 		{
 		private:
-			sf::Texture textura;
 			float pegajosidadePulo;
 			float pegajosidadeMovimento;
 

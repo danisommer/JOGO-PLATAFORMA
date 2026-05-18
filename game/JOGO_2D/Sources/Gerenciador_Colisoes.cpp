@@ -13,15 +13,9 @@ namespace Gerenciadores
 
 	Gerenciador_Colisoes::~Gerenciador_Colisoes()
 	{
-		delete pJogador;
-		delete pJogador2;
-
-		for (auto inimigo : inimigos)
-		{
-			delete inimigo;
-		}
-		inimigos.clear();
-
+		// O gerenciador de colisoes apenas observa as entidades; quem as
+		// possui (e portanto as destroi) e a Fase. Nao deletar aqui.
+		limparListas();
 	}
 
 	Gerenciador_Colisoes* Gerenciador_Colisoes::getGerenciador()
@@ -111,9 +105,10 @@ namespace Gerenciadores
 		inimigos.push_back(inimigo);
 	}
 
-	void Gerenciador_Colisoes::removeInimigo(int index)
+	void Gerenciador_Colisoes::removeInimigo(Entidades::Personagens::Inimigo* inimigo)
 	{
-		inimigos[index] = nullptr;
+		inimigos.erase(std::remove(inimigos.begin(), inimigos.end(), inimigo),
+			inimigos.end());
 	}
 
 	void Gerenciador_Colisoes::addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo)

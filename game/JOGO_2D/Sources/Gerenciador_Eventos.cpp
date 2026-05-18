@@ -40,7 +40,13 @@ namespace Gerenciadores
 	{
 		Event evento;
 
-		gerenciador_grafico->getJanela()->pollEvent(evento);
+		// Drena toda a fila de eventos por quadro; processar apenas um
+		// evento por quadro descarta entradas e pode perder o Closed.
+		while (gerenciador_grafico->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+				gerenciador_grafico->fecharJanela();
+		}
 
 		bool escPressionadoAtualmente = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
 
@@ -133,12 +139,6 @@ namespace Gerenciadores
 				}
 			}
 
-		}
-		
-
-		if (evento.type == sf::Event::Closed)
-		{
-			gerenciador_grafico->fecharJanela();
 		}
 	}
 	bool Gerenciador_Eventos::getJogoPausado()

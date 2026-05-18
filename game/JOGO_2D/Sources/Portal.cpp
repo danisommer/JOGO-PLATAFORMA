@@ -1,4 +1,5 @@
 #include "Portal.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 namespace Entidades
 {
@@ -28,19 +29,14 @@ namespace Entidades
 
 		void Portal::inicializaAnimacoes()
 		{
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
 
-			sf::Texture texture;
+			// Cada quadro do portal esta em um arquivo separado.
+			for (int i = 1; i < 41; i++)
+				animacaoTeleporte.adicionarTextura(
+					recursos->getTextura("Assets/Portal/Portal (" + std::to_string(i) + ").png"));
 
-			for (int i = 1; i < 41; i++) {
-				if (!texture.loadFromFile("Assets/Portal/Portal (" + std::to_string(i) + ").png"))
-				{
-					exit(1);
-				}
-
-				animacaoTeleporte.setAnimationSpeed(10.0f);
-
-				animacaoTeleporte.addFrame(texture);
-			}
+			animacaoTeleporte.setAnimationSpeed(10.0f);
 		}
 
 		void Portal::atualizarAnimacao()
@@ -49,7 +45,7 @@ namespace Entidades
 			{
 				if (cont < 40)
 				{
-					sprite.setTexture(animacaoTeleporte.getFrame(cont));
+					animacaoTeleporte.aplicar(sprite, cont);
 					cont++;
 				}
 				else

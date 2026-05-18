@@ -1,4 +1,5 @@
 #include "Jogador.hpp"
+#include "Gerenciador_Recursos.hpp"
 #include <iostream>
 #define VIDA_MAX 100.0f
 
@@ -144,7 +145,7 @@ namespace Entidades
 			}
 			iteracoes++;
 
-			sprite.setTexture(animacaoAtual->getFrame(count));
+			animacaoAtual->aplicar(sprite, count);
 			sprite.setScale(lado * 2.5f, 2.5f);
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
 
@@ -383,133 +384,53 @@ namespace Entidades
 
 		void Jogador::inicializaAnimacoes()
 		{
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
 			String pasta = jogadorCriado ? "Jogador2" : "Jogador";
+			const std::string base = "Assets/" + pasta + "/";
 
-			Animacao animacaoParado;
-			Animacao animacaoPulo;
-			Animacao animacaoAndar;
-			Animacao animacaoAtacar;
-			Animacao animacaoTomarDano;
-			Animacao animacaoAtacar2;
-			Animacao animacaoMorte;
-			Animacao animacaoAgachar;
-
-			sf::Texture texture;
-			int pedacoWidth = 120; //Largura
-			int pedacoHeight = 80; //Altura
+			const int pedacoWidth = 120;  //Largura
+			const int pedacoHeight = 80;  //Altura
 
 			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.55f, corpo.getSize().y / 2.0f);
 			sprite.setOrigin(spriteOrigin);
 
-			//ANDAR 0 
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Run.png")) {
-				exit(1);
-			}
+			Animacao animacaoAndar;
+			Animacao animacaoTomarDano;
+			Animacao animacaoMorte;
+			Animacao animacaoAtacar;
+			Animacao animacaoAtacar2;
+			Animacao animacaoParado;
+			Animacao animacaoPulo;
+			Animacao animacaoAgachar;
 
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAndar.addFrame(pedacoTexture);
-			}
-
+			//ANDAR 0
+			animacaoAndar.fatiarSpritesheet(recursos->getTextura(base + "_Run.png"), pedacoWidth, pedacoHeight);
 			animacaoAndar.setAnimationSpeed(25.0f);
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Hit.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoTomarDano.addFrame(pedacoTexture);
-			}
-
+			animacaoTomarDano.fatiarSpritesheet(recursos->getTextura(base + "_Hit.png"), pedacoWidth, pedacoHeight);
 			animacaoTomarDano.setAnimationSpeed(30.0f);
 
-
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Death.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoMorte.addFrame(pedacoTexture);
-			}
-
+			animacaoMorte.fatiarSpritesheet(recursos->getTextura(base + "_Death.png"), pedacoWidth, pedacoHeight);
 
 			//ATAQUE PESADO 3
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Attack.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAtacar.addFrame(pedacoTexture);
-			}
-
+			animacaoAtacar.fatiarSpritesheet(recursos->getTextura(base + "_Attack.png"), pedacoWidth, pedacoHeight);
 			animacaoAtacar.setAnimationSpeed(15.0f);
-			animacaoAtacar2.setAnimationSpeed(15.0f);
 
 			//ATAQUE LEVE 4
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Attack2.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAtacar2.addFrame(pedacoTexture);
-			}
-
+			animacaoAtacar2.fatiarSpritesheet(recursos->getTextura(base + "_Attack2.png"), pedacoWidth, pedacoHeight);
+			animacaoAtacar2.setAnimationSpeed(15.0f);
 
 			//PARADO 5
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Idle.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoParado.addFrame(pedacoTexture);
-			}
-
+			animacaoParado.fatiarSpritesheet(recursos->getTextura(base + "_Idle.png"), pedacoWidth, pedacoHeight);
 			animacaoParado.setAnimationSpeed(40.0f);
 
 			//PULO 6
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Jump.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoPulo.addFrame(pedacoTexture);
-			}
+			animacaoPulo.fatiarSpritesheet(recursos->getTextura(base + "_Jump.png"), pedacoWidth, pedacoHeight);
 
 			//AGACHAR 7
-			if (!texture.loadFromFile("Assets/" + pasta + "/_Crouch.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAgachar.addFrame(pedacoTexture);
-			}
-
-
+			animacaoAgachar.fatiarSpritesheet(recursos->getTextura(base + "_Crouch.png"), pedacoWidth, pedacoHeight);
 
 			animacoes.push_back(animacaoAndar);
 			animacoes.push_back(animacaoTomarDano);

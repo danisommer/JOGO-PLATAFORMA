@@ -1,4 +1,5 @@
 #include "Projetil.hpp"
+#include "Gerenciador_Recursos.hpp"
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -53,41 +54,28 @@ namespace Entidades
 
 	void Projetil::inicializaAnimacoes()
 	{
+		auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
+
 		sprite.setOrigin(Vector2f((corpo.getSize().x / 3.0f), (corpo.getSize().y / 2.0f) + 20.0f));
 
 		Animacao animacaoVoar;
 		Animacao animacaoExplodir;
-		sf::Texture texture;
-		int largura = 64;
+		const int largura = 64;
 
-		for (int i = 1; i < 60; i++) {
-			if (!texture.loadFromFile("Assets/Fireball/" + std::to_string(i) + ".png"))
-			{
-				exit(1);
-			}
+		// A animacao de voo tem cada quadro em um arquivo separado.
+		for (int i = 1; i < 60; i++)
+			animacaoVoar.adicionarTextura(
+				recursos->getTextura("Assets/Fireball/" + std::to_string(i) + ".png"));
 
-			animacaoVoar.addFrame(texture);
-		}
+		// A explosao e um spritesheet horizontal.
+		animacaoExplodir.fatiarSpritesheet(
+			recursos->getTextura("Assets/Fireball/explosao.png"), largura, largura);
 
-		if (!texture.loadFromFile("Assets/Fireball/explosao.png")) {
-			exit(1);
-		}
-
-		for (unsigned int i = 0; i < texture.getSize().x; i += largura) {
-			for (unsigned int j = 0; j < texture.getSize().y; j += largura) {
-				sf::IntRect pedacoRect(i, 0, largura, largura);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoExplodir.addFrame(pedacoTexture);
-			}
-		}
 		animacaoVoar.setAnimationSpeed(10.0f);
 		animacaoExplodir.setAnimationSpeed(7.0f);
 
-
 		animacoes.push_back(animacaoVoar);
 		animacoes.push_back(animacaoExplodir);
-
 	}
 
 
@@ -125,7 +113,7 @@ namespace Entidades
 		if (animacao == 1 && concluida)
 			explodiu = true;
 
-		sprite.setTexture(animacaoAtual->getFrame(count));
+		animacaoAtual->aplicar(sprite, count);
 		sprite.setScale(2.3f * lado, 2.3f);
 		sprite.setPosition(corpo.getPosition().x - 80.0f * lado, corpo.getPosition().y);
 

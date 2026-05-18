@@ -1,4 +1,5 @@
 #include "Serra.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 
 namespace Entidades
@@ -26,22 +27,12 @@ namespace Entidades
 
 		void Serra::inicializaAnimacoes()
 		{
-			sf::Texture texture;
-			int largura = 32;
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
+			const int largura = 32;
 
-			if (!texture.loadFromFile("Assets/Cenario/Trap/Serra.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += largura) {
-				sf::IntRect pedacoRect(x, 0, largura, largura);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacao.addFrame(pedacoTexture);
-			}
-
+			animacao.fatiarSpritesheet(
+				recursos->getTextura("Assets/Cenario/Trap/Serra.png"), largura, largura);
 			animacao.setAnimationSpeed(8.0f);
-
 		}
 
 		void Serra::atualizaAnimacao()
@@ -50,7 +41,7 @@ namespace Entidades
 			{
 				if (cont < animacao.getNumFrames())
 				{
-					sprite.setTexture(animacao.getFrame(cont));
+					animacao.aplicar(sprite, cont);
 					cont++;
 				}
 				else

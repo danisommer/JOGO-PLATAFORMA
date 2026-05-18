@@ -1,4 +1,5 @@
 #include "Cogumelo.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 #include "iostream"
 #define VIDA_MAX 60.0f
@@ -109,84 +110,38 @@ namespace Entidades
 
 		void Cogumelo::inicializaAnimacoes()
 		{
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
+			const std::string base = "Assets/Monsters/Cogumelo/";
+
+			const int pedacoWidth = 150;  //Largura
+			const int pedacoHeight = 150; //Altura
+
+			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 1.6f);
+			sprite.setOrigin(spriteOrigin);
+
 			Animacao animacaoAndando;
 			Animacao animacaoTomarDano;
 			Animacao animacaoMorte;
 			Animacao animacaoAtacar;
 			Animacao animacaoParado;
 
-			sf::Texture texture;
-			int pedacoWidth = 150; //Largura
-			int pedacoHeight = 150; //Altura
-
-			sf::Vector2f spriteOrigin(corpo.getSize().x / 0.5f, corpo.getSize().y / 1.6f);
-			sprite.setOrigin(spriteOrigin);
-
-			//WALK 0 
-			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Run.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAndando.addFrame(pedacoTexture);
-			}
+			//WALK 0
+			animacaoAndando.fatiarSpritesheet(recursos->getTextura(base + "Run.png"), pedacoWidth, pedacoHeight);
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/TakeHit.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoTomarDano.addFrame(pedacoTexture);
-			}
-
+			animacaoTomarDano.fatiarSpritesheet(recursos->getTextura(base + "TakeHit.png"), pedacoWidth, pedacoHeight);
 			animacaoTomarDano.setAnimationSpeed(20.0f);
 
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Death.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoMorte.addFrame(pedacoTexture);
-			}
-
+			animacaoMorte.fatiarSpritesheet(recursos->getTextura(base + "Death.png"), pedacoWidth, pedacoHeight);
 			animacaoMorte.setAnimationSpeed(90.0f);
 
 			//ATACAR 3
-			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Attack.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAtacar.addFrame(pedacoTexture);
-			}
-
+			animacaoAtacar.fatiarSpritesheet(recursos->getTextura(base + "Attack.png"), pedacoWidth, pedacoHeight);
 			animacaoAtacar.setAnimationSpeed(12.0f);
 
 			//PARADO 4
-			if (!texture.loadFromFile("Assets/Monsters/Cogumelo/Idle.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoParado.addFrame(pedacoTexture);
-			}
+			animacaoParado.fatiarSpritesheet(recursos->getTextura(base + "Idle.png"), pedacoWidth, pedacoHeight);
 
 			animacoes.push_back(animacaoAndando);
 			animacoes.push_back(animacaoTomarDano);

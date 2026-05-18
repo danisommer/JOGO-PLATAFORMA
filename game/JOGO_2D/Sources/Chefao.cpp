@@ -1,4 +1,5 @@
 #include "Chefao.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 #include "iostream"
 #define VIDA_MAX 600.0f
@@ -253,84 +254,38 @@ namespace Entidades
 
 		void Chefao::inicializaAnimacoes()
 		{
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
+			const std::string base = "Assets/Monsters/Chefao/";
+
+			const int pedacoWidth = 64;  //Largura
+			const int pedacoHeight = 64; //Altura
+
+			sf::Vector2f spriteOrigin((corpo.getSize().x / 2.9f), (corpo.getSize().y / 4.0f) - 10.0f);
+			sprite.setOrigin(spriteOrigin);
+
 			Animacao animacaoVoando;
 			Animacao animacaoTomarDano;
 			Animacao animacaoMorte;
 			Animacao animacaoAtacar;
 			Animacao animacaoParado;
 
-			sf::Texture texture;
-			int pedacoWidth = 64; //Largura
-			int pedacoHeight = 64; //Altura
-
-			sf::Vector2f spriteOrigin((corpo.getSize().x / 2.9f), (corpo.getSize().y / 4.0f) - 10.0f);
-			sprite.setOrigin(spriteOrigin);
-
-			//VOANDO 0 
-			if (!texture.loadFromFile("Assets/Monsters/Chefao/Flight.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoVoando.addFrame(pedacoTexture);
-			}
+			//VOANDO 0
+			animacaoVoando.fatiarSpritesheet(recursos->getTextura(base + "Flight.png"), pedacoWidth, pedacoHeight);
 
 			//TOMAR DANO 1
-			if (!texture.loadFromFile("Assets/Monsters/Chefao/TakeHit.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoTomarDano.addFrame(pedacoTexture);
-			}
-
+			animacaoTomarDano.fatiarSpritesheet(recursos->getTextura(base + "TakeHit.png"), pedacoWidth, pedacoHeight);
 			animacaoTomarDano.setAnimationSpeed(20.0f);
 
 			//MORTE 2
-			if (!texture.loadFromFile("Assets/Monsters/Chefao/Death.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoMorte.addFrame(pedacoTexture);
-			}
-
+			animacaoMorte.fatiarSpritesheet(recursos->getTextura(base + "Death.png"), pedacoWidth, pedacoHeight);
 			animacaoMorte.setAnimationSpeed(90.0f);
 
 			//ATACAR 3
-			if (!texture.loadFromFile("Assets/Monsters/Chefao/Attack.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoAtacar.addFrame(pedacoTexture);
-			}
-
+			animacaoAtacar.fatiarSpritesheet(recursos->getTextura(base + "Attack.png"), pedacoWidth, pedacoHeight);
 			animacaoAtacar.setAnimationSpeed(50.0f);
 
-			//PARADO 4 
-			if (!texture.loadFromFile("Assets/Monsters/Chefao/Flight.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += pedacoWidth) {
-				sf::IntRect pedacoRect(x, 0, pedacoWidth, pedacoHeight);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacaoParado.addFrame(pedacoTexture);
-			}
+			//PARADO 4
+			animacaoParado.fatiarSpritesheet(recursos->getTextura(base + "Flight.png"), pedacoWidth, pedacoHeight);
 
 			animacoes.push_back(animacaoVoando);
 			animacoes.push_back(animacaoTomarDano);

@@ -17,6 +17,7 @@ namespace Gerenciadores
 		}
 		view.zoom(1.0f);
 		janela->setView(view);
+		janela->setFramerateLimit(60);
 	}
 
 	Gerenciador_Grafico::~Gerenciador_Grafico()

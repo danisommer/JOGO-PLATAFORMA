@@ -4,6 +4,7 @@
 #include "Plataforma.hpp"
 #include "Parede.hpp"
 #include "Obstaculo.hpp"
+#include <algorithm>
 #include <vector>
 #include <iostream>
 
@@ -27,7 +28,7 @@ namespace Gerenciadores
 		void setJogador(Entidades::Personagens::Jogador* jogador);
 		void setJogador2(Entidades::Personagens::Jogador* jogador);
 		void addInimigo(Entidades::Personagens::Inimigo* inimigo);
-		void removeInimigo(int index);
+		void removeInimigo(Entidades::Personagens::Inimigo* inimigo);
 		void addCorpo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void addObstaculo(Entidades::Obstaculos::Obstaculo* obstaculo);
 		void verificaColisao(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma);

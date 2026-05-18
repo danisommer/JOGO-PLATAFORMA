@@ -1,4 +1,5 @@
 #include "Espinho.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 namespace Entidades
 {
@@ -28,22 +29,12 @@ namespace Entidades
 
 		void Espinho::inicializaAnimacoes()
 		{
-			sf::Texture texture;
-			int largura = 32;
+			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
+			const int largura = 32;
 
-			if (!texture.loadFromFile("Assets/Cenario/Trap/Espinho.png")) {
-				exit(1);
-			}
-
-			for (unsigned int x = 0; x < texture.getSize().x; x += largura) {
-				sf::IntRect pedacoRect(x, 0, largura, largura);
-				sf::Texture pedacoTexture;
-				pedacoTexture.loadFromImage(texture.copyToImage(), pedacoRect);
-				animacao.addFrame(pedacoTexture);
-			}
-
+			animacao.fatiarSpritesheet(
+				recursos->getTextura("Assets/Cenario/Trap/Espinho.png"), largura, largura);
 			animacao.setAnimationSpeed(15.0f);
-
 		}
 
 		void Espinho::atualizaAnimacao()
@@ -54,7 +45,7 @@ namespace Entidades
 				{
 					if (cont < animacao.getNumFrames())
 					{
-						sprite.setTexture(animacao.getFrame(cont));
+						animacao.aplicar(sprite, cont);
 						cont++;
 					}
 					else
@@ -71,7 +62,7 @@ namespace Entidades
 			}
 			else
 			{
-				sprite.setTexture(animacao.getFrame(0));
+				animacao.aplicar(sprite, 0);
 			}
 
 			sprite.setScale(3.0f, 3.0f);

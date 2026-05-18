@@ -1,4 +1,5 @@
 #include "Slime.hpp"
+#include "Gerenciador_Recursos.hpp"
 
 #include <iostream>
 
@@ -17,10 +18,8 @@ namespace Entidades
 			corpo.setFillColor(Color::Red);
 
 
-			if (!textura.loadFromFile("Assets/Cenario/Trap/Slime.png")) {
-				exit(1);
-			}
-			sprite.setTexture(textura);
+			sprite.setTexture(Gerenciadores::Gerenciador_Recursos::getGerenciador()
+				->getTextura("Assets/Cenario/Trap/Slime.png"));
 			sprite.setPosition(Vector2f(pos.x - 102.0f, pos.y - 75.0f));
 			sprite.setScale(0.5f, 0.31f);
 

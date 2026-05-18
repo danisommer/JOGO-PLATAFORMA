@@ -257,11 +257,11 @@ namespace Fases
 
 		Jogador::setJogadorCriado(false);
 
-		int numCogumelosCriados = 0;
-		int numVoadoresCriados = 0;
-		int numSerrasCriadas = 0;
-		int numEspinhosCriados = 0;
-		int numSlimesCriados = 0;
+		numCogumelosCriados = 0;
+		numVoadoresCriados = 0;
+		numSerrasCriadas = 0;
+		numEspinhosCriados = 0;
+		numSlimesCriados = 0;
 
 		Inimigo::setChefaoMorreu(false);
 
@@ -377,6 +377,14 @@ namespace Fases
 			pAuxPerso = dynamic_cast<Entidades::Personagens::Personagem*>(listaPersonagem.operator[](i));
 			if (pAuxPerso && pAuxPerso->getMorte())
 			{
+				// O gerenciador de colisoes guarda ponteiros observadores;
+				// remova-os antes de destruir a entidade para nao deixar
+				// ponteiros pendurados.
+				Entidades::Personagens::Inimigo* inim =
+					dynamic_cast<Entidades::Personagens::Inimigo*>(pAuxPerso);
+				if (inim)
+					gerenciador_colisoes->removeInimigo(inim);
+
 				listaPersonagem.removerEntidade(pAuxPerso);
 			}
 
@@ -573,8 +581,10 @@ namespace Fases
 		desalocaEntidades();
 		instanciaEntidades("Fases/fase" + to_string(fase) + "-" + to_string(n_jogadores) + "p.txt");
 
-		jogador->carregar(save);
-		jogador2->carregar(save);
+		if (jogador)
+			jogador->carregar(save);
+		if (jogador2)
+			jogador2->carregar(save);
 	}
 
 }
