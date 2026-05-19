@@ -88,14 +88,6 @@ namespace Estados
 			passos++;
 		}
 
-		// Garante ao menos um quadro visivel mesmo se o acumulador ainda
-		// nao atingiu um passo cheio.
-		if (passos == 0 && !finalizado)
-		{
-			executarPasso();
-			acumulador = 0.0f;
-		}
-
 		if (finalizado)
 		{
 			if (fase->getConcluida() && numFase == 1)

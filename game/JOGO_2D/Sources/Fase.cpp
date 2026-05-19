@@ -176,11 +176,19 @@ namespace Fases
 		}
 
 		// Atualizar personagens: temporizadores de combate, logica e gravidade.
+		// processarEntrada e chamado aqui (dentro do passo de fisica) para que
+		// o movimento horizontal seja aplicado uma vez por passo, nao uma vez
+		// por frame — o que fazia o jogador ficar na metade da velocidade
+		// quando o FPS caia abaixo de 60 (2 passos por frame).
 		for (int i = 0; i < listaPersonagem.getTam(); i++)
 		{
 			if (Personagem* p = dynamic_cast<Personagem*>(listaPersonagem[i]))
 			{
 				p->atualizarEstadoCombate();
+
+				if (Jogador* j = dynamic_cast<Jogador*>(p))
+					j->processarEntrada();
+
 				p->atualizar();
 				p->cair();
 			}

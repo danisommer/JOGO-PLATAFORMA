@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "vector": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/wsl.localhost/Ubuntu-24.04/home/danizs/prog/jogo/JOGO-PLATAFORMA/game"
 }

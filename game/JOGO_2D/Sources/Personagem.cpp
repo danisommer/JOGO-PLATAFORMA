@@ -156,15 +156,7 @@ namespace Entidades
 				healthBar.setPosition(pos.x, pos.y);
 				border.setPosition(pos.x, pos.y);
 
-				if (inimigo)
-				{
-					if (concluida)
-						healthBar.setScale((vida / vidaMax) * 0.2f, 0.2f);
-				}
-				else
-				{
-					healthBar.setScale((vida / vidaMax) * 0.2f, 0.2f);
-				}
+				healthBar.setScale((vida / vidaMax) * 0.2f, 0.2f);
 
 				border.setScale(0.2f, 0.2f);
 			}

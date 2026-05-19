@@ -57,16 +57,9 @@ namespace Gerenciadores
 
 		escPressionadoAnteriormente = escPressionadoAtualmente;
 
-		// Cada jogador interpreta a entrada com seu proprio mapeamento de
-		// teclas; o gerenciador apenas delega, sem codificar teclas aqui.
-		if (!jogoPausado)
-		{
-			if (pJogador)
-				pJogador->processarEntrada();
-
-			if (pJogador2)
-				pJogador2->processarEntrada();
-		}
+		// processarEntrada() e chamado dentro de cada passo de fisica
+		// (Fase::AtualizarPersonagens) para que o movimento seja aplicado
+		// uma vez por passo, nao uma vez por frame renderizado.
 	}
 	bool Gerenciador_Eventos::getJogoPausado()
 	{
