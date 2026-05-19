@@ -1,5 +1,6 @@
 #include "Slime.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 #include <iostream>
 
@@ -36,16 +37,10 @@ namespace Entidades
 
 		void Slime::danar(int jogador)
 		{
-			if (jogador == 1)
-			{
-				jogador1->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
-			}
-			else if (jogador == 2)
-			{
-				jogador2->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
-
-			}
-
+			Entidades::Personagens::Jogador* alvo =
+				mundo ? mundo->getJogador(jogador - 1) : nullptr;
+			if (alvo)
+				alvo->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
 		}
 		void Slime::limparArquivo(int save)
 		{

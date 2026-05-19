@@ -1,5 +1,6 @@
 #include "Espinho.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 namespace Entidades
 {
@@ -77,21 +78,15 @@ namespace Entidades
 
 		void Espinho::danar(int jogador)
 		{
-			if (!pisou) 
+			if (!pisou)
 			{
-				if (jogador == 1)
+				Entidades::Personagens::Jogador* alvo =
+					mundo ? mundo->getJogador(jogador - 1) : nullptr;
+				if (alvo)
 				{
-
-					jogador1->tomarDano(danoInstantaneo);
-					jogador1->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
+					alvo->tomarDano(danoInstantaneo);
+					alvo->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
 				}
-				else if (jogador == 2)
-				{
-
-					jogador2->tomarDano(danoInstantaneo);
-					jogador2->setEnvenenado(true, tempoEnvenenamento, veneno, Color{ 100, 255, 100 });
-				}
-
 			}
 			pisou = true;
 		}

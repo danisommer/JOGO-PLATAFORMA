@@ -3,6 +3,7 @@
 #include "Gerenciador_Grafico.hpp"
 #include "Gerenciador_Colisoes.hpp"
 #include "Gerenciador_Eventos.hpp"
+#include "Mundo.hpp"
 #include "Ruinas.hpp"
 #include "Floresta.hpp"
 #include "Tela.hpp"
@@ -22,17 +23,16 @@ private:
 	Fases::Floresta fase1;
 	Fases::Ruinas fase2;
 
-	sf::Font* fonte;
+	// Estado de sessao compartilhado por ambas as fases (pontuacao
+	// acumulada, jogadores, chefao). Injetado nas fases no construtor.
+	Mundo mundo;
+
+	const sf::Font* fonte;
 
 	sf::Text textoCarregamento;
 
 	Tela telaPausa;
 	Tela telaMundos;
-
-	bool derrota;
-	bool concluida;
-	bool salvar;
-	bool carregar;
 
 public:
 	Principal();
@@ -41,12 +41,16 @@ public:
 	void alocaFase2(int n_jogadores);
 	void recuperaFase(int save);
 
+	// Roda uma fase atraves da maquina de estados (EstadoJogo/EstadoPausa).
 	void executarFase(int fase, int n_jogadores);
 
-	int exibirMenuPausa();
-	int exibirMenuMundos();
+	// Usados pelos estados de jogo/pausa.
+	Fases::Fase* prepararFase(int numFase, int n_jogadores);
+	void telaCarregamento();
+	Tela& getTelaPausa();
+	Tela& getTelaMundos();
+	Mundo& getMundo();
+
 	void inicializaMenu();
 	void inicializaMundos();
-	bool getConcluida();
-	void telaCarregamento();
 };

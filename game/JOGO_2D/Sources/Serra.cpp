@@ -1,5 +1,6 @@
 #include "Serra.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 
 namespace Entidades
@@ -66,15 +67,10 @@ namespace Entidades
 
 		void Serra::danar(int jogador)
 		{
-			if (jogador == 1)
-			{
-				jogador1->tomarDano(dano);
-			}
-			else if (jogador == 2)
-			{
-				jogador2->tomarDano(dano);
-
-			}
+			Entidades::Personagens::Jogador* alvo =
+				mundo ? mundo->getJogador(jogador - 1) : nullptr;
+			if (alvo)
+				alvo->tomarDano(dano);
 		}
 		void Serra::limparArquivo(int save)
 		{

@@ -1,5 +1,6 @@
 #include "Portal.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 namespace Entidades
 {
@@ -84,14 +85,10 @@ namespace Entidades
 		{
 			if (infinito)
 			{
-				if (jogador == 1)
-				{
-					jogador1->setConcluiuFase(true);
-				}
-				else if (jogador == 2)
-				{
-					jogador2->setConcluiuFase(true);
-				}
+				Entidades::Personagens::Jogador* alvo =
+					mundo ? mundo->getJogador(jogador - 1) : nullptr;
+				if (alvo)
+					alvo->setConcluiuFase(true);
 			}
 		}
 		void Portal::limparArquivo(int save)

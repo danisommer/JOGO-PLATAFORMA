@@ -1,5 +1,6 @@
 #include "OlhoVoador.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 #include "iostream"
 #define VIDA_MAX 45.0f
 #define SIZE 1.8f
@@ -40,21 +41,15 @@ namespace Entidades
 
 		void OlhoVoador::atacar(int jogador)
 		{
-			if (!morto)
-				if (concluida)
+			if (!morto && concluida)
+			{
+				Jogador* alvo = mundo ? mundo->getJogador(jogador - 1) : nullptr;
+				if (alvo)
 				{
-					if (jogador == 1)
-					{
-						jogador1->tomarDano(dano);
-						jogador1->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
-					}
-					else if (jogador == 2)
-					{
-						jogador2->tomarDano(dano);
-						jogador2->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
-					}
-
+					alvo->tomarDano(dano);
+					alvo->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
 				}
+			}
 
 			animacao = 3;
 		}
@@ -118,6 +113,9 @@ namespace Entidades
 		}
 		void OlhoVoador::atualizar()
 		{
+			Jogador* jogador1 = mundo ? mundo->getJogador(0) : nullptr;
+			Jogador* jogador2 = mundo ? mundo->getJogador(1) : nullptr;
+
 			if (!parado)
 			{
 				Vector2f posJogador;

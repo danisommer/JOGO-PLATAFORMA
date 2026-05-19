@@ -225,7 +225,7 @@ void Menu::executar()
 
 				if (evento == 0)
 				{
-					Fases::Fase::gravarPontuacao(telaGameOver.coletarNome(), telaGameOver.coletarNome2());
+					objPrincipal.getMundo().gravarRanking(telaGameOver.coletarNome(), telaGameOver.coletarNome2());
 
 					for (int i = 0; i < telaAtual.size(); i++)
 					{

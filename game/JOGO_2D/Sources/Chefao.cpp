@@ -1,5 +1,6 @@
 #include "Chefao.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 #include "iostream"
 #define VIDA_MAX 600.0f
@@ -63,6 +64,9 @@ namespace Entidades
 
 		void Chefao::atualizaProjeteis()
 		{
+			Jogador* jogador1 = mundo ? mundo->getJogador(0) : nullptr;
+			Jogador* jogador2 = mundo ? mundo->getJogador(1) : nullptr;
+
 			for (int i = 0; i < projeteis.size(); i++)
 			{
 				if (projeteis.at(i) && !projeteis.at(i)->getColidiu())
@@ -135,6 +139,9 @@ namespace Entidades
 
 		void Chefao::atualizar()
 		{
+			Jogador* jogador1 = mundo ? mundo->getJogador(0) : nullptr;
+			Jogador* jogador2 = mundo ? mundo->getJogador(1) : nullptr;
+
 			if (!parado)
 			{
 				Vector2f posJogador;
@@ -202,8 +209,8 @@ namespace Entidades
 				animacao = 2;
 				voador = false;
 
-				chefaoMorreu = true;
-				posChefao = corpo.getPosition();
+				if (mundo)
+					mundo->setChefaoMorreu(true, corpo.getPosition());
 			}
 		}
 

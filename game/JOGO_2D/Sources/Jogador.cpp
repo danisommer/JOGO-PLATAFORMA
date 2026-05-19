@@ -7,12 +7,10 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		bool Jogador::jogadorCriado = false;
-		int Jogador::nJogadoresRecuperados = 0;
-
-		Jogador::Jogador(const Vector2f pos, const Vector2f tam) :
-			jumpStrength(-0.16f),
+		Jogador::Jogador(const Vector2f pos, const Vector2f tam, int indice) :
 			Personagem(),
+			indiceJogador(indice),
+			jumpStrength(-0.16f),
 			n_frames(0),
 			count(0),
 			lado(1),
@@ -27,8 +25,7 @@ namespace Entidades
 			tempoVeneno(0),
 			tempoLentidao(0),
 			tamanhoCorpo(tam),
-			concluiuFase(false),
-			nVariaveisSalvas(3)
+			concluiuFase(false)
 		{
 			dano = 0.15f;
 			vida = VIDA_MAX;
@@ -40,8 +37,6 @@ namespace Entidades
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
 			inicializaTeclas();
-
-			jogadorCriado = true;
 		}
 
 		Jogador::~Jogador() = default;
@@ -263,11 +258,6 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::setJogadorCriado(bool jc)
-		{
-			jogadorCriado = jc;
-		}
-
 		void Jogador::setConcluiuFase(bool cf)
 		{
 			concluiuFase = cf;
@@ -324,68 +314,23 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::carregar(int save)
+		float Jogador::getVidaAtual() const
 		{
-			std::ifstream arquivo("Saves/save" + std::to_string(save) + "_jogador.txt");
+			return vida;
+		}
 
-			if (arquivo.is_open())
-			{
-				float lixo;
-
-				for (int i = 0; i < nVariaveisSalvas * nJogadoresRecuperados; i++)
-				{
-					arquivo >> lixo;
-				}
-
-				float x;
-				float y;
-
-				arquivo >> vida;
-				
-				arquivo >> x;
-				arquivo >> y;
-
-				corpo.setPosition(x, y);
-
-				cout << "recuperei " << nJogadoresRecuperados << endl;
-
-				//arquivo >> jumpStrength;
-				//arquivo >> n_frames;
-				//arquivo >> count;
-				//arquivo >> lado;
-				//arquivo >> anterior;
-				//arquivo >> iteracoes;
-				//arquivo >> ataque;
-				//arquivo >> vidaAnterior;
-				//arquivo >> atacando;
-				//arquivo >> tomandoDano;
-
-				//arquivo >> envenenado;
-				//arquivo >> tempoVeneno;
-				//arquivo >> tempoDecorridoVeneno;
-				//arquivo >> forcaVeneno;
-
-				//arquivo >> lento;
-				//arquivo >> tempoLentidao;
-				//arquivo >> tempoDecorridoLentidao;
-				//arquivo >> forcaLentidao;
-				//arquivo >> forcaPulo;
-
-				nJogadoresRecuperados++;
-
-				arquivo.close();
-			}
-			else
-			{
-				std::cerr << "Erro ao abrir o arquivo de save." << std::endl;
-			}
+		void Jogador::carregarEstado(float vidaSalva, Vector2f pos)
+		{
+			vida = vidaSalva;
+			corpo.setPosition(pos);
+			sprite.setPosition(pos);
 		}
 
 
 		void Jogador::inicializaAnimacoes()
 		{
 			auto* recursos = Gerenciadores::Gerenciador_Recursos::getGerenciador();
-			String pasta = jogadorCriado ? "Jogador2" : "Jogador";
+			String pasta = (indiceJogador == 0) ? "Jogador" : "Jogador2";
 			const std::string base = "Assets/" + pasta + "/";
 
 			const int pedacoWidth = 120;  //Largura
@@ -445,7 +390,7 @@ namespace Entidades
 
 		void Jogador::inicializaTeclas()
 		{
-			if (!jogadorCriado)
+			if (indiceJogador == 0)
 			{
 				teclas.push_back(Keyboard::A);
 				teclas.push_back(Keyboard::D);

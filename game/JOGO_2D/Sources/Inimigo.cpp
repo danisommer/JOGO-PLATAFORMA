@@ -5,12 +5,6 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		Jogador* Inimigo::jogador1 = nullptr;
-		Jogador* Inimigo::jogador2 = nullptr;
-		bool Inimigo::chefaoMorreu = false;
-		Vector2f Inimigo::posChefao = Vector2f(0.0f, 0.0f);
-
-
 		Inimigo::Inimigo(Vector2f pos, Vector2f	tam) :
 			iteracoes(0),
 			Personagem(),
@@ -205,15 +199,6 @@ namespace Entidades
 		{
 			animacaoAtual = &animacoes[anim];
 		}
-		void Inimigo::setJogador(Jogador* j)
-		{
-			jogador1 = j;
-		}
-		void Inimigo::setJogador2(Jogador* j)
-		{
-			jogador2 = j;
-
-		}
 		const bool Inimigo::getVoador() const
 		{
 			return voador;
@@ -229,18 +214,6 @@ namespace Entidades
 		const float Inimigo::getDistanciaAtaqueY() const
 		{
 			return distanciaAtaqueY;
-		}
-		bool Inimigo::getChefaoMorreu()
-		{
-			return chefaoMorreu;
-		}
-		void Inimigo::setChefaoMorreu(bool cm)
-		{
-			chefaoMorreu = cm;
-		}
-		Vector2f Inimigo::getPosChefao()
-		{
-			return posChefao;
 		}
 	}
 

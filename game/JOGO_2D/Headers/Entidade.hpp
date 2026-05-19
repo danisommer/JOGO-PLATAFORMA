@@ -7,6 +7,8 @@
 
 using namespace sf;
 
+class Mundo;
+
 namespace Entidades
 {
 	class Entidade : public Ente
@@ -14,6 +16,9 @@ namespace Entidades
 	protected:
 		Sprite sprite;
 		RectangleShape corpo;
+		// Estado de sessao compartilhado, injetado pela Fase. Substitui os
+		// antigos ponteiros 'static' para jogadores em Inimigo/Obstaculo.
+		Mundo* mundo = nullptr;
 
 	public:
 		Entidade(const Vector2f pos, const Vector2f tam);
@@ -24,6 +29,7 @@ namespace Entidades
 		virtual void desenharSprite() = 0;
 		virtual void salvar(int save) = 0;
 		virtual void limparArquivo(int save) = 0;
+		void setMundo(Mundo* m) { mundo = m; }
 	};
 }
 

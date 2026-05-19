@@ -125,31 +125,49 @@ namespace Gerenciadores
 
 	void Gerenciador_Colisoes::verificaColisao(Entidades::Personagens::Personagem* corpo, RectangleShape* plataforma)
 	{
-		if (corpo->getCorpo()->getGlobalBounds().intersects(plataforma->getGlobalBounds()))
+		const sf::FloatRect a = corpo->getCorpo()->getGlobalBounds();
+		const sf::FloatRect b = plataforma->getGlobalBounds();
+
+		sf::FloatRect intersecao;
+		if (!a.intersects(b, intersecao))
+			return;
+
+		// Resolucao por profundidade de penetracao: empurra o corpo pelo
+		// eixo de MENOR sobreposicao. Isso elimina o "teletransporte"
+		// que a cadeia if/else antiga causava ao tocar quinas.
+		const float penX = intersecao.width;
+		const float penY = intersecao.height;
+
+		if (penX < penY)
 		{
-			corpo->setY(0.0f);
+			// Colisao predominantemente lateral.
+			const float centroA = a.left + a.width / 2.0f;
+			const float centroB = b.left + b.width / 2.0f;
 
-			sf::FloatRect corpoBounds = corpo->getCorpo()->getGlobalBounds();
-			sf::FloatRect plataformaBounds = plataforma->getGlobalBounds();
+			if (centroA < centroB)
+				corpo->setPos(a.left - penX, corpo->getPos().y);
+			else
+				corpo->setPos(a.left + penX, corpo->getPos().y);
+		}
+		else
+		{
+			// Colisao predominantemente vertical.
+			const float centroA = a.top + a.height / 2.0f;
+			const float centroB = b.top + b.height / 2.0f;
 
-			if (corpoBounds.top < plataformaBounds.top)
+			corpo->setY(0.0f);   // zera o acumulador vertical
+
+			if (centroA < centroB)
 			{
+				// Corpo acima: pousa sobre a plataforma.
+				corpo->setPos(corpo->getPos().x, a.top - penY);
 				corpo->setIsJumping(false);
-				corpo->setPos(corpo->getPos().x, plataformaBounds.top - corpoBounds.height);
-			}
-			else if (corpoBounds.top + corpoBounds.height > plataformaBounds.top + plataformaBounds.height)
-			{
-				corpo->setPos(corpo->getPos().x, plataformaBounds.top + plataformaBounds.height);
-			}
-			else if (corpoBounds.left < plataformaBounds.left)
-			{
-				corpo->setPos(plataformaBounds.left - corpoBounds.width, corpo->getPos().y);
 			}
 			else
 			{
-				corpo->setPos(plataformaBounds.left + plataformaBounds.width, corpo->getPos().y);
+				// Corpo abaixo: bate a cabeca na plataforma.
+				corpo->setPos(corpo->getPos().x, a.top + penY);
 			}
-
 		}
 	}
 

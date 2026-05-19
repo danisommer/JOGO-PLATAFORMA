@@ -1,5 +1,6 @@
 #include "Cogumelo.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Mundo.hpp"
 
 #include "iostream"
 #define VIDA_MAX 60.0f
@@ -44,20 +45,15 @@ namespace Entidades
 
 		void Cogumelo::atacar(int jogador)
 		{
-			if (!morto)
-				if (concluida)
+			if (!morto && concluida)
+			{
+				Jogador* alvo = mundo ? mundo->getJogador(jogador - 1) : nullptr;
+				if (alvo)
 				{
-					if (jogador == 1)
-					{
-						jogador1->tomarDano(dano);
-						envenenar(1);
-					}
-					else if (jogador == 2)
-					{
-						jogador2->tomarDano(dano);
-						envenenar(2);
-					}
+					alvo->tomarDano(dano);
+					envenenar(jogador);
 				}
+			}
 
 			animacao = 3;
 		}
@@ -75,13 +71,11 @@ namespace Entidades
 				corJogador = Color{ 100, 255, 100 };
 
 			}
-			if (jogador == 1)
+
+			Jogador* alvo = mundo ? mundo->getJogador(jogador - 1) : nullptr;
+			if (alvo)
 			{
-				jogador1->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
-			}
-			else if (jogador == 2)
-			{
-				jogador2->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
+				alvo->setEnvenenado(true, tempoEnvenenamento, forcaVeneno, corJogador);
 			}
 		}
 
@@ -169,6 +163,9 @@ namespace Entidades
 		}
 		void Cogumelo::atualizar()
 		{
+			Jogador* jogador1 = mundo ? mundo->getJogador(0) : nullptr;
+			Jogador* jogador2 = mundo ? mundo->getJogador(1) : nullptr;
+
 			if (!parado)
 			{
 				Vector2f posJogador;

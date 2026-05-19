@@ -13,9 +13,10 @@ namespace Entidades
 		class Jogador : public Personagem
 		{
 		private:
-			static bool jogadorCriado;
-			static int nJogadoresRecuperados;
-			const int nVariaveisSalvas;
+			// Indice do jogador (0 = P1, 1 = P2). Substitui o antigo
+			// 'static bool jogadorCriado', que tornava o comportamento
+			// dependente da ordem de criacao e impedia mais de 2 jogadores.
+			const int indiceJogador;
 
 			float jumpStrength;
 			int n_frames;
@@ -52,7 +53,7 @@ namespace Entidades
 			void inicializaTeclas();
 
 		public:
-			Jogador(Vector2f pos, Vector2f tam);
+			Jogador(Vector2f pos, Vector2f tam, int indiceJogador);
 			~Jogador();
 			void atualizar();
 			void atualizarAnimacao(int animacao);
@@ -66,13 +67,15 @@ namespace Entidades
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);
-			static void setJogadorCriado(bool jc);
 			void setConcluiuFase(bool cf);
 			bool getConcluiuFase();
 
 			void salvar(int save);
 			void limparArquivo(int save);
-			void carregar(int save);
+
+			// Usados pela camada de serializacao (GerenciadorSave).
+			float getVidaAtual() const;
+			void carregarEstado(float vidaSalva, Vector2f pos);
 
 		};
 	}
