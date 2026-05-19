@@ -33,6 +33,11 @@ namespace Entidades
 			float vida;
 			float dano;
 			int animacao;
+			// Contador de invulnerabilidade pos-dano (em passos). Enquanto
+			// > 0 o personagem nao recebe novo dano; durante a parte inicial
+			// ele fica atordoado (ver estaAtordoado). Isso da ao inimigo uma
+			// janela para reagir em vez de morrer preso em hit-stun.
+			int tempoInvulneravel;
 			
 
 		public:
@@ -44,7 +49,14 @@ namespace Entidades
 			void setIsJumping(bool IJ);
 			void setY(float Y);
 			void setPos(float X, float Y);
-			void tomarDano(float dano);
+			// Aplica dano respeitando os quadros de invulnerabilidade.
+			// dirKnockback (-1/0/+1) empurra a vitima nessa direcao.
+			// Devolve true se o golpe efetivamente acertou.
+			bool tomarDano(float dano, int dirKnockback = 0);
+			// Decrementa os temporizadores de combate; chamar uma vez por passo.
+			void atualizarEstadoCombate();
+			// true durante a parte inicial da invulnerabilidade (hit-stun).
+			bool estaAtordoado() const;
 			virtual void setAnimacao(int anim) = 0;
 			void morrer();
 			bool getMorte();

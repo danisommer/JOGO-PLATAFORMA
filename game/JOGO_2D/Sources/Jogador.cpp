@@ -10,8 +10,9 @@ namespace Entidades
 		{
 			// Constantes do jogador, em unidades por passo de 1/60 s.
 			constexpr float VIDA_MAX = 100.0f;
-			constexpr float VEL_JOGADOR = 4.5f;    // velocidade horizontal
-			constexpr float FORCA_PULO = -16.0f;   // impulso inicial do pulo
+			constexpr float VEL_JOGADOR = 7.0f;    // velocidade horizontal
+			constexpr float FORCA_PULO = -20.0f;   // impulso inicial do pulo
+			constexpr float DANO_JOGADOR = 18.0f;  // dano por golpe
 		}
 
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam, int indice) :
@@ -34,7 +35,7 @@ namespace Entidades
 			tamanhoCorpo(tam),
 			concluiuFase(false)
 		{
-			dano = 0.15f;
+			dano = DANO_JOGADOR;
 			vida = VIDA_MAX;
 			sprite.setPosition(pos);
 			corpo.setSize(tam);

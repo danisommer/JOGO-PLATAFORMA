@@ -26,7 +26,7 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(1.1f, 1.7f);
+			vel = Vector2f(1.5f, 1.9f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_Y = 1200.0f;
 			ALCANCE_X = 1200.0f;
@@ -76,7 +76,8 @@ namespace Entidades
 						if (jogador1->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
 						{
 							projeteis.at(i)->setColidiu(true);
-							jogador1->tomarDano(projeteis.at(i)->getDano());
+							jogador1->tomarDano(projeteis.at(i)->getDano(),
+								(jogador1->getPos().x >= projeteis.at(i)->getPos().x) ? 1 : -1);
 						}
 					}
 
@@ -85,7 +86,8 @@ namespace Entidades
 						if (jogador2->getCorpo()->getGlobalBounds().intersects(projeteis.at(i)->getCorpo()->getGlobalBounds()))
 						{
 							projeteis.at(i)->setColidiu(true);
-							jogador2->tomarDano(projeteis.at(i)->getDano());
+							jogador2->tomarDano(projeteis.at(i)->getDano(),
+								(jogador2->getPos().x >= projeteis.at(i)->getPos().x) ? 1 : -1);
 						}
 					}
 

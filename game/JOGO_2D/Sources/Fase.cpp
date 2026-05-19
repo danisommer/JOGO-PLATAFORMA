@@ -175,11 +175,12 @@ namespace Fases
 			}
 		}
 
-		// Atualizar personagens e aplicar gravidade.
+		// Atualizar personagens: temporizadores de combate, logica e gravidade.
 		for (int i = 0; i < listaPersonagem.getTam(); i++)
 		{
 			if (Personagem* p = dynamic_cast<Personagem*>(listaPersonagem[i]))
 			{
+				p->atualizarEstadoCombate();
 				p->atualizar();
 				p->cair();
 			}

@@ -13,6 +13,15 @@ namespace Entidades
 			constexpr float GRAVIDADE = 0.9f;
 			constexpr float VEL_TERMINAL = 22.0f;
 			constexpr float VIDA_INICIAL = 100.0f;
+
+			// Combate. Apos um golpe, o personagem fica INVUL_FRAMES passos
+			// sem poder receber dano; os primeiros STUN_FRAMES desse periodo
+			// sao de hit-stun (atordoado). Como STUN < INVUL, sempre sobra
+			// uma janela em que o inimigo esta livre para revidar mesmo sob
+			// pressao continua. KNOCKBACK_DIST e o empurrao do golpe.
+			constexpr int   INVUL_FRAMES = 34;
+			constexpr int   STUN_FRAMES = 15;
+			constexpr float KNOCKBACK_DIST = 14.0f;
 		}
 
 		Personagem::Personagem() :
@@ -28,7 +37,8 @@ namespace Entidades
 			inimigo(false),
 			vida(VIDA_INICIAL),
 			dano(),
-			animacao(0)
+			animacao(0),
+			tempoInvulneravel(0)
 		{
 			if (!healthBarTexture.loadFromFile("Assets/vida.png")) {
 				exit(1);
@@ -73,13 +83,38 @@ namespace Entidades
 			corpo.setPosition(X, Y);
 		}
 
-		void Personagem::tomarDano(float dano)
+		bool Personagem::tomarDano(float dano, int dirKnockback)
 		{
-			if (animacao != 2)
-			{
-				vida -= dano;
-				animacao = 1;
-			}
+			// Ja em animacao de morte: ignora.
+			if (animacao == 2)
+				return false;
+
+			// Quadros de invulnerabilidade ativos: o golpe nao acerta.
+			// E isto que impede o jogador de "derreter" o inimigo segurando
+			// o botao - cada golpe so conta a cada INVUL_FRAMES passos.
+			if (tempoInvulneravel > 0)
+				return false;
+
+			vida -= dano;
+			animacao = 1;
+			tempoInvulneravel = INVUL_FRAMES;
+
+			if (dirKnockback != 0)
+				corpo.move(static_cast<float>(dirKnockback) * KNOCKBACK_DIST, 0.0f);
+
+			return true;
+		}
+
+		void Personagem::atualizarEstadoCombate()
+		{
+			if (tempoInvulneravel > 0)
+				tempoInvulneravel--;
+		}
+
+		bool Personagem::estaAtordoado() const
+		{
+			// Atordoado durante os STUN_FRAMES iniciais da invulnerabilidade.
+			return tempoInvulneravel > (INVUL_FRAMES - STUN_FRAMES);
 		}
 
 		void Personagem::morrer()

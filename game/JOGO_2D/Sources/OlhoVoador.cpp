@@ -23,13 +23,13 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(1.7f, 1.9f);
+			vel = Vector2f(2.4f, 2.6f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_X = 900.0f;
 			ALCANCE_Y = 900.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
-			dano = 0.35f;
+			dano = 10.0f;
 
 			healthBar.setScale(vida / 500.0f, 0.2f);
 
@@ -46,7 +46,8 @@ namespace Entidades
 				Jogador* alvo = mundo ? mundo->getJogador(jogador - 1) : nullptr;
 				if (alvo)
 				{
-					alvo->tomarDano(dano);
+					const int dir = (alvo->getPos().x >= getPos().x) ? 1 : -1;
+					alvo->tomarDano(dano, dir);
 					alvo->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
 				}
 			}

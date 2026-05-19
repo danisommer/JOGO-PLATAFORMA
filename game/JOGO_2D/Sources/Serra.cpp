@@ -11,7 +11,7 @@ namespace Entidades
 			Obstaculo(pos, tam),
 			cont(0),
 			iteracoes(0),
-			dano(0.2f)
+			dano(6.0f)
 		{
 			corpo.setFillColor(Color::Red);
 			corpo.setPosition(pos);

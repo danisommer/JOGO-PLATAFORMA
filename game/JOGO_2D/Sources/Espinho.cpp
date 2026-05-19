@@ -10,7 +10,7 @@ namespace Entidades
 			Obstaculo(pos, tam),
 			cont(0),
 			iteracoes(0),
-			danoInstantaneo(0.55f),
+			danoInstantaneo(9.0f),
 			pisou(false),
 			tempoEnvenenamento(850),
 			veneno(0.035f)

@@ -17,6 +17,7 @@ namespace Sistemas
 				return;
 
 			const sf::Vector2f regiao = jogador->getRegiaoAtaque();
+			const float jogadorX = jogador->getPos().x;
 
 			for (int i = 0; i < personagens.getTam(); i++)
 			{
@@ -25,8 +26,13 @@ namespace Sistemas
 					std::fabs(inimigo->getPos().x - regiao.x) < 80.0f &&
 					std::fabs(inimigo->getPos().y - regiao.y) < 80.0f)
 				{
-					inimigo->tomarDano(jogador->getDano());
-					mundo.adicionarPontos(indiceJogador, 10);
+					// Empurra o inimigo no sentido oposto ao do jogador.
+					const int dir = (inimigo->getPos().x >= jogadorX) ? 1 : -1;
+
+					// So pontua quando o golpe realmente acerta - tomarDano
+					// devolve false durante os quadros de invulnerabilidade.
+					if (inimigo->tomarDano(jogador->getDano(), dir))
+						mundo.adicionarPontos(indiceJogador, 10);
 				}
 			}
 		}

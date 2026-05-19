@@ -1,11 +1,21 @@
 #include "Camera.hpp"
 #include "Mundo.hpp"
 #include "Jogador.hpp"
+#include <cmath>
 
 namespace Sistemas
 {
+	namespace
+	{
+		// Fracao do caminho ate o alvo percorrida por passo: da um
+		// acompanhamento suave sem deixar a camera "presa" ao jogador.
+		constexpr float SUAVIZACAO = 0.22f;
+	}
+
 	Camera::Camera() :
-		gerenciadorGrafico(Gerenciadores::Gerenciador_Grafico::getGerenciador())
+		gerenciadorGrafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
+		centroX(0.0f),
+		inicializada(false)
 	{
 	}
 
@@ -14,32 +24,35 @@ namespace Sistemas
 		Entidades::Personagens::Jogador* jogador = mundo.getJogador(0);
 		Entidades::Personagens::Jogador* jogador2 = mundo.getJogador(1);
 
-		sf::Vector2f cameraCenter = gerenciadorGrafico->getViewCenter();
-		sf::Vector2f pos;
-
+		// Alvo horizontal: jogador, ou o ponto medio entre os dois.
+		float alvoX = centroX;
 		if (jogador && jogador2)
-		{
-			float middleX = (jogador->getPos().x + jogador2->getPos().x) / 2.0f;
-			cameraCenter.x = middleX;
-			pos.x = middleX - (TELA_X / 2);
-			pos.y = -30.0f;
-		}
+			alvoX = (jogador->getPos().x + jogador2->getPos().x) / 2.0f;
 		else if (jogador2)
-		{
-			cameraCenter.x = jogador2->getPos().x;
-			pos.x = jogador2->getPos().x - (TELA_X / 2);
-			pos.y = -30.0f;
-		}
+			alvoX = jogador2->getPos().x;
 		else if (jogador)
+			alvoX = jogador->getPos().x;
+
+		// Primeiro quadro: encaixa direto, sem deslizar do canto da tela.
+		if (!inicializada)
 		{
-			cameraCenter.x = jogador->getPos().x;
-			pos.x = jogador->getPos().x - (TELA_X / 2);
-			pos.y = -30.0f;
+			centroX = alvoX;
+			inicializada = true;
 		}
+		else
+		{
+			centroX += (alvoX - centroX) * SUAVIZACAO;
+		}
+
+		// Arredondar para pixel inteiro elimina o tremor sub-pixel.
+		const float centroXInteiro = std::round(centroX);
+
+		sf::Vector2f cameraCenter = gerenciadorGrafico->getViewCenter();
+		cameraCenter.x = centroXInteiro;
 
 		sf::Sprite sprite(texturaFundo);
 		sprite.setScale(0.9f, 0.9f);
-		sprite.setPosition(pos);
+		sprite.setPosition(centroXInteiro - (TELA_X / 2.0f), -30.0f);
 
 		gerenciadorGrafico->desenhaSprite(sprite);
 		gerenciadorGrafico->setCentro(cameraCenter);

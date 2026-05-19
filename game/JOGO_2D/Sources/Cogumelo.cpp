@@ -24,11 +24,11 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(1.5f, 0.4f);
+			vel = Vector2f(2.2f, 0.4f);
 			distanciaAlvo = 30.0f;
 			corpo.setFillColor(sf::Color::Red);
 			healthBar.setScale(vida / 500.0f, 0.2f);
-			dano = 0.2f;
+			dano = 8.0f;
 			vida = VIDA_MAX;
 
 			if (rand() % 3 == 0)
@@ -50,7 +50,8 @@ namespace Entidades
 				Jogador* alvo = mundo ? mundo->getJogador(jogador - 1) : nullptr;
 				if (alvo)
 				{
-					alvo->tomarDano(dano);
+					const int dir = (alvo->getPos().x >= getPos().x) ? 1 : -1;
+					alvo->tomarDano(dano, dir);
 					envenenar(jogador);
 				}
 			}

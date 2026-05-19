@@ -91,15 +91,14 @@ namespace Entidades
 
 		void Inimigo::atualizarAnimacao()
 		{
-			if (vida != vidaAnterior)
-			{
+			// O inimigo so fica "parado" (sem agir) durante o hit-stun
+			// breve que segue um golpe - nao mais enquanto a vida muda.
+			// Assim, sob ataque continuo, ele alterna dano -> contra-ataque
+			// -> dano, em vez de morrer preso no loop de tomar dano.
+			parado = estaAtordoado();
+
+			if (parado)
 				animacao = 1;
-				parado = true;
-			}
-			else
-			{
-				parado = false;
-			}
 
 			vidaAnterior = vida;
 
