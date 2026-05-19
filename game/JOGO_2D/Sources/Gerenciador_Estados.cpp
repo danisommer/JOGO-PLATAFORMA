@@ -19,7 +19,10 @@ namespace Gerenciadores
 
 	bool Gerenciador_Estados::vazio() const
 	{
-		return pilha.empty();
+		// Considera tambem as transicoes pendentes: logo apos um empilhar()
+		// a pilha ainda esta vazia, mas o estado entrara no proximo quadro.
+		// Sem isso, o laco de 'executarFase' terminava antes de comecar.
+		return pilha.empty() && pendentes.empty();
 	}
 
 	void Gerenciador_Estados::aplicarTransicoes()

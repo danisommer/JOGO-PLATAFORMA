@@ -10,8 +10,8 @@ namespace Entidades
 	{
 		Slime::Slime(const sf::Vector2f pos, const sf::Vector2f tam) :
 			Obstaculo(pos, tam),
-			pegajosidadePulo(-0.13f),
-			pegajosidadeMovimento(0.5f)
+			pegajosidadePulo(-10.5f),
+			pegajosidadeMovimento(2.0f)
 		{
 			danoso = true;
 			corpo = sf::RectangleShape(tam);

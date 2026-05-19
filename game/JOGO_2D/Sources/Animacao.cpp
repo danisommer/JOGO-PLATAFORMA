@@ -27,7 +27,13 @@ void Animacao::setAnimationSpeed(float speed)
 
 float Animacao::getAnimationSpeed() const
 {
-	return animationSpeed;
+	// As velocidades de animacao foram ajustadas para a taxa de quadros
+	// alta da maquina original (~240 fps). Como a simulacao agora roda em
+	// passo fixo de 60 Hz, escala-se o limiar para manter as animacoes
+	// sincronizadas com o movimento (uma troca de quadro a cada
+	// animationSpeed * ESCALA passos de simulacao).
+	constexpr float ESCALA_60HZ = 0.25f;
+	return animationSpeed * ESCALA_60HZ;
 }
 
 int Animacao::getNumFrames() const

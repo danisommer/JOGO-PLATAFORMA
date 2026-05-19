@@ -192,7 +192,7 @@ void Menu::executar()
 				{
 					objPrincipal.executarFase(1, n_jogadores);
 
-					for (int i = 0; i < telaAtual.size(); i++)
+					while (!telaAtual.empty())
 					{
 						popTela();
 					}
@@ -203,7 +203,7 @@ void Menu::executar()
 				{
 					objPrincipal.executarFase(2, n_jogadores);
 
-					for (int i = 0; i < telaAtual.size(); i++)
+					while (!telaAtual.empty())
 					{
 						popTela();
 					}
@@ -227,7 +227,7 @@ void Menu::executar()
 				{
 					objPrincipal.getMundo().gravarRanking(telaGameOver.coletarNome(), telaGameOver.coletarNome2());
 
-					for (int i = 0; i < telaAtual.size(); i++)
+					while (!telaAtual.empty())
 					{
 						popTela();
 					}
@@ -236,7 +236,7 @@ void Menu::executar()
 				}
 				else if (evento == 1)
 				{
-					for (int i = 0; i < telaAtual.size(); i++)
+					while (!telaAtual.empty())
 					{
 						popTela();
 					}

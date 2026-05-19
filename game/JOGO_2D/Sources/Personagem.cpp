@@ -1,17 +1,23 @@
 #include "Personagem.hpp"
 #include <iostream>
-#define GRAVIDADE 0.018f
-#define VIDA 100.0f
 
 namespace Entidades
 {
 	namespace Personagens
 	{
+		namespace
+		{
+			// Constantes de fisica, em unidades por passo de 1/60 s.
+			// GRAVIDADE     : aceleracao vertical somada a velocity.y por passo.
+			// VEL_TERMINAL  : limite de queda, evita atravessar plataformas.
+			constexpr float GRAVIDADE = 0.9f;
+			constexpr float VEL_TERMINAL = 22.0f;
+			constexpr float VIDA_INICIAL = 100.0f;
+		}
+
 		Personagem::Personagem() :
 			Entidade(Vector2f(), Vector2f()),
 			vel(),
-			direcao(0.0f, 0.0f),
-			position(),
 			velocity(0.0f, 0.0f),
 			posAnterior(),
 			isJumping(true),
@@ -20,8 +26,7 @@ namespace Entidades
 			moveu(true),
 			concluida(true),
 			inimigo(false),
-			gravity(GRAVIDADE),
-			vida(VIDA),
+			vida(VIDA_INICIAL),
 			dano(),
 			animacao(0)
 		{
@@ -39,36 +44,28 @@ namespace Entidades
 
 		void Personagem::cair()
 		{
-			if (!voador) 
-			{
-				// Gravidade
-				if (isJumping)
-				{
-					direcao.y += gravity;
-					direcao.y += velocity.y;
-					if (gravity >= 0.18f)
-						gravity = 0.18f;
-					else
-						gravity += 0.005f;
-				}
-				else
-				{
-					gravity = GRAVIDADE;
-					direcao.y += gravity;
-				}
+			// Integracao simples da gravidade: aceleracao constante somada
+			// a velocidade vertical, com limite de velocidade terminal.
+			// Substitui o antigo hack que mutava o membro 'gravity'.
+			if (voador)
+				return;
 
-				corpo.move(0.0, direcao.y);
-			}
-			
+			velocity.y += GRAVIDADE;
+			if (velocity.y > VEL_TERMINAL)
+				velocity.y = VEL_TERMINAL;
+
+			corpo.move(0.0f, velocity.y);
 		}
 
 		void Personagem::setIsJumping(bool IJ)
 		{
 			isJumping = IJ;
 		}
+
 		void Personagem::setY(float Y)
 		{
-			direcao.y = Y;
+			// Usado pela resolucao de colisao para zerar a queda ao pousar.
+			velocity.y = Y;
 		}
 
 		void Personagem::setPos(float X, float Y)

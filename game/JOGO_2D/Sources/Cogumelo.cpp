@@ -24,7 +24,7 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = false;
-			vel = Vector2f(0.35f, 0.1f);
+			vel = Vector2f(1.5f, 0.4f);
 			distanciaAlvo = 30.0f;
 			corpo.setFillColor(sf::Color::Red);
 			healthBar.setScale(vida / 500.0f, 0.2f);

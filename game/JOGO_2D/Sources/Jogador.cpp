@@ -1,16 +1,23 @@
 #include "Jogador.hpp"
 #include "Gerenciador_Recursos.hpp"
 #include <iostream>
-#define VIDA_MAX 100.0f
 
 namespace Entidades
 {
 	namespace Personagens
 	{
+		namespace
+		{
+			// Constantes do jogador, em unidades por passo de 1/60 s.
+			constexpr float VIDA_MAX = 100.0f;
+			constexpr float VEL_JOGADOR = 4.5f;    // velocidade horizontal
+			constexpr float FORCA_PULO = -16.0f;   // impulso inicial do pulo
+		}
+
 		Jogador::Jogador(const Vector2f pos, const Vector2f tam, int indice) :
 			Personagem(),
 			indiceJogador(indice),
-			jumpStrength(-0.16f),
+			jumpStrength(FORCA_PULO),
 			n_frames(0),
 			count(0),
 			lado(1),
@@ -33,7 +40,7 @@ namespace Entidades
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
 			corpo.setFillColor(sf::Color::Red);
-			vel = Vector2f(1.1f, 1.1f);
+			vel = Vector2f(VEL_JOGADOR, VEL_JOGADOR);
 			healthBar.setScale(vida / 500.0f, 0.2f);
 			inicializaAnimacoes();
 			inicializaTeclas();
@@ -72,8 +79,8 @@ namespace Entidades
 					}
 					else
 					{
-						jumpStrength = -0.16f;
-						vel.x = 1.1f;
+						jumpStrength = FORCA_PULO;
+						vel.x = VEL_JOGADOR;
 						tempoDecorridoLentidao = 0;
 						lento = false;
 						animacoes.at(0).setAnimationSpeed(25.0f);
@@ -193,24 +200,24 @@ namespace Entidades
 		{
 			if (direita)
 			{
-				direcao.x = vel.x;
+				velocity.x = vel.x;
 				animacao = 0;
 				lado = 1;
 			}
 			else if (esquerda)
 			{
-				direcao.x = -vel.x;
+				velocity.x = -vel.x;
 				animacao = 0;
 				lado = -1;
 			}
-			
-			if(!direita && !esquerda)
+
+			if (!direita && !esquerda)
 			{
 				animacao = 5;
-				direcao.x = 0.0f;
+				velocity.x = 0.0f;
 			}
 
-			corpo.move(direcao.x, 0.0f);
+			corpo.move(velocity.x, 0.0f);
 		}
 
 		void Jogador::bater(bool batendo)
@@ -225,7 +232,7 @@ namespace Entidades
 				regiaoAtaque = Vector2f(corpo.getPosition().x + (65.0f * lado), corpo.getPosition().y);
 				atacando = true;
 
-				direcao.x = 0.0;
+				velocity.x = 0.0f;
 
 				if (ataque == 1)
 					animacao = 4;
@@ -242,20 +249,34 @@ namespace Entidades
 
 		void Jogador::pular(bool pulando)
 		{
-			if (pulando)
+			// Pulo de altura fixa: so impulsiona quando o jogador esta no
+			// chao (isJumping == false). A colisao zera isJumping ao pousar.
+			if (pulando && !isJumping)
 			{
-				if (!isJumping)
-				{
-					velocity.y = jumpStrength;
-					isJumping = true;
-					animacao = 6;
-				}
+				velocity.y = jumpStrength;
+				isJumping = true;
+				animacao = 6;
+			}
+		}
 
-			}
-			else
+		void Jogador::processarEntrada()
+		{
+			// teclas: 0 = esquerda, 1 = direita, 2 = pulo, 3 = ataque.
+			// Cada jogador traz seu proprio mapeamento (ver inicializaTeclas),
+			// portanto o gerenciador de eventos nao precisa codificar teclas.
+			if (Keyboard::isKeyPressed(teclas.at(3)))
 			{
-				velocity.y = jumpStrength / 1.13f;
+				bater(true);
+				return;
 			}
+
+			bater(false);
+
+			const bool direita = Keyboard::isKeyPressed(teclas.at(1));
+			const bool esquerda = Keyboard::isKeyPressed(teclas.at(0));
+			mover(direita, esquerda);
+
+			pular(Keyboard::isKeyPressed(teclas.at(2)));
 		}
 
 		void Jogador::setConcluiuFase(bool cf)

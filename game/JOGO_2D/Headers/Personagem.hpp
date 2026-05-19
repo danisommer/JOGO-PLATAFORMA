@@ -12,23 +12,24 @@ namespace Entidades
 		class Personagem : public Entidade
 		{
 		protected:
+			// vel      = velocidade configurada (modulo), em px por passo.
+			// velocity = velocidade ATUAL do corpo, em px por passo;
+			//            velocity.y e controlada por gravidade e pulo.
+			// A simulacao roda em passo fixo de 1/60 s (ver EstadoJogo),
+			// portanto "por passo" equivale a "por 1/60 de segundo".
 			Vector2f vel;
-			Vector2f direcao;
-			Vector2f position;
 			Vector2f velocity;
 			Vector2f posAnterior;
 			Sprite healthBar;
 			Sprite border;
 			Texture healthBarTexture;
 			Texture borderTexture;
-			Clock relogio;
 			bool isJumping;
 			bool voador;
 			bool morto;
 			bool moveu;
 			bool concluida;
 			bool inimigo;
-			float gravity;
 			float vida;
 			float dano;
 			int animacao;

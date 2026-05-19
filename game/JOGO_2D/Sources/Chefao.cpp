@@ -26,7 +26,7 @@ namespace Entidades
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(0.25f, 0.4f);
+			vel = Vector2f(1.1f, 1.7f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_Y = 1200.0f;
 			ALCANCE_X = 1200.0f;

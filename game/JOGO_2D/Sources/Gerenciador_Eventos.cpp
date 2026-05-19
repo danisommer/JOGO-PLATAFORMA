@@ -57,88 +57,15 @@ namespace Gerenciadores
 
 		escPressionadoAnteriormente = escPressionadoAtualmente;
 
+		// Cada jogador interpreta a entrada com seu proprio mapeamento de
+		// teclas; o gerenciador apenas delega, sem codificar teclas aqui.
 		if (!jogoPausado)
 		{
 			if (pJogador)
-			{
-				if (Keyboard::isKeyPressed(Keyboard::E))
-				{
-					pJogador->bater(true);
-
-				}
-				else
-				{
-					pJogador->bater(false);
-
-					if (Keyboard::isKeyPressed(Keyboard::D))
-					{
-						pJogador->mover(true, false);
-					}
-
-					if (Keyboard::isKeyPressed(Keyboard::A))
-					{
-						pJogador->mover(false, true);
-
-					}
-
-					if (!(Keyboard::isKeyPressed(Keyboard::D)) && !(Keyboard::isKeyPressed(Keyboard::A)))
-					{
-						pJogador->mover(false, false);
-					}
-
-					if (Keyboard::isKeyPressed(Keyboard::W))
-					{
-						pJogador->pular(true);
-
-					}
-					else
-					{
-						pJogador->pular(false);
-
-					}
-				}
-			}
+				pJogador->processarEntrada();
 
 			if (pJogador2)
-			{
-				if (Keyboard::isKeyPressed(Keyboard::M))
-				{
-					pJogador2->bater(true);
-
-				}
-				else
-				{
-					pJogador2->bater(false);
-
-					if (Keyboard::isKeyPressed(Keyboard::Right))
-					{
-						pJogador2->mover(true, false);
-					}
-
-					if (Keyboard::isKeyPressed(Keyboard::Left))
-					{
-						pJogador2->mover(false, true);
-
-					}
-
-					if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)))
-					{
-						pJogador2->mover(false, false);
-					}
-
-					if (Keyboard::isKeyPressed(Keyboard::Up))
-					{
-						pJogador2->pular(true);
-
-					}
-					else
-					{
-						pJogador2->pular(false);
-
-					}
-				}
-			}
-
+				pJogador2->processarEntrada();
 		}
 	}
 	bool Gerenciador_Eventos::getJogoPausado()

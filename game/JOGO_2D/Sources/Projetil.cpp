@@ -9,7 +9,7 @@ namespace Entidades
 {
 	Projetil::Projetil(const Vector2f pos, const Vector2f tam, bool direita) :
 		Entidade(pos, tam),
-		vel(1.6f),
+		vel(6.0f),
 		dano(18.0f),
 		colidiu(false),
 		explodiu(false),

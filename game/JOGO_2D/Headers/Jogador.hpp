@@ -67,6 +67,8 @@ namespace Entidades
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);
+			// Le o proprio mapeamento de teclas e aciona mover/pular/bater.
+			void processarEntrada();
 			void setConcluiuFase(bool cf);
 			bool getConcluiuFase();
 

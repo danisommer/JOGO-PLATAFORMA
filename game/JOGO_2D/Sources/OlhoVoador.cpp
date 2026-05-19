@@ -15,15 +15,15 @@ namespace Entidades
 		OlhoVoador::OlhoVoador(Vector2f pos, Vector2f tam):
 			Inimigo(pos, tam),
 			tempoLentidao(700),
-			forcaLentidao(0.5f),
-			forcaPulo(-0.14f)
+			forcaLentidao(2.0f),
+			forcaPulo(-11.0f)
 
 
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
 			voador = true;
-			vel = Vector2f(0.4f, 0.45f);
+			vel = Vector2f(1.7f, 1.9f);
 			distanciaAlvo = 30.0f;
 			ALCANCE_X = 900.0f;
 			ALCANCE_Y = 900.0f;
