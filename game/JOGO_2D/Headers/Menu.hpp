@@ -81,4 +81,10 @@ public:
 	// nem sprite de fundo); usada pelo EstadoPausa, que so quer abrir a
 	// tela de habilidades para o Mundo da run em curso.
 	static void abrirTelaHabilidades(Mundo& mundo);
+
+	// Tela de selecao de slot de save com informacoes do conteudo
+	// (fase, kills, jogadores). Slots vazios aparecem como
+	// "Vazio" e nao sao selecionaveis. Devolve o slot escolhido
+	// (1, 2 ou 3) ou 0 se o usuario voltou sem escolher.
+	int escolherSlotSave();
 };

@@ -47,6 +47,7 @@ namespace Entidades
 		{
 			dano = DANO_JOGADOR;
 			vida = VIDA_MAX;
+			vidaMaxima = VIDA_MAX;
 			sprite.setPosition(pos);
 			corpo.setSize(tam);
 			corpo.setPosition(pos);
@@ -474,7 +475,10 @@ namespace Entidades
 			const ArvoreHabilidades& arv = mundo->getArvore();
 
 			if (arv.foiDesbloqueada(ArvoreHabilidades::VIDA_EXTRA))
+			{
 				vida += 25.0f;
+				vidaMaxima += 25.0f;
+			}
 
 			if (arv.foiDesbloqueada(ArvoreHabilidades::DANO_EXTRA))
 				dano += 5.0f;

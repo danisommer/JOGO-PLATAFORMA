@@ -45,6 +45,10 @@ namespace Sistemas
 		float flashIntensidade;
 		bool venenoAtivo;
 
+		// Centro suavizado da segunda viewport (split-screen).
+		float centroX2;
+		bool inicializada2;
+
 	public:
 		Camera();
 		void atualizar(Mundo& mundo, const sf::Texture& texturaFundo);
@@ -56,6 +60,18 @@ namespace Sistemas
 
 		void definirLimites(float minX, float maxX);
 		void limparLimites();
+
+		// Renderizacao em split-screen. focoX e o centro alvo da
+		// viewport, viewport e o retangulo fracionario (0..1) onde
+		// a metade da tela deve aparecer. Suaviza/clampa internamente.
+		// "primario": passa true para a viewport que carrega o estado
+		// de suavizacao da camera principal (entre frames); a outra
+		// usa um centro independente sem afetar o estado.
+		void renderizarViewport(float focoX, const sf::FloatRect& viewport,
+			const sf::Texture& texturaFundo, bool primario);
+		// Reseta a view para tela cheia (chamado quando saimos do
+		// modo split). Apenas restaura viewport(0,0,1,1).
+		void resetarViewportCheio();
 
 		// Tela treme por 'frames' quadros com intensidade dada (px).
 		void dispararTremor(int frames, float intensidade);

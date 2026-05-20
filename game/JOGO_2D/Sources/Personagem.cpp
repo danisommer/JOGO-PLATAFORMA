@@ -36,6 +36,7 @@ namespace Entidades
 			concluida(true),
 			inimigo(false),
 			vida(VIDA_INICIAL),
+			vidaMaxima(VIDA_INICIAL),
 			dano(),
 			animacao(0),
 			tempoInvulneravel(0)
@@ -142,7 +143,11 @@ namespace Entidades
 		}
 		void Personagem::atualizarBarraVida()
 		{
-			float vidaMax = getVida();
+			// Usa a vida maxima REAL (vidaMaxima), nao a fixa de classe.
+			// Sem isto, inimigos escalonados pela fase ou jogadores
+			// com Vida Extra mostrariam uma barra que estoura a borda
+			// (porque vida > getVida()).
+			const float vidaMax = (vidaMaxima > 0.0f) ? vidaMaxima : getVida();
 
 			if (vida >= 0.0f)
 			{
@@ -156,7 +161,11 @@ namespace Entidades
 				healthBar.setPosition(pos.x, pos.y);
 				border.setPosition(pos.x, pos.y);
 
-				healthBar.setScale((vida / vidaMax) * 0.2f, 0.2f);
+				float frac = vida / vidaMax;
+				if (frac < 0.0f) frac = 0.0f;
+				if (frac > 1.0f) frac = 1.0f;
+
+				healthBar.setScale(frac * 0.2f, 0.2f);
 
 				border.setScale(0.2f, 0.2f);
 			}

@@ -1,4 +1,5 @@
 #include "Inimigo.hpp"
+#include "Gerenciador_Recursos.hpp"
 #include <iostream>
 
 namespace Entidades
@@ -22,7 +23,8 @@ namespace Entidades
 			parado(false),
 			distanciaAtaqueX(60.0f),
 			distanciaAtaqueY(30.0f),
-			teleportando(false)
+			teleportando(false),
+			nivel(1)
 		{
 			inimigo = true;
 			corpo.setSize(tam);
@@ -215,16 +217,56 @@ namespace Entidades
 			return distanciaAtaqueY;
 		}
 
+		void Inimigo::desenharSprite()
+		{
+			Personagem::desenharSprite();
+			desenharNivel();
+		}
+
+		void Inimigo::desenharNivel()
+		{
+			if (animacao == 2)  // morto: nao desenha
+				return;
+
+			// Posicionamento ao lado da borda da barra de vida. A barra
+			// e ancorada em (corpo.x - 25, corpo.y - 25) com largura
+			// ~50 px (0.2 do tamanho da textura). Colocamos o texto
+			// um pouco a direita disso.
+			const sf::Font& fonte = Gerenciadores::Gerenciador_Recursos::getGerenciador()
+				->getFonte("Menu/antiquity-print.ttf");
+
+			sf::Text texto;
+			texto.setFont(fonte);
+			texto.setString("Lv " + std::to_string(nivel));
+			texto.setCharacterSize(14);
+			texto.setFillColor(sf::Color::Yellow);
+			texto.setOutlineColor(sf::Color::Black);
+			texto.setOutlineThickness(1.0f);
+			texto.setPosition(corpo.getPosition().x + 30.0f,
+				corpo.getPosition().y - 32.0f);
+
+			Gerenciadores::Gerenciador_Grafico::getGerenciador()->desenhaTexto(texto);
+		}
+
 		void Inimigo::aplicarDificuldade(int numeroFase)
 		{
+			// Captura a vida base como vidaMaxima ANTES do escalonamento,
+			// para garantir que a barra de vida sempre tenha referencia
+			// correta (mesmo para inimigos da fase 1, sem aumento).
+			nivel = numeroFase;
+
 			if (numeroFase <= 1)
+			{
+				vidaMaxima = vida;
 				return;
+			}
 
 			const float fatorVida = 1.0f + 0.12f * (numeroFase - 1);
 			const float fatorDano = 1.0f + 0.08f * (numeroFase - 1);
 
 			vida *= fatorVida;
 			dano *= fatorDano;
+			vidaMaxima = vida;
 		}
 
 		bool Inimigo::podeAtacarAlvo(const sf::RectangleShape& alvo) const

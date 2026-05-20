@@ -5,6 +5,8 @@
 #include "Fase.hpp"
 #include "Mundo.hpp"
 #include "Camera.hpp"
+#include "Jogador.hpp"
+#include <cmath>
 
 namespace Estados
 {
@@ -61,9 +63,53 @@ namespace Estados
 	void EstadoJogo::executarPasso()
 	{
 		gerenciadorGrafico->limpaTela();
-		fase->atualizaCamera();
-		fase->AtualizarPersonagens();
-		gerenciadorColisoes->Executar();
+
+		// Decide split-screen: dois jogadores vivos a mais de
+		// LIMIAR_SPLIT pixels de distancia (horizontal ou vertical).
+		Mundo& mundo = principal->getMundo();
+		Entidades::Personagens::Jogador* j1 = mundo.getJogador(0);
+		Entidades::Personagens::Jogador* j2 = mundo.getJogador(1);
+
+		bool split = false;
+		if (j1 && j2)
+		{
+			constexpr float LIMIAR_SPLIT = 750.0f;
+			const float dx = std::fabs(j1->getPos().x - j2->getPos().x);
+			const float dy = std::fabs(j1->getPos().y - j2->getPos().y);
+			split = (dx > LIMIAR_SPLIT) || (dy > LIMIAR_SPLIT);
+		}
+
+		// Texture do background (Fase guarda o atual).
+		const sf::Texture& fundo = fase->getTexturaFundo();
+
+		if (split && j1 && j2)
+		{
+			Sistemas::Camera& cam = fase->getCamera();
+
+			// Metade esquerda segue jogador 1.
+			cam.renderizarViewport(j1->getPos().x,
+				sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f),
+				fundo, true);
+			fase->AtualizarPersonagens();
+			gerenciadorColisoes->Executar();
+
+			// Metade direita segue jogador 2 - so re-renderiza
+			// entidades (sem mexer no estado de jogo).
+			cam.renderizarViewport(j2->getPos().x,
+				sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f),
+				fundo, false);
+			fase->redesenharEntidades();
+
+			// Volta para a view padrao para HUD e overlays.
+			cam.resetarViewportCheio();
+		}
+		else
+		{
+			fase->atualizaCamera();
+			fase->AtualizarPersonagens();
+			gerenciadorColisoes->Executar();
+		}
+
 		// Overlays cinematicos da camera (flash de dano, tint de
 		// veneno) entram apos as entidades para cobri-las.
 		fase->getCamera().desenharOverlays();

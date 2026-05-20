@@ -29,6 +29,7 @@ namespace Entidades
 			ALCANCE_Y = 900.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
+			vidaMaxima = vida;
 			dano = 10.0f;
 
 			healthBar.setScale(vida / 500.0f, 0.2f);

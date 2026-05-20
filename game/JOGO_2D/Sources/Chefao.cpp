@@ -33,6 +33,7 @@ namespace Entidades
 			ALCANCE_X = 1200.0f;
 			corpo.setFillColor(sf::Color::Red);
 			vida = VIDA_MAX;
+			vidaMaxima = vida;
 			dano = 0.35f;
 			distanciaAtaqueX = 900.0f;
 			distanciaAtaqueY = 150.0f;

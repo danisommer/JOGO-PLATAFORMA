@@ -153,7 +153,13 @@ namespace Fases
 		// Mundo cobre de x=0 (parede esquerda) ate x=(xFim+1)*50
 		// (logo apos a parede direita). A camera so anda dentro deste
 		// intervalo - alem dele so ha o vazio do background.
-		minX = 0.0f;
+		//
+		// Empurramos a borda esquerda em ~90 px para dentro: a parede
+		// e o degrau de transicao para o piso principal ficam mais
+		// agradaveis quando a tela nao revela a linha exata onde o
+		// piso comeca (o usuario via uma "borda dura" antes da
+		// plataforma).
+		minX = 90.0f;
 		maxX = static_cast<float>((xFim + 1) * 50);
 	}
 
@@ -228,61 +234,72 @@ namespace Fases
 			return entidades;
 		}
 
-		// Geracao logica de plataformas. Em cada secao construimos uma
-		// "torre" de 1 a 3 plataformas, cada degrau ~3 tiles acima do
-		// anterior - alturas que cabem no pulo do jogador (~4 tiles).
-		// O degrau mais baixo fica em y=14 (3 tiles acima do piso 17),
-		// nao tao alto como antes (quando podia spawnar em y=6).
+		// Geracao logica de plataformas. Cada secao recebe UMA
+		// estrutura - escolhida aleatoriamente entre:
+		//   1) plataforma unica baixa (mais comum, mais natural)
+		//   2) escada de 2 degraus (intermediaria)
+		//   3) torre de 3 degraus (rara, espacada)
 		//
-		// Sob cada torre colocamos uma serra ou espinho no chao, dando
-		// um motivo concreto para o jogador subir nas plataformas em
-		// vez de passar correndo pelo solo.
+		// O degrau mais baixo fica em y=14 (3 tiles acima do piso 17),
+		// alcance comodo do pulo. Os degraus de uma escada/torre sao
+		// SEPARADOS horizontalmente em ~5 tiles para nao virar uma
+		// coluna apertada - dando uma sensacao mais espacosa.
+		//
+		// Sob algumas plataformas baixas (~50%) ha uma serra/espinho
+		// no chao, dando motivo para subir mas sem entupir a fase.
 
-		struct Torre
-		{
-			int xBase;
-			int alturaDegraus;
-			int xHazard;  // ponto onde o hazard fica no piso
-			char hazard;  // 's' (serra) ou 'e' (espinho)
+		std::vector<int> xPisoComHazard;
+
+		auto colocarPlataforma = [&](int x, int y) {
+			instanciarChar('p', x, y, tema, entidades, indiceJogador);
 		};
-
-		std::vector<Torre> torres;
 
 		for (int s = 0; s < numSecoes; ++s)
 		{
-			// Cada secao ganha de 1 a 2 torres, deslocadas no eixo X.
-			const int torresNaSecao = 1 + sortear(0, 1);
-			for (int t = 0; t < torresNaSecao; ++t)
+			const int inicioSecao = s * tilesPorSecao;
+			const int meioSecao = inicioSecao + tilesPorSecao / 2;
+
+			// Sorteio do tipo de estrutura.
+			const int tipo = sortear(0, 9);
+			int xBase = meioSecao + sortear(-6, 6);
+			// Pequena chance da plataforma "baixa" ser ainda mais baixa
+			// (y=15) para dar uma rampa de aprendizado.
+			const int yBase = (sortear(0, 4) == 0) ? 15 : 14;
+
+			if (tipo < 5) // 0..4: plataforma unica (50%)
 			{
-				Torre tor;
-				tor.alturaDegraus = 1 + sortear(0, 2); // 1..3
-				tor.xBase = s * tilesPorSecao + sortear(7, tilesPorSecao - 7);
-
-				// Hazard centrado embaixo do degrau mais baixo.
-				tor.xHazard = tor.xBase;
-				tor.hazard = (sortear(0, 1) == 0) ? 's' : 'e';
-				torres.push_back(tor);
-
-				int xAtual = tor.xBase;
-				for (int d = 0; d < tor.alturaDegraus; ++d)
-				{
-					// Degrau d: y = 14 - d*3, xAtual ligeiramente
-					// deslocado a cada degrau para nao virar uma coluna.
-					const int y = 14 - d * 3;
-					instanciarChar('p', xAtual, y, tema, entidades, indiceJogador);
-					xAtual += sortear(-2, 2);
-				}
+				colocarPlataforma(xBase, yBase);
+				if (sortear(0, 1) == 0)
+					xPisoComHazard.push_back(xBase);
+			}
+			else if (tipo < 8) // 5..7: escada de 2 degraus (30%)
+			{
+				const int dir = (sortear(0, 1) == 0) ? 1 : -1;
+				colocarPlataforma(xBase, yBase);
+				colocarPlataforma(xBase + 5 * dir, yBase - 3);
+				if (sortear(0, 1) == 0)
+					xPisoComHazard.push_back(xBase);
+			}
+			else // 8..9: torre de 3 degraus (20%)
+			{
+				const int dir1 = (sortear(0, 1) == 0) ? 1 : -1;
+				const int dir2 = -dir1;
+				colocarPlataforma(xBase, yBase);
+				colocarPlataforma(xBase + 5 * dir1, yBase - 3);
+				colocarPlataforma(xBase + 5 * dir1 + 5 * dir2, yBase - 6);
+				xPisoComHazard.push_back(xBase);
 			}
 		}
 
-		// Coloca os hazards do solo embaixo das torres. Garante uma
-		// brecha de 4 tiles entre torres para nao deixar a fase
-		// intransponivel (jogador precisa de espaco para pousar).
-		for (const Torre& tor : torres)
+		// Hazards de chao posicionados embaixo das plataformas mais
+		// baixas. So um a cada estrutura selecionada, alternando entre
+		// serra e espinho.
+		bool usarSerra = (sortear(0, 1) == 0);
+		for (int xH : xPisoComHazard)
 		{
-			// 'e' (espinho) tem 100x50 = 2 tiles de largura; o sprite
-			// nasce uma posicao a esquerda do x indicado.
-			instanciarChar(tor.hazard, tor.xHazard, 16, tema, entidades, indiceJogador);
+			const char tipo = usarSerra ? 's' : 'e';
+			instanciarChar(tipo, xH, 16, tema, entidades, indiceJogador);
+			usarSerra = !usarSerra;
 		}
 
 		// Inimigos: cresce a quantidade com a fase. Distribuidos pelo

@@ -25,7 +25,9 @@ namespace Sistemas
 		flashFrames(0),
 		flashFramesMax(0),
 		flashIntensidade(0.0f),
-		venenoAtivo(false)
+		venenoAtivo(false),
+		centroX2(0.0f),
+		inicializada2(false)
 	{
 	}
 
@@ -139,6 +141,90 @@ namespace Sistemas
 
 		gerenciadorGrafico->desenhaSprite(sprite);
 		gerenciadorGrafico->setCentro(cameraCenter);
+	}
+
+	void Camera::renderizarViewport(float focoX, const sf::FloatRect& viewport,
+		const sf::Texture& texturaFundo, bool primario)
+	{
+		// Cada viewport renderiza meia tela. Para evitar distorcao
+		// horizontal (compressao da imagem para caber no viewport),
+		// o tamanho LOGICO da view tambem e reduzido pela mesma
+		// proporcao.
+		const float largura = TELA_X * viewport.width;
+		const float altura  = TELA_Y * viewport.height;
+
+		// Suavizacao + clamp para o centro especifico desta viewport.
+		float& centroSuave = primario ? centroX : centroX2;
+		bool& iniciado = primario ? inicializada : inicializada2;
+
+		if (!iniciado)
+		{
+			centroSuave = focoX;
+			iniciado = true;
+		}
+		else
+		{
+			centroSuave += (focoX - centroSuave) * SUAVIZACAO;
+		}
+
+		float centroEfetivo = centroSuave;
+		if (temLimites)
+		{
+			const float metade = largura / 2.0f;
+			const float minimo = limiteMinX + metade;
+			const float maximo = limiteMaxX - metade;
+			if (minimo < maximo)
+			{
+				if (centroEfetivo < minimo) centroEfetivo = minimo;
+				if (centroEfetivo > maximo) centroEfetivo = maximo;
+			}
+			else
+			{
+				centroEfetivo = (limiteMinX + limiteMaxX) / 2.0f;
+			}
+		}
+
+		// Tremor da camera primaria so afeta a viewport primaria; a
+		// secundaria fica estavel (decisao de design para nao virar
+		// confuso no split).
+		float offsetX = 0.0f;
+		float offsetY = 0.0f;
+		if (primario && shakeFrames > 0)
+		{
+			offsetX = (static_cast<float>(std::rand()) / RAND_MAX - 0.5f)
+				* 2.0f * shakeIntensidade;
+			offsetY = (static_cast<float>(std::rand()) / RAND_MAX - 0.5f)
+				* 2.0f * shakeIntensidade;
+			shakeFrames--;
+			if (shakeFrames == 0)
+				shakeIntensidade = 0.0f;
+		}
+
+		const float centroXFinal = std::round(centroEfetivo + offsetX);
+		const float centroYFinal = std::round(altura / 2.0f + offsetY);
+
+		// Configura a view do SFML.
+		sf::View view(sf::FloatRect(0.0f, 0.0f, largura, altura));
+		view.setCenter(centroXFinal, centroYFinal);
+		view.setViewport(viewport);
+
+		auto* janela = gerenciadorGrafico->getJanela();
+		janela->setView(view);
+
+		// Background. Escalado para cobrir a largura logica da view.
+		sf::Sprite sprite(texturaFundo);
+		sprite.setScale(0.9f, 0.9f);
+		sprite.setPosition(std::round(centroEfetivo) - (largura / 2.0f), -30.0f);
+		janela->draw(sprite);
+	}
+
+	void Camera::resetarViewportCheio()
+	{
+		// Reativa uma view padrao em viewport(0,0,1,1) - usada quando
+		// o split desliga ou quando o HUD/overlays sao desenhados.
+		sf::View view(sf::FloatRect(0.0f, 0.0f, TELA_X, TELA_Y));
+		view.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+		gerenciadorGrafico->getJanela()->setView(view);
 	}
 
 	void Camera::desenharOverlays()

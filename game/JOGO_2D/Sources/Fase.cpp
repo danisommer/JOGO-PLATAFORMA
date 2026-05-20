@@ -167,6 +167,24 @@ namespace Fases
 		return camera;
 	}
 
+	void Fase::redesenharEntidades()
+	{
+		// Pass de renderizacao "puro": nenhuma logica de jogo avanca.
+		// Reusa o desenharSprite ja existente em cada entidade, que
+		// usa a posicao corrente do sprite (atualizada na primeira
+		// passada de AtualizarPersonagens).
+		for (int i = 0; i < listaObstaculo.getTam(); i++)
+		{
+			if (Obstaculo* o = dynamic_cast<Obstaculo*>(listaObstaculo[i]))
+				o->desenharSprite();
+		}
+		for (int i = 0; i < listaPersonagem.getTam(); i++)
+		{
+			if (Personagem* p = dynamic_cast<Personagem*>(listaPersonagem[i]))
+				p->desenharSprite();
+		}
+	}
+
 	void Fase::setFase(int f)
 	{
 		fase = f;

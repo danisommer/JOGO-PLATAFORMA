@@ -37,6 +37,8 @@ namespace Entidades
 				sprite.setColor(Color{ 235, 255, 0 });
 				vida += 20.0f;
 			}
+
+			vidaMaxima = vida;
 		}
 
 		Cogumelo::~Cogumelo()

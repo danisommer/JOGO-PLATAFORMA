@@ -76,13 +76,15 @@ int Tela::verificaEventoTela()
 			continue;
 		}
 
-		if (evento.type == sf::Event::MouseButtonReleased &&
+		// MouseButtonPressed e mais responsivo que Released - dispara
+		// no instante do clique, sem esperar o usuario soltar. Como
+		// menus nao usam drag, isso elimina a sensacao de "click
+		// duplo" reportada pelo usuario, que vinha do gap entre Press
+		// e Release ser as vezes consumido em frames diferentes ou
+		// perdido em transicoes entre telas.
+		if (evento.type == sf::Event::MouseButtonPressed &&
 			evento.mouseButton.button == sf::Mouse::Left)
 		{
-			// Usa as coordenadas EXATAS do clique (e nao a posicao
-			// atual do mouse) para evitar perder cliques quando o
-			// usuario move o mouse logo apos clicar - causa do bug
-			// em que era preciso clicar duas vezes para selecionar.
 			const sf::Vector2i mp(evento.mouseButton.x, evento.mouseButton.y);
 			const sf::Vector2f cm = janela->mapPixelToCoords(mp);
 

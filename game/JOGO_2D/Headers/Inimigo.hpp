@@ -43,6 +43,9 @@ namespace Entidades
 			float distanciaAtaqueY;
 			bool parado;
 			bool teleportando;
+			// Nivel do inimigo - acompanha a fase em que foi instanciado.
+			// E exibido no HUD do inimigo (ao lado da barra de vida).
+			int nivel;
 
 		public:
 			Inimigo(Vector2f pos, Vector2f tam);
@@ -72,6 +75,16 @@ namespace Entidades
 			// com que fases mais altas exijam mais habilidade mesmo
 			// quando o jogador esta com a arvore de skills carregada.
 			void aplicarDificuldade(int numeroFase);
+
+			int getNivel() const { return nivel; }
+			// Desenha o rotulo "Lv N" ao lado da barra de vida. Chamado
+			// pelas classes derivadas em desenharSprite/atualizar para
+			// que toda subclasse tenha o indicador automatico.
+			void desenharNivel();
+
+			// Sobrescreve para incluir o "Lv N" alem do sprite e da
+			// barra padroes do Personagem.
+			void desenharSprite() override;
 			void limparArquivo(int save) = 0;
 			void salvar(int save) = 0;
 		};

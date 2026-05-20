@@ -3,6 +3,7 @@
 #include "ArvoreHabilidades.hpp"
 #include "Gerenciador_Recursos.hpp"
 #include "Gerenciador_Grafico.hpp"
+#include "GerenciadorSave.hpp"
 
 Menu::Menu() :
 	posicaoTela(gerenciador_grafico->getViewCenter()),
@@ -133,33 +134,30 @@ void Menu::executar()
 
 				break;
 			case 3:
-				// tela2 reaproveitada como seletor de slot de save para
-				// retomar uma run salva. Botoes 0/1/2 = saves 1/2/3.
-				evento = tela2.verificaEventoTela();
-				if (evento >= 0 && evento <= 2)
+			{
+				const int slot = escolherSlotSave();
+				if (slot >= 1 && slot <= 3)
 				{
-					// Para recuperar, precisamos saber quantos jogadores;
-					// usamos 1 como padrao (o save guarda numJogadores).
-					n_jogadores = 1;
 					telaGameOver.setEntradaAtiva(true);
 					telaGameOver.setEntradaAtiva2(false);
 
-					objPrincipal.recuperaFase(evento + 1);
+					objPrincipal.recuperaFase(slot);
 
 					while (!telaAtual.empty())
 						popTela();
 					pushTela(6);
 				}
-				else if (evento == 3)
+				else
 				{
 					popTela();
 				}
 
 				gerenciador_grafico->limpaTela();
 				gerenciador_grafico->desenhaSprite(*sprite);
-				tela2.desenharTela();
+				telaInicial.desenharTela();
 
 				break;
+			}
 			case 4:
 				evento = tela3.verificaEventoTela();
 
@@ -668,6 +666,121 @@ namespace
 	}
 }
 
+int Menu::escolherSlotSave()
+{
+	auto* gerGraf = Gerenciadores::Gerenciador_Grafico::getGerenciador();
+
+	sf::Text titulo;
+	titulo.setFont(*fonte);
+	titulo.setString("Continuar");
+	titulo.setPosition(470, 70);
+	titulo.setCharacterSize(75);
+	titulo.setOutlineColor(sf::Color::Black);
+	titulo.setStyle(sf::Text::Bold);
+
+	while (gerGraf->getOpen())
+	{
+		// Le os 3 saves a cada frame - barato e mantem a tela
+		// sempre atualizada (ex.: usuario apagou save por fora).
+		struct InfoSlot
+		{
+			bool valido = false;
+			int fase = 0;
+			int kills = 0;
+			int numJogadores = 0;
+		};
+
+		InfoSlot infos[3];
+		for (int i = 0; i < 3; ++i)
+		{
+			Persistencia::DadosSave d;
+			if (Persistencia::GerenciadorSave::carregar(i + 1, d))
+			{
+				infos[i].valido = true;
+				infos[i].fase = d.fase;
+				infos[i].kills = d.kills;
+				infos[i].numJogadores = d.numJogadores;
+			}
+		}
+
+		std::vector<ItemConfig> linhas;
+		std::vector<bool> selecionaveis;
+		for (int i = 0; i < 3; ++i)
+		{
+			std::string label;
+			if (infos[i].valido)
+			{
+				label = "Save " + std::to_string(i + 1) + "  |  Fase "
+					+ std::to_string(infos[i].fase) + "  |  Kills "
+					+ std::to_string(infos[i].kills) + "  |  "
+					+ std::to_string(infos[i].numJogadores) + "P";
+			}
+			else
+			{
+				label = "Save " + std::to_string(i + 1) + "  |  Vazio";
+			}
+
+			ItemConfig item = criarItem(*fonte, label,
+				{70.0f, 280.0f + i * 80.0f}, {660.0f, 60.0f}, 26);
+
+			if (infos[i].valido)
+				item.rotulo.setFillColor(sf::Color::White);
+			else
+				item.rotulo.setFillColor(sf::Color(140, 140, 140));
+
+			linhas.push_back(item);
+			selecionaveis.push_back(infos[i].valido);
+		}
+
+		ItemConfig btnVoltar = criarItem(*fonte, "Voltar",
+			{70.0f, 540.0f}, {220.0f, 60.0f}, 32);
+
+		sf::Event evento;
+		while (gerGraf->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerGraf->fecharJanela();
+				return 0;
+			}
+
+			if (evento.type == sf::Event::MouseButtonPressed &&
+				evento.mouseButton.button == sf::Mouse::Left)
+			{
+				const sf::Vector2i mp(evento.mouseButton.x, evento.mouseButton.y);
+				const sf::Vector2f cm = gerGraf->getJanela()->mapPixelToCoords(mp);
+
+				for (std::size_t i = 0; i < linhas.size(); ++i)
+				{
+					if (linhas[i].retangulo.getGlobalBounds().contains(cm))
+					{
+						if (selecionaveis[i])
+							return static_cast<int>(i) + 1;
+						// Slot vazio: nao selecionavel, sem efeito.
+					}
+				}
+
+				if (btnVoltar.retangulo.getGlobalBounds().contains(cm))
+					return 0;
+			}
+		}
+
+		gerGraf->limpaTela();
+		gerGraf->desenhaSprite(*sprite);
+		gerGraf->desenhaTexto(titulo);
+		for (auto& it : linhas)
+		{
+			gerGraf->desenhaTela(&it.retangulo);
+			gerGraf->desenhaTexto(it.rotulo);
+		}
+		gerGraf->desenhaTela(&btnVoltar.retangulo);
+		gerGraf->desenhaTexto(btnVoltar.rotulo);
+		gerGraf->mostraElemento();
+	}
+
+	return 0;
+}
+
 void Menu::executarTelaConfiguracoes()
 {
 	auto* cfg = Gerenciadores::Configuracao::getInstancia();
@@ -695,7 +808,7 @@ void Menu::executarTelaConfiguracoes()
 				return;
 			}
 
-			if (evento.type == sf::Event::MouseButtonReleased &&
+			if (evento.type == sf::Event::MouseButtonPressed &&
 				evento.mouseButton.button == sf::Mouse::Left)
 			{
 				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
@@ -820,7 +933,7 @@ void Menu::executarTelaControles()
 				continue;
 			}
 
-			if (evento.type == sf::Event::MouseButtonReleased &&
+			if (evento.type == sf::Event::MouseButtonPressed &&
 				evento.mouseButton.button == sf::Mouse::Left)
 			{
 				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
@@ -961,7 +1074,7 @@ void Menu::abrirTelaHabilidades(Mundo& mundoRef)
 				return;
 			}
 
-			if (evento.type == sf::Event::MouseButtonReleased &&
+			if (evento.type == sf::Event::MouseButtonPressed &&
 				evento.mouseButton.button == sf::Mouse::Left)
 			{
 				const sf::Vector2i mp = sf::Mouse::getPosition(*janela);
@@ -1081,7 +1194,7 @@ void Menu::executarTelaTela()
 				return;
 			}
 
-			if (evento.type == sf::Event::MouseButtonReleased &&
+			if (evento.type == sf::Event::MouseButtonPressed &&
 				evento.mouseButton.button == sf::Mouse::Left)
 			{
 				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());

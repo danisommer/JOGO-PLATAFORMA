@@ -62,6 +62,11 @@ namespace Fases
 		// para a arvore) sobre o cenario. Chamado pelo EstadoJogo apos
 		// AtualizarPersonagens e antes de mostraElemento.
 		void desenharHUD();
+		// Re-desenha as entidades existentes na fase SEM atualizar
+		// estado de jogo. Usado pelo modo split-screen para renderizar
+		// a segunda viewport sem que animacoes e contadores avancem
+		// duas vezes por quadro.
+		void redesenharEntidades();
 		int getFase();
 		bool getConcluida();
 		bool getDerrota();
@@ -76,5 +81,9 @@ namespace Fases
 		// possam disparar efeitos cinematicos sem conhecer a Camera
 		// diretamente.
 		Sistemas::Camera& getCamera();
+
+		// Textura de fundo da fase (usada pelo EstadoJogo no modo
+		// split-screen, que controla a camera diretamente).
+		const sf::Texture& getTexturaFundo() const { return texturaFundo; }
 	};
 }

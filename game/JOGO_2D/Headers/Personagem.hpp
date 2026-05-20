@@ -31,6 +31,12 @@ namespace Entidades
 			bool concluida;
 			bool inimigo;
 			float vida;
+			// Vida maxima REAL deste personagem - inclui modificacoes
+			// dinamicas (escalonamento de fase nos inimigos, skills
+			// de vida no jogador). Usada para normalizar a barra de
+			// vida; o getVida() virtual mantem o "teto base" da classe
+			// para retrocompatibilidade.
+			float vidaMaxima;
 			float dano;
 			int animacao;
 			// Contador de invulnerabilidade pos-dano (em passos). Enquanto
@@ -64,7 +70,9 @@ namespace Entidades
 			bool getMoveu();
 			void atualizarBarraVida();
 			virtual float getVida() = 0;
-			void desenharSprite();
+			// virtual para que Inimigo possa adicionar o rotulo de nivel
+			// (Lv N) acima do sprite sem que cada subclasse precise.
+			virtual void desenharSprite();
 			void salvar(int save) = 0;
 			void limparArquivo(int save) = 0;
 
