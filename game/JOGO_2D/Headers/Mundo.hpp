@@ -5,8 +5,7 @@
 #include <vector>
 #include "ArvoreHabilidades.hpp"
 
-namespace Entidades { namespace Personagens { class Jogador; } }
-namespace Entidades { namespace Personagens { class Inimigo; } }
+namespace Entidades { namespace Personagens { class Jogador; class Inimigo; } }
 namespace Sistemas { class Camera; }
 
 // Estado compartilhado de uma sessao de jogo. Substitui os membros
