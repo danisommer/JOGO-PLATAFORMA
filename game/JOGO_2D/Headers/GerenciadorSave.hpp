@@ -19,6 +19,15 @@ namespace Persistencia
 		int fase = 1;
 		int numJogadores = 1;
 		std::vector<EstadoJogador> jogadores;
+
+		// Estado da run roguelike: pontuacao por jogador, kills
+		// acumulados, pontos disponiveis na arvore e bitmap de
+		// habilidades desbloqueadas. Tudo opcional - saves antigos
+		// (versao 1) sem estes campos sao carregados como zerados.
+		int pontuacao[2] = {0, 0};
+		int kills = 0;
+		int pontosArvore = 0;
+		std::vector<bool> skillsDesbloqueadas;
 	};
 
 	// Camada de serializacao do jogo.
@@ -33,7 +42,7 @@ namespace Persistencia
 	class GerenciadorSave
 	{
 	public:
-		static const int VERSAO = 1;
+		static const int VERSAO = 2;
 
 		// Devolve false se o slot for invalido ou o arquivo nao abrir.
 		static bool salvar(int slot, const DadosSave& dados);

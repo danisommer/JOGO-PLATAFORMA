@@ -22,6 +22,7 @@ namespace Estados
 		Gerenciadores::Gerenciador_Eventos* gerenciadorEventos;
 
 		bool escolhendoSlot;   // true enquanto a tela de mundos esta ativa
+		bool modoCarregar;     // true se escolher slot e para carregar (vs salvar)
 
 	public:
 		EstadoPausa(Gerenciadores::Gerenciador_Estados* g, Principal* p,

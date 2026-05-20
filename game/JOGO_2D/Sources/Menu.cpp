@@ -1,5 +1,8 @@
 #include "Menu.hpp"
 #include "Configuracao.hpp"
+#include "ArvoreHabilidades.hpp"
+#include "Gerenciador_Recursos.hpp"
+#include "Gerenciador_Grafico.hpp"
 
 Menu::Menu() :
 	posicaoTela(gerenciador_grafico->getViewCenter()),
@@ -71,23 +74,27 @@ void Menu::executar()
 			case 1:
 				evento = telaInicial.verificaEventoTela();
 
-				if (evento == 0)
+				if (evento == 0)         // Novo Jogo
 				{
 					telaAtual.push(2);
 				}
-				else if (evento == 1)
+				else if (evento == 1)    // Continuar
 				{
 					telaAtual.push(3);
 				}
-				else if (evento == 2)
+				else if (evento == 2)    // Habilidades
+				{
+					executarTelaHabilidades();
+				}
+				else if (evento == 3)    // Ranking
 				{
 					telaAtual.push(4);
 				}
-				else if (evento == 3)
+				else if (evento == 4)    // Configuracoes
 				{
 					executarTelaConfiguracoes();
 				}
-				else if (evento == 4)
+				else if (evento == 5)    // Sair
 				{
 					gerenciador_grafico->fecharJanela();
 					exit(1);
@@ -101,15 +108,19 @@ void Menu::executar()
 			case 2:
 				evento = tela1.verificaEventoTela();
 
-				if (evento == 0)
+				if (evento == 0 || evento == 1)
 				{
-					n_jogadores = 1;
-					telaAtual.push(5);
-				}
-				else if (evento == 1)
-				{
-					n_jogadores = 2;
-					telaAtual.push(5);
+					n_jogadores = (evento == 0) ? 1 : 2;
+					telaGameOver.setEntradaAtiva(true);
+					telaGameOver.setEntradaAtiva2(n_jogadores == 2);
+
+					// Modo roguelike: nao ha mais escolha de fase - vai
+					// direto para a primeira fase procedural.
+					objPrincipal.executarFase(1, n_jogadores);
+
+					while (!telaAtual.empty())
+						popTela();
+					pushTela(6);
 				}
 				else if (evento == 2)
 				{
@@ -122,18 +133,22 @@ void Menu::executar()
 
 				break;
 			case 3:
+				// tela2 reaproveitada como seletor de slot de save para
+				// retomar uma run salva. Botoes 0/1/2 = saves 1/2/3.
 				evento = tela2.verificaEventoTela();
-				if (evento == 0)
+				if (evento >= 0 && evento <= 2)
 				{
-					//objPrincipal.recuperaFase(1);
-				}
-				else if (evento == 1)
-				{
-					//objPrincipal.recuperaFase(2);
-				}
-				else if (evento == 2)
-				{
-					//objPrincipal.recuperaFase(3);
+					// Para recuperar, precisamos saber quantos jogadores;
+					// usamos 1 como padrao (o save guarda numJogadores).
+					n_jogadores = 1;
+					telaGameOver.setEntradaAtiva(true);
+					telaGameOver.setEntradaAtiva2(false);
+
+					objPrincipal.recuperaFase(evento + 1);
+
+					while (!telaAtual.empty())
+						popTela();
+					pushTela(6);
 				}
 				else if (evento == 3)
 				{
@@ -271,9 +286,9 @@ void Menu::inicializaTextos()
 	std::vector<sf::Vector2f> coordenadas;
 	std::vector<std::size_t> tamanhos;
 
-	opcoes = { "Novo Jogo", "Continuar", "Ranking", "Configuracoes", "Sair" };
-	coordenadas = { { 70, 280}, { 70, 360 }, { 70, 440 }, { 70, 520 }, { 70, 600 } };
-	tamanhos = { 38, 38, 38, 38, 38 };
+	opcoes = { "Novo Jogo", "Continuar", "Habilidades", "Ranking", "Configuracoes", "Sair" };
+	coordenadas = { { 70, 250}, { 70, 320 }, { 70, 390 }, { 70, 460 }, { 70, 530 }, { 70, 600 } };
+	tamanhos = { 38, 38, 38, 38, 38, 38 };
 
 	for (size_t i = 0; i < opcoes.size(); i++)
 	{
@@ -306,7 +321,7 @@ void Menu::inicializaTextos()
 	}
 
 
-	opcoes = { "Mundo 1", "Mundo 2","Mundo 3", "Voltar" };
+	opcoes = { "Save 1", "Save 2", "Save 3", "Voltar" };
 	coordenadas = { { 70, 300}, { 70, 390 }, { 70, 480 }, { 70, 570 } };
 	tamanhos = { 38, 38, 38, 38 };
 
@@ -390,6 +405,7 @@ void Menu::inicializaBotoes()
 
 	sf::RectangleShape* novoJogo;
 	sf::RectangleShape* continuar;
+	sf::RectangleShape* habilidades;
 	sf::RectangleShape* ranking;
 	sf::RectangleShape* configuracoes;
 	sf::RectangleShape* sair;
@@ -417,22 +433,27 @@ void Menu::inicializaBotoes()
 	//TELA INICIAL
 	novoJogo = new sf::RectangleShape();
 	novoJogo->setSize(sf::Vector2f(250.0f, 50.0f));
-	novoJogo->setPosition(sf::Vector2f(70, 280));
+	novoJogo->setPosition(sf::Vector2f(70, 250));
 	novoJogo->setFillColor(sf::Color::Red);
 
 	continuar = new sf::RectangleShape();
 	continuar->setSize(sf::Vector2f(240.0f, 50.0f));
-	continuar->setPosition(sf::Vector2f(70, 360));
+	continuar->setPosition(sf::Vector2f(70, 320));
 	continuar->setFillColor(sf::Color::Red);
+
+	habilidades = new sf::RectangleShape();
+	habilidades->setSize(sf::Vector2f(270.0f, 50.0f));
+	habilidades->setPosition(sf::Vector2f(70, 390));
+	habilidades->setFillColor(sf::Color::Red);
 
 	ranking = new sf::RectangleShape();
 	ranking->setSize(sf::Vector2f(190.0f, 50.0f));
-	ranking->setPosition(sf::Vector2f(70, 440));
+	ranking->setPosition(sf::Vector2f(70, 460));
 	ranking->setFillColor(sf::Color::Red);
 
 	configuracoes = new sf::RectangleShape();
 	configuracoes->setSize(sf::Vector2f(310.0f, 50.0f));
-	configuracoes->setPosition(sf::Vector2f(70, 520));
+	configuracoes->setPosition(sf::Vector2f(70, 530));
 	configuracoes->setFillColor(sf::Color::Red);
 
 	sair = new sf::RectangleShape();
@@ -442,6 +463,7 @@ void Menu::inicializaBotoes()
 
 	telaInicial.addBotao(novoJogo);
 	telaInicial.addBotao(continuar);
+	telaInicial.addBotao(habilidades);
 	telaInicial.addBotao(ranking);
 	telaInicial.addBotao(configuracoes);
 	telaInicial.addBotao(sair);
@@ -841,6 +863,145 @@ void Menu::executarTelaControles()
 		gerenciador_grafico->desenhaTexto(btnVoltar.rotulo);
 
 		gerenciador_grafico->mostraElemento();
+	}
+}
+
+void Menu::executarTelaHabilidades(Mundo* mundoExterno)
+{
+	// Usa o Mundo de Principal por padrao (acumulado entre runs); pode
+	// receber um Mundo externo (ex.: chamado a partir do menu de pausa
+	// com o Mundo da run em curso).
+	abrirTelaHabilidades(mundoExterno ? *mundoExterno : objPrincipal.getMundo());
+}
+
+void Menu::abrirTelaHabilidades(Mundo& mundoRef)
+{
+	auto* gerGraf = Gerenciadores::Gerenciador_Grafico::getGerenciador();
+	const sf::Font& fonte = Gerenciadores::Gerenciador_Recursos::getGerenciador()
+		->getFonte("Menu/antiquity-print.ttf");
+
+	ArvoreHabilidades& arvore = mundoRef.getArvore();
+
+	sf::Text titulo;
+	titulo.setFont(fonte);
+	titulo.setString("Habilidades");
+	titulo.setPosition(470, 30);
+	titulo.setCharacterSize(60);
+	titulo.setOutlineColor(sf::Color::Black);
+	titulo.setStyle(sf::Text::Bold);
+
+	// Backdrop semi-transparente em vez do sprite do menu (este metodo
+	// pode ser chamado durante o jogo, sem o sprite do menu disponivel).
+	sf::RectangleShape backdrop;
+	backdrop.setSize(sf::Vector2f(TELA_X, TELA_Y));
+	backdrop.setFillColor(sf::Color(0, 0, 0, 220));
+
+	while (gerGraf->getOpen())
+	{
+		// Vista em coordenadas de tela enquanto a skill tree esta aberta.
+		auto* janela = gerGraf->getJanela();
+		const sf::View viewAnterior = janela->getView();
+		sf::View viewUI(sf::FloatRect(0.0f, 0.0f, TELA_X, TELA_Y));
+		janela->setView(viewUI);
+
+		const int pontos = arvore.getPontos();
+
+		sf::Text infoPontos;
+		infoPontos.setFont(fonte);
+		infoPontos.setString("Pontos disponiveis: " + std::to_string(pontos));
+		infoPontos.setCharacterSize(28);
+		infoPontos.setFillColor(sf::Color::Yellow);
+		infoPontos.setOutlineColor(sf::Color::Black);
+		infoPontos.setPosition(70, 130);
+
+		std::vector<ItemConfig> linhas;
+		std::vector<ArvoreHabilidades::Habilidade> mapHabilidade;
+		const float yBase = 200.0f;
+		const float passoY = 60.0f;
+
+		for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
+		{
+			auto h = static_cast<ArvoreHabilidades::Habilidade>(i);
+			const auto& info = ArvoreHabilidades::getInfo(h);
+			const bool desbloqueada = arvore.foiDesbloqueada(h);
+			const bool podeComprar = !desbloqueada && pontos >= info.custo;
+
+			std::string sufixo;
+			if (desbloqueada)
+				sufixo = "  [DESBLOQUEADA]";
+			else
+				sufixo = "  [custo " + std::to_string(info.custo) + "]";
+
+			const std::string texto = std::string(info.nome) + " - " + info.descricao + sufixo;
+			ItemConfig item = criarItem(fonte, texto,
+				{60, yBase + i * passoY}, {1280, 50}, 22);
+
+			if (desbloqueada)
+				item.rotulo.setFillColor(sf::Color(120, 255, 120));
+			else if (podeComprar)
+				item.rotulo.setFillColor(sf::Color::White);
+			else
+				item.rotulo.setFillColor(sf::Color(180, 180, 180));
+
+			linhas.push_back(item);
+			mapHabilidade.push_back(h);
+		}
+
+		ItemConfig btnVoltar = criarItem(fonte, "Voltar",
+			{60, yBase + ArvoreHabilidades::N_HABILIDADES * passoY + 20},
+			{260, 50}, 32);
+
+		sf::Event evento;
+		while (janela->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerGraf->fecharJanela();
+				janela->setView(viewAnterior);
+				return;
+			}
+
+			if (evento.type == sf::Event::MouseButtonReleased &&
+				evento.mouseButton.button == sf::Mouse::Left)
+			{
+				const sf::Vector2i mp = sf::Mouse::getPosition(*janela);
+				const sf::Vector2f cm = janela->mapPixelToCoords(mp);
+
+				bool clicouLinha = false;
+				for (std::size_t i = 0; i < linhas.size(); ++i)
+				{
+					if (linhas[i].retangulo.getGlobalBounds().contains(cm))
+					{
+						arvore.comprar(mapHabilidade[i]);
+						clicouLinha = true;
+						break;
+					}
+				}
+
+				if (!clicouLinha && btnVoltar.retangulo.getGlobalBounds().contains(cm))
+				{
+					janela->setView(viewAnterior);
+					return;
+				}
+			}
+		}
+
+		gerGraf->limpaTela();
+		gerGraf->desenhaTela(&backdrop);
+		gerGraf->desenhaTexto(titulo);
+		gerGraf->desenhaTexto(infoPontos);
+		for (auto& it : linhas)
+		{
+			gerGraf->desenhaTela(&it.retangulo);
+			gerGraf->desenhaTexto(it.rotulo);
+		}
+		gerGraf->desenhaTela(&btnVoltar.retangulo);
+		gerGraf->desenhaTexto(btnVoltar.rotulo);
+
+		gerGraf->mostraElemento();
+
+		// Restaura a view do chamador antes de polling de proxima vez.
+		janela->setView(viewAnterior);
 	}
 }
 

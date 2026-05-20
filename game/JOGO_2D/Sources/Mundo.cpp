@@ -5,7 +5,9 @@
 Mundo::Mundo() :
 	pontuacao{ 0, 0 },
 	chefaoMorreu(false),
-	posChefao(0.0f, 0.0f)
+	posChefao(0.0f, 0.0f),
+	faseAtual(1),
+	kills(0)
 {
 }
 
@@ -74,6 +76,72 @@ bool Mundo::getChefaoMorreu() const
 sf::Vector2f Mundo::getPosChefao() const
 {
 	return posChefao;
+}
+
+int Mundo::getFaseAtual() const
+{
+	return faseAtual;
+}
+
+void Mundo::setFaseAtual(int f)
+{
+	faseAtual = f;
+}
+
+void Mundo::avancarFase()
+{
+	faseAtual++;
+	// Bonus de pontuacao por terminar uma fase.
+	adicionarPontos(0, 50);
+	arvore.adicionarPontos(1);
+}
+
+int Mundo::getKills() const
+{
+	return kills;
+}
+
+void Mundo::setKills(int k)
+{
+	kills = k;
+}
+
+void Mundo::registrarKill(bool ehChefao)
+{
+	kills++;
+	// Pontos para a pontuacao "tradicional" (ranking) e pontos para
+	// a arvore de habilidades. Boss vale bem mais que inimigo comum.
+	if (ehChefao)
+	{
+		adicionarPontos(0, 200);
+		arvore.adicionarPontos(5);
+	}
+	else
+	{
+		adicionarPontos(0, 10);
+		// Inimigo comum: 1 ponto a cada 2 kills, para nao inflacionar.
+		if (kills % 2 == 0)
+			arvore.adicionarPontos(1);
+	}
+}
+
+ArvoreHabilidades& Mundo::getArvore()
+{
+	return arvore;
+}
+
+const ArvoreHabilidades& Mundo::getArvore() const
+{
+	return arvore;
+}
+
+void Mundo::reiniciarRun()
+{
+	faseAtual = 1;
+	kills = 0;
+	zerarPontuacao();
+	chefaoMorreu = false;
+	posChefao = sf::Vector2f();
 }
 
 void Mundo::gravarRanking(const std::string& nome1, const std::string& nome2) const

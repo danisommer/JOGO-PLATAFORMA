@@ -51,8 +51,9 @@ namespace Entidades
 			void setPos(float X, float Y);
 			// Aplica dano respeitando os quadros de invulnerabilidade.
 			// dirKnockback (-1/0/+1) empurra a vitima nessa direcao.
-			// Devolve true se o golpe efetivamente acertou.
-			bool tomarDano(float dano, int dirKnockback = 0);
+			// Devolve true se o golpe efetivamente acertou. virtual para
+			// que Jogador possa aplicar reducao de dano (skill Armadura).
+			virtual bool tomarDano(float dano, int dirKnockback = 0);
 			// Decrementa os temporizadores de combate; chamar uma vez por passo.
 			void atualizarEstadoCombate();
 			// true durante a parte inicial da invulnerabilidade (hit-stun).

@@ -48,9 +48,20 @@ namespace Fases
 		void setMundo(Mundo* m);
 
 		void instanciaEntidades(const std::string& arquivoTxt);
+		// Substitui o conteudo desta fase por uma geracao procedural
+		// do roguelike. Usa o numero passado para variar dificuldade
+		// e disparar fases de chefao a cada 5.
+		void instanciaProcedural(int numeroFase, int numJogadores);
+		// Define o numero da fase (usado pelo modo roguelike) e atualiza
+		// a texturaFundo correspondente.
+		void setFase(int f);
 		void desalocaEntidades();
 		void AtualizarPersonagens();
 		void atualizaCamera();
+		// Renderiza o HUD do modo roguelike (fase atual, kills, pontos
+		// para a arvore) sobre o cenario. Chamado pelo EstadoJogo apos
+		// AtualizarPersonagens e antes de mostraElemento.
+		void desenharHUD();
 		int getFase();
 		bool getConcluida();
 		bool getDerrota();

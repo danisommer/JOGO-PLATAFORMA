@@ -5,6 +5,7 @@
 #include "Tela.hpp"
 #include "Ente.hpp"
 #include "Principal.hpp"
+#include "Mundo.hpp"
 
 #include <vector>
 #include <fstream>
@@ -69,4 +70,15 @@ public:
 	void executarTelaConfiguracoes();
 	void executarTelaControles();
 	void executarTelaTela();
+
+	// Skill tree do modo roguelike. Mostra todas as habilidades, custo
+	// e estado (desbloqueada / disponivel para compra / sem pontos),
+	// permitindo gastar pontos acumulados no Mundo. Acessivel pelo
+	// menu principal e tambem pelo menu de pausa (via Principal).
+	void executarTelaHabilidades(Mundo* mundoExterno = nullptr);
+
+	// Versao estatica que nao depende do estado do Menu (sem objPrincipal
+	// nem sprite de fundo); usada pelo EstadoPausa, que so quer abrir a
+	// tela de habilidades para o Mundo da run em curso.
+	static void abrirTelaHabilidades(Mundo& mundo);
 };

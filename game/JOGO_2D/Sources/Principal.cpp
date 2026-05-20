@@ -9,16 +9,13 @@
 Principal::Principal() : gerenciador_grafico(Gerenciadores::Gerenciador_Grafico::getGerenciador()),
 gerenciador_eventos(Gerenciadores::Gerenciador_Eventos::getGerenciador()),
 gerenciador_colisoes(Gerenciadores::Gerenciador_Colisoes::getGerenciador()),
-fase1(),
-fase2(),
+fase(),
 fonte(nullptr)
 {
 	fonte = &Gerenciadores::Gerenciador_Recursos::getGerenciador()
 		->getFonte("Menu/antiquity-print.ttf");
 
-	// As duas fases compartilham o mesmo Mundo (pontuacao acumulada).
-	fase1.setMundo(&mundo);
-	fase2.setMundo(&mundo);
+	fase.setMundo(&mundo);
 
 	inicializaMenu();
 	inicializaMundos();
@@ -45,18 +42,6 @@ void Principal::telaCarregamento()
 	gerenciador_grafico->mostraElemento();
 }
 
-void Principal::alocaFase1(int n_jogadores)
-{
-	fase1.desalocaEntidades();
-	fase1.instanciaEntidades("Fases/fase1-" + to_string(n_jogadores) + "p.txt");
-}
-
-void Principal::alocaFase2(int n_jogadores)
-{
-	fase2.desalocaEntidades();
-	fase2.instanciaEntidades("Fases/fase2-" + to_string(n_jogadores) + "p.txt");
-}
-
 void Principal::recuperaFase(int save)
 {
 	Persistencia::DadosSave dados;
@@ -66,23 +51,38 @@ void Principal::recuperaFase(int save)
 		return;
 	}
 
-	// Roda a fase salva; EstadoJogo aplica o estado dos jogadores.
+	// Aplica o estado salvo no Mundo antes de iniciar a fase, para
+	// que a fase reaberta ja tenha a pontuacao, kills e arvore.
+	mundo.setFaseAtual(dados.fase);
+	mundo.setKills(dados.kills);
+	for (int i = 0; i < 2; ++i)
+		mundo.adicionarPontos(i, dados.pontuacao[i] - mundo.getPontuacao(i));
+
+	mundo.getArvore().setPontos(dados.pontosArvore);
+	for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
+	{
+		mundo.getArvore().setDesbloqueada(
+			static_cast<ArvoreHabilidades::Habilidade>(i),
+			i < static_cast<int>(dados.skillsDesbloqueadas.size())
+				? dados.skillsDesbloqueadas[i]
+				: false);
+	}
+
 	Gerenciadores::Gerenciador_Estados estados;
 	estados.empilhar(std::make_unique<Estados::EstadoJogo>(
-		&estados, this, dados.fase, dados.numJogadores, true, save));
+		&estados, this, dados.fase, dados.numJogadores, false, save));
 
 	while (!estados.vazio() && gerenciador_grafico->getOpen())
 		estados.executarQuadro();
 }
 
-void Principal::executarFase(int fase, int n_jogadores)
+void Principal::executarFase(int faseInicial, int n_jogadores)
 {
-	// Toda a fase (incluindo pausa e save) e conduzida pela maquina de
-	// estados. EstadoJogo cuida da jogabilidade e encadeia a fase 2;
-	// EstadoPausa cuida do menu de pausa.
+	// EstadoJogo cuida do loop infinito de fases proceduralmente
+	// geradas. Aqui apenas iniciamos a maquina de estados.
 	Gerenciadores::Gerenciador_Estados estados;
 	estados.empilhar(std::make_unique<Estados::EstadoJogo>(
-		&estados, this, fase, n_jogadores, true));
+		&estados, this, faseInicial, n_jogadores, true));
 
 	while (!estados.vazio() && gerenciador_grafico->getOpen())
 		estados.executarQuadro();
@@ -91,15 +91,10 @@ void Principal::executarFase(int fase, int n_jogadores)
 Fases::Fase* Principal::prepararFase(int numFase, int n_jogadores)
 {
 	telaCarregamento();
-
-	if (numFase == 2)
-	{
-		alocaFase2(n_jogadores);
-		return &fase2;
-	}
-
-	alocaFase1(n_jogadores);
-	return &fase1;
+	fase.desalocaEntidades();
+	fase.setFase(numFase);
+	fase.instanciaProcedural(numFase, n_jogadores);
+	return &fase;
 }
 
 Tela& Principal::getTelaPausa()
@@ -128,11 +123,12 @@ void Principal::inicializaMenu()
 	sf::RectangleShape* continuar;
 	sf::RectangleShape* recuperar;
 	sf::RectangleShape* salvar;
+	sf::RectangleShape* habilidades;
 	sf::RectangleShape* sair;
 
-	opcoes = { "Continuar", "Recuperar ","Salvar", "Sair" };
-	coordenadas = { { 300, 300}, { 300, 390 }, { 300, 480 }, { 300,570 } };
-	tamanhos = { 30, 30, 30, 30 };
+	opcoes = { "Continuar", "Recuperar ", "Salvar", "Habilidades", "Sair" };
+	coordenadas = { { 300, 250}, { 300, 330 }, { 300, 410 }, { 300, 490 }, { 300, 570 } };
+	tamanhos = { 30, 30, 30, 30, 30 };
 
 	for (size_t i = 0; i < opcoes.size(); i++)
 	{
@@ -162,18 +158,23 @@ void Principal::inicializaMenu()
 
 	continuar = new sf::RectangleShape();
 	continuar->setSize(sf::Vector2f(200.0f, 50.0f));
-	continuar->setPosition(sf::Vector2f(300, 300));
+	continuar->setPosition(sf::Vector2f(300, 250));
 	continuar->setFillColor(sf::Color::Red);
 
 	recuperar = new sf::RectangleShape();
 	recuperar->setSize(sf::Vector2f(205.0f, 50.0f));
-	recuperar->setPosition(sf::Vector2f(300, 390));
+	recuperar->setPosition(sf::Vector2f(300, 330));
 	recuperar->setFillColor(sf::Color::Red);
 
 	salvar = new sf::RectangleShape();
 	salvar->setSize(sf::Vector2f(145.0f, 50.0f));
-	salvar->setPosition(sf::Vector2f(300, 480));
+	salvar->setPosition(sf::Vector2f(300, 410));
 	salvar->setFillColor(sf::Color::Red);
+
+	habilidades = new sf::RectangleShape();
+	habilidades->setSize(sf::Vector2f(240.0f, 50.0f));
+	habilidades->setPosition(sf::Vector2f(300, 490));
+	habilidades->setFillColor(sf::Color::Red);
 
 	sair = new sf::RectangleShape();
 	sair->setSize(sf::Vector2f(95.0f, 50.0f));
@@ -183,6 +184,7 @@ void Principal::inicializaMenu()
 	telaPausa.addBotao(continuar);
 	telaPausa.addBotao(recuperar);
 	telaPausa.addBotao(salvar);
+	telaPausa.addBotao(habilidades);
 	telaPausa.addBotao(sair);
 }
 
@@ -191,7 +193,7 @@ void Principal::inicializaMundos()
 	sf::Text tituloMundos;
 
 	tituloMundos.setFont(*fonte);
-	tituloMundos.setString("Escolha um mundo:");
+	tituloMundos.setString("Escolha um slot:");
 	tituloMundos.setPosition(1100, 170);
 	tituloMundos.setCharacterSize(55);
 	tituloMundos.setOutlineColor(Color::Black);
@@ -210,7 +212,7 @@ void Principal::inicializaMundos()
 	sf::RectangleShape* mundo3;
 	sf::RectangleShape* sair;
 
-	opcoes = { "Mundo 1", "Mundo 2 ","Mundo 3", "Sair" };
+	opcoes = { "Save 1", "Save 2 ","Save 3", "Sair" };
 	coordenadas = { { 300, 300}, { 300, 390 }, { 300, 480 }, { 300,570 } };
 	tamanhos = { 30, 30, 30, 30 };
 

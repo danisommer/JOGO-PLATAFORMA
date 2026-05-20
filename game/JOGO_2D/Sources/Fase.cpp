@@ -1,6 +1,8 @@
 #include "../Headers/Fase.hpp"
 #include "CarregadorFase.hpp"
 #include "GerenciadorSave.hpp"
+#include "Gerenciador_Recursos.hpp"
+#include "Chefao.hpp"
 #include "Jogador.hpp"
 #include "Inimigo.hpp"
 #include "Personagem.hpp"
@@ -45,56 +47,108 @@ namespace Fases
 		mundo = m;
 	}
 
+	namespace
+	{
+		// Helper compartilhado entre instanciaEntidades (modo classico)
+		// e instanciaProcedural (modo roguelike). Faz a ligacao das
+		// entidades carregadas com os managers da fase.
+		void registrarEntidades(
+			std::vector<std::unique_ptr<Entidade>>& entidades,
+			Mundo* mundo,
+			Gerenciadores::Gerenciador_Eventos* eventos,
+			Gerenciadores::Gerenciador_Colisoes* colisoes,
+			Lista::ListaEntidade& listaPersonagem,
+			Lista::ListaEntidade& listaObstaculo,
+			int& numJogadores)
+		{
+			std::vector<Jogador*> jogadores;
+
+			for (auto& up : entidades)
+			{
+				Entidade* e = up.get();
+				e->setMundo(mundo);
+
+				if (Jogador* jog = dynamic_cast<Jogador*>(e))
+				{
+					// O jogador so pode consultar a arvore de habilidades
+					// apos receber o ponteiro Mundo - por isso e aqui que
+					// aplicamos os bonus permanentes da run.
+					jog->aplicarHabilidades();
+
+					if (jogadores.empty())
+					{
+						eventos->setJogador(jog);
+						colisoes->setJogador(jog);
+					}
+					else
+					{
+						eventos->setJogador2(jog);
+						colisoes->setJogador2(jog);
+					}
+					jogadores.push_back(jog);
+					numJogadores++;
+					listaPersonagem.addEntidade(up.release());
+				}
+				else if (Inimigo* inim = dynamic_cast<Inimigo*>(e))
+				{
+					colisoes->addInimigo(inim);
+					listaPersonagem.addEntidade(up.release());
+				}
+				else if (Obstaculo* obst = dynamic_cast<Obstaculo*>(e))
+				{
+					colisoes->addObstaculo(obst);
+					colisoes->addCorpo(obst);
+					listaObstaculo.addEntidade(up.release());
+				}
+			}
+
+			if (mundo)
+				mundo->definirJogadores(jogadores);
+		}
+	}
+
 	void Fase::instanciaEntidades(const std::string& arquivoTxt)
 	{
 		CarregadorFase carregador;
 		std::vector<std::unique_ptr<Entidade>> entidades =
 			carregador.carregar(arquivoTxt, fase);
 
-		std::vector<Jogador*> jogadores;
-
-		for (auto& up : entidades)
-		{
-			Entidade* e = up.get();
-			e->setMundo(mundo);
-
-			if (Jogador* jog = dynamic_cast<Jogador*>(e))
-			{
-				if (jogadores.empty())
-				{
-					gerenciador_eventos->setJogador(jog);
-					gerenciador_colisoes->setJogador(jog);
-				}
-				else
-				{
-					gerenciador_eventos->setJogador2(jog);
-					gerenciador_colisoes->setJogador2(jog);
-				}
-				jogadores.push_back(jog);
-				numJogadores++;
-				listaPersonagem.addEntidade(up.release());
-			}
-			else if (Inimigo* inim = dynamic_cast<Inimigo*>(e))
-			{
-				gerenciador_colisoes->addInimigo(inim);
-				listaPersonagem.addEntidade(up.release());
-			}
-			else if (Obstaculo* obst = dynamic_cast<Obstaculo*>(e))
-			{
-				gerenciador_colisoes->addObstaculo(obst);
-				gerenciador_colisoes->addCorpo(obst);
-				listaObstaculo.addEntidade(up.release());
-			}
-		}
+		registrarEntidades(entidades, mundo, gerenciador_eventos,
+			gerenciador_colisoes, listaPersonagem, listaObstaculo,
+			numJogadores);
 
 		if (numJogadores != 1 && numJogadores != 2)
 		{
 			std::cout << "numero incomum de jogadores" << std::endl;
 			exit(1);
 		}
+	}
 
-		if (mundo)
-			mundo->definirJogadores(jogadores);
+	void Fase::instanciaProcedural(int numeroFase, int nJogadores)
+	{
+		CarregadorFase carregador;
+		std::vector<std::unique_ptr<Entidade>> entidades =
+			carregador.gerarProcedural(numeroFase, nJogadores);
+
+		registrarEntidades(entidades, mundo, gerenciador_eventos,
+			gerenciador_colisoes, listaPersonagem, listaObstaculo,
+			numJogadores);
+	}
+
+	void Fase::setFase(int f)
+	{
+		fase = f;
+		// Alterna o cenario entre os dois temas existentes. Sem isto,
+		// a textura do background da primeira fase ficaria fixa para
+		// sempre no modo roguelike.
+		const int tema = ((f - 1) % 2) + 1;
+		const std::string caminho = "Assets/Cenario/background_"
+			+ std::to_string(tema) + ".png";
+		if (!texturaFundo.loadFromFile(caminho))
+		{
+			// Em caso de falha mantemos a textura anterior - melhor que
+			// derrubar o jogo no meio de uma run.
+		}
 	}
 
 	void Fase::desalocaEntidades()
@@ -163,13 +217,33 @@ namespace Fases
 
 		// Remover personagens mortos (avisando o gerenciador de colisoes,
 		// que guarda ponteiros observadores, antes de destruir a entidade).
+		// Cada inimigo abatido conta como kill no Mundo - serve tanto para
+		// o HUD quanto para alimentar pontos da arvore de habilidades.
 		for (int i = 0; i < listaPersonagem.getTam(); i++)
 		{
 			Personagem* p = dynamic_cast<Personagem*>(listaPersonagem[i]);
 			if (p && p->getMorte())
 			{
 				if (Inimigo* inim = dynamic_cast<Inimigo*>(p))
+				{
+					if (mundo)
+					{
+						const bool ehChefao = dynamic_cast<Chefao*>(inim) != nullptr;
+						mundo->registrarKill(ehChefao);
+
+						// Habilidade Vampiro: cura cada jogador vivo que
+						// possui a skill em 5 HP a cada inimigo abatido.
+						for (int s = 0; s < mundo->getNumSlots(); ++s)
+						{
+							if (Jogador* j = mundo->getJogador(s))
+							{
+								if (j->getVampiro())
+									j->curar(5.0f);
+							}
+						}
+					}
 					gerenciador_colisoes->removeInimigo(inim);
+				}
 
 				listaPersonagem.removerEntidade(p);
 			}
@@ -199,6 +273,59 @@ namespace Fases
 	{
 		if (mundo)
 			camera.atualizar(*mundo, texturaFundo);
+	}
+
+	void Fase::desenharHUD()
+	{
+		if (!mundo)
+			return;
+
+		// HUD em coordenadas de tela (canto superior esquerdo). Como a
+		// camera move a view, usamos uma view fixa em (0,0)-(TELA_X,TELA_Y)
+		// apenas para o HUD e restauramos a view do jogo em seguida.
+		const sf::Font& fonte = Gerenciadores::Gerenciador_Recursos::getGerenciador()
+			->getFonte("Menu/antiquity-print.ttf");
+
+		auto* janela = gerenciador_grafico->getJanela();
+		const sf::View viewJogo = janela->getView();
+
+		sf::View viewHUD(sf::FloatRect(0.0f, 0.0f, TELA_X, TELA_Y));
+		janela->setView(viewHUD);
+
+		sf::RectangleShape painel;
+		painel.setPosition(15.0f, 15.0f);
+		painel.setSize(sf::Vector2f(320.0f, 130.0f));
+		painel.setFillColor(sf::Color(0, 0, 0, 160));
+		painel.setOutlineColor(sf::Color::White);
+		painel.setOutlineThickness(1.5f);
+		janela->draw(painel);
+
+		sf::Text texto;
+		texto.setFont(fonte);
+		texto.setCharacterSize(24);
+		texto.setFillColor(sf::Color::White);
+		texto.setOutlineColor(sf::Color::Black);
+		texto.setOutlineThickness(1.0f);
+
+		const bool ehChefao = mundo->getFaseAtual() % 5 == 0;
+		const std::string rotuloFase = ehChefao
+			? "Fase " + std::to_string(mundo->getFaseAtual()) + " - CHEFAO"
+			: "Fase " + std::to_string(mundo->getFaseAtual());
+
+		texto.setString(rotuloFase);
+		texto.setPosition(28.0f, 22.0f);
+		janela->draw(texto);
+
+		texto.setString("Kills: " + std::to_string(mundo->getKills()));
+		texto.setPosition(28.0f, 58.0f);
+		janela->draw(texto);
+
+		texto.setString("Pontos arvore: " +
+			std::to_string(mundo->getArvore().getPontos()));
+		texto.setPosition(28.0f, 94.0f);
+		janela->draw(texto);
+
+		janela->setView(viewJogo);
 	}
 
 	int Fase::getFase()
@@ -243,7 +370,7 @@ namespace Fases
 			return;
 
 		Persistencia::DadosSave dados;
-		dados.fase = fase;
+		dados.fase = mundo->getFaseAtual();
 		dados.numJogadores = numJogadores;
 
 		for (int i = 0; i < mundo->getNumSlots(); i++)
@@ -256,6 +383,19 @@ namespace Fases
 				estado.y = j->getPos().y;
 				dados.jogadores.push_back(estado);
 			}
+		}
+
+		// Estado da run do modo roguelike.
+		dados.pontuacao[0] = mundo->getPontuacao(0);
+		dados.pontuacao[1] = mundo->getPontuacao(1);
+		dados.kills = mundo->getKills();
+		dados.pontosArvore = mundo->getArvore().getPontos();
+
+		for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
+		{
+			dados.skillsDesbloqueadas.push_back(
+				mundo->getArvore().foiDesbloqueada(
+					static_cast<ArvoreHabilidades::Habilidade>(i)));
 		}
 
 		Persistencia::GerenciadorSave::salvar(slot, dados);
@@ -274,6 +414,24 @@ namespace Fases
 				const Persistencia::EstadoJogador& e = dados.jogadores[i];
 				j->carregarEstado(e.vida, sf::Vector2f(e.x, e.y));
 			}
+		}
+
+		// Restaura o estado da run roguelike. A fase em si nao e
+		// regenerada aqui (aplicarSave so atua sobre a fase ja
+		// montada); para carregar comecando de outra fase, usar
+		// Principal::recuperaFase, que reinicia o EstadoJogo.
+		mundo->setFaseAtual(dados.fase);
+		mundo->setKills(dados.kills);
+		mundo->zerarPontuacao();
+		mundo->adicionarPontos(0, dados.pontuacao[0]);
+		mundo->adicionarPontos(1, dados.pontuacao[1]);
+		mundo->getArvore().setPontos(dados.pontosArvore);
+		for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
+		{
+			const bool v = (i < static_cast<int>(dados.skillsDesbloqueadas.size()))
+				? dados.skillsDesbloqueadas[i] : false;
+			mundo->getArvore().setDesbloqueada(
+				static_cast<ArvoreHabilidades::Habilidade>(i), v);
 		}
 	}
 }

@@ -3,6 +3,7 @@
 #include "Gerenciador_Estados.hpp"
 #include "Principal.hpp"
 #include "Fase.hpp"
+#include "Mundo.hpp"
 
 namespace Estados
 {
@@ -30,8 +31,17 @@ namespace Estados
 		acumulador(0.0f),
 		finalizado(false)
 	{
+		// Iniciar uma nova run reinicia a contagem de fase/kills do
+		// Mundo, MAS preserva a arvore de habilidades (meta-progressao).
 		if (zerarPontuacao)
-			principal->getMundo().zerarPontuacao();
+		{
+			principal->getMundo().reiniciarRun();
+			principal->getMundo().setFaseAtual(numFase);
+		}
+		else
+		{
+			principal->getMundo().setFaseAtual(numFase);
+		}
 
 		fase = principal->prepararFase(numFase, numJogadores);
 
@@ -53,6 +63,7 @@ namespace Estados
 		fase->atualizaCamera();
 		fase->AtualizarPersonagens();
 		gerenciadorColisoes->Executar();
+		fase->desenharHUD();
 		gerenciadorGrafico->mostraElemento();
 
 		fase->verificaFase();
@@ -90,11 +101,20 @@ namespace Estados
 
 		if (finalizado)
 		{
-			if (fase->getConcluida() && numFase == 1)
+			// Roguelike: ao concluir a fase, geramos a proxima
+			// procedural. Ao perder, voltamos ao menu (preservando a
+			// arvore de habilidades em Mundo para a proxima run).
+			if (fase->getConcluida())
+			{
+				principal->getMundo().avancarFase();
+				const int prox = principal->getMundo().getFaseAtual();
 				gerenciadorEstados->trocar(std::make_unique<EstadoJogo>(
-					gerenciadorEstados, principal, 2, numJogadores, false));
+					gerenciadorEstados, principal, prox, numJogadores, false));
+			}
 			else
+			{
 				gerenciadorEstados->desempilhar();
+			}
 		}
 	}
 

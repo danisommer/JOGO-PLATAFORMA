@@ -4,8 +4,7 @@
 #include "Gerenciador_Colisoes.hpp"
 #include "Gerenciador_Eventos.hpp"
 #include "Mundo.hpp"
-#include "Ruinas.hpp"
-#include "Floresta.hpp"
+#include "Fase.hpp"
 #include "Tela.hpp"
 
 using namespace sf;
@@ -20,11 +19,13 @@ private:
 	Gerenciadores::Gerenciador_Eventos* gerenciador_eventos;
 	Gerenciadores::Gerenciador_Colisoes* gerenciador_colisoes;
 
-	Fases::Floresta fase1;
-	Fases::Ruinas fase2;
+	// Modo roguelike: uma unica Fase reciclada a cada nova fase
+	// procedural. As classes Floresta/Ruinas viraram apenas temas
+	// visuais aplicados via Fase::setFase.
+	Fases::Fase fase;
 
-	// Estado de sessao compartilhado por ambas as fases (pontuacao
-	// acumulada, jogadores, chefao). Injetado nas fases no construtor.
+	// Estado de sessao compartilhado pelas fases (pontuacao
+	// acumulada, jogadores, chefao, fase atual, kills, arvore).
 	Mundo mundo;
 
 	const sf::Font* fonte;
@@ -37,16 +38,18 @@ private:
 public:
 	Principal();
 	~Principal();
-	void alocaFase1(int n_jogadores);
-	void alocaFase2(int n_jogadores);
 	void recuperaFase(int save);
 
-	// Roda uma fase atraves da maquina de estados (EstadoJogo/EstadoPausa).
-	void executarFase(int fase, int n_jogadores);
-
-	// Usados pelos estados de jogo/pausa.
+	// Gera (ou regenera) a fase atual a partir do numero armazenado
+	// em Mundo. Usado para iniciar uma nova run e para avancar entre
+	// fases dentro de uma mesma run.
 	Fases::Fase* prepararFase(int numFase, int n_jogadores);
 	void telaCarregamento();
+
+	// Inicia a sessao do modo roguelike. Comeca da fase 1 (ou de uma
+	// salva) e gera fases sucessivas enquanto o jogador sobrevive.
+	void executarFase(int faseInicial, int n_jogadores);
+
 	Tela& getTelaPausa();
 	Tela& getTelaMundos();
 	Mundo& getMundo();

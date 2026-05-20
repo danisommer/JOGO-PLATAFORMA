@@ -1,6 +1,8 @@
 #include "Jogador.hpp"
 #include "Gerenciador_Recursos.hpp"
 #include "Configuracao.hpp"
+#include "Mundo.hpp"
+#include "ArvoreHabilidades.hpp"
 #include <iostream>
 
 namespace Entidades
@@ -34,7 +36,13 @@ namespace Entidades
 			tempoVeneno(0),
 			tempoLentidao(0),
 			tamanhoCorpo(tam),
-			concluiuFase(false)
+			concluiuFase(false),
+			puloDuploDisponivel(false),
+			puloDuploLiberado(false),
+			puloPressionadoAnterior(false),
+			fatorArmadura(1.0f),
+			vampiro(false),
+			bonusAlcance(0.0f)
 		{
 			dano = DANO_JOGADOR;
 			vida = VIDA_MAX;
@@ -52,6 +60,12 @@ namespace Entidades
 
 		void Jogador::atualizar()
 		{
+			// Recarrega o pulo duplo sempre que o jogador esta no chao.
+			// isJumping == false logo apos a resolucao da colisao com o
+			// piso (Gerenciador_Colisoes::verificaColisao zera isto).
+			if (!isJumping)
+				puloDuploDisponivel = puloDuploLiberado;
+
 			if (animacao != 2)
 			{
 				if (envenenado)
@@ -236,7 +250,8 @@ namespace Entidades
 				if (Keyboard::isKeyPressed(teclas.at(1)))
 					lado = 1;
 
-				regiaoAtaque = Vector2f(corpo.getPosition().x + (65.0f * lado), corpo.getPosition().y);
+				const float alcance = 65.0f * (1.0f + bonusAlcance);
+				regiaoAtaque = Vector2f(corpo.getPosition().x + (alcance * lado), corpo.getPosition().y);
 				atacando = true;
 
 				velocity.x = 0.0f;
@@ -258,12 +273,24 @@ namespace Entidades
 		{
 			// Pulo de altura fixa: so impulsiona quando o jogador esta no
 			// chao (isJumping == false). A colisao zera isJumping ao pousar.
+			// Com a habilidade "Pulo duplo" ativa, um segundo pulo no ar
+			// e disparado quando a tecla e RE-pressionada (edge "subiu") e
+			// o pulo duplo ainda nao foi consumido.
 			if (pulando && !isJumping)
 			{
 				velocity.y = jumpStrength;
 				isJumping = true;
 				animacao = 6;
 			}
+			else if (pulando && !puloPressionadoAnterior
+				&& puloDuploLiberado && puloDuploDisponivel)
+			{
+				velocity.y = jumpStrength;
+				puloDuploDisponivel = false;
+				animacao = 6;
+			}
+
+			puloPressionadoAnterior = pulando;
 		}
 
 		void Jogador::processarEntrada()
@@ -426,6 +453,65 @@ namespace Entidades
 			animacoes.push_back(animacaoPulo);
 			animacoes.push_back(animacaoAgachar);
 
+		}
+
+		void Jogador::aplicarHabilidades()
+		{
+			// Os efeitos das habilidades sao aplicados como bonus
+			// aditivos/multiplicativos sobre os atributos base. A vida
+			// e curada para o novo maximo, evitando comecar uma fase
+			// com a barra parcialmente vazia apos a compra de Vida +.
+			if (!mundo)
+				return;
+
+			const ArvoreHabilidades& arv = mundo->getArvore();
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::VIDA_EXTRA))
+				vida += 25.0f;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::DANO_EXTRA))
+				dano += 5.0f;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::VELOCIDADE))
+				vel.x += 2.0f;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::PULO_FORTE))
+				jumpStrength *= 1.25f; // mais forca (mais negativo)
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::ALCANCE_EXTRA))
+				bonusAlcance = 0.30f;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::VAMPIRO))
+				vampiro = true;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::PULO_DUPLO))
+				puloDuploLiberado = true;
+
+			if (arv.foiDesbloqueada(ArvoreHabilidades::ARMADURA))
+				fatorArmadura = 0.75f;
+		}
+
+		bool Jogador::getVampiro() const
+		{
+			return vampiro;
+		}
+
+		void Jogador::curar(float quanto)
+		{
+			vida += quanto;
+			// O teto e o getVida da classe (constante VIDA_MAX). Aceitamos
+			// que VIDA_EXTRA aumente o "atual" sem mexer no teto exposto;
+			// a barra ja reescala via atualizarBarraVida.
+		}
+
+		void Jogador::recarregarPuloDuplo()
+		{
+			puloDuploDisponivel = puloDuploLiberado;
+		}
+
+		bool Jogador::tomarDano(float dano, int dirKnockback)
+		{
+			return Personagem::tomarDano(dano * fatorArmadura, dirKnockback);
 		}
 
 		void Jogador::inicializaTeclas()

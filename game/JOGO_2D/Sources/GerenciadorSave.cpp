@@ -28,6 +28,15 @@ namespace Persistencia
 		for (const EstadoJogador& j : dados.jogadores)
 			arquivo << "JOGADOR " << j.vida << " " << j.x << " " << j.y << "\n";
 
+		arquivo << "PONTUACAO " << dados.pontuacao[0] << " " << dados.pontuacao[1] << "\n";
+		arquivo << "KILLS " << dados.kills << "\n";
+		arquivo << "PONTOS_ARVORE " << dados.pontosArvore << "\n";
+
+		arquivo << "SKILLS";
+		for (bool s : dados.skillsDesbloqueadas)
+			arquivo << " " << (s ? 1 : 0);
+		arquivo << "\n";
+
 		return true;
 	}
 
@@ -66,6 +75,24 @@ namespace Persistencia
 				EstadoJogador j;
 				iss >> j.vida >> j.x >> j.y;
 				dados.jogadores.push_back(j);
+			}
+			else if (tag == "PONTUACAO")
+			{
+				iss >> dados.pontuacao[0] >> dados.pontuacao[1];
+			}
+			else if (tag == "KILLS")
+			{
+				iss >> dados.kills;
+			}
+			else if (tag == "PONTOS_ARVORE")
+			{
+				iss >> dados.pontosArvore;
+			}
+			else if (tag == "SKILLS")
+			{
+				int v;
+				while (iss >> v)
+					dados.skillsDesbloqueadas.push_back(v != 0);
 			}
 			// Tags desconhecidas sao ignoradas (compatibilidade futura).
 		}
