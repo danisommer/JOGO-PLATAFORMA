@@ -48,6 +48,9 @@ namespace Entidades
 			// Controla o ciclo completo do ataque: true enquanto a animacao
 			// de ataque nao completou um ciclo apos o primeiro disparo.
 			bool atacandoAtivo;
+			// Edge detection: true se o botao de ataque estava pressionado
+			// no frame anterior (impede "segurar para atacar continuo").
+			bool ataquePressionadoAnterior;
 		
 			Vector2f regiaoAtaque;
 			std::vector<Animacao> animacoes;

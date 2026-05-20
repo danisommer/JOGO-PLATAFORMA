@@ -40,6 +40,7 @@ namespace Entidades
 			tempoAtordoado(0),
 			tempoDecorridoAtordoado(0),
 			atacandoAtivo(false),
+			ataquePressionadoAnterior(false),
 			tamanhoCorpo(tam),
 			concluiuFase(false),
 			puloDuploDisponivel(false),
@@ -394,6 +395,11 @@ namespace Entidades
 			}
 
 			const bool ataquePressionado = Keyboard::isKeyPressed(teclas.at(3));
+			// Borda de subida: so e true no frame em que o botao foi
+			// pressionado (transicao solto -> pressionado).
+			const bool ataqueNovo = ataquePressionado && !ataquePressionadoAnterior;
+			ataquePressionadoAnterior = ataquePressionado;
+
 			const bool direita = Keyboard::isKeyPressed(teclas.at(1));
 			const bool esquerda = Keyboard::isKeyPressed(teclas.at(0));
 
@@ -411,27 +417,22 @@ namespace Entidades
 				}
 				else if (concluida)
 				{
-					// Animacao completou: reinicia se tecla ainda pressionada
-					if (ataquePressionado)
-						bater(true); // recomecar ciclo
-					else
-					{
-						atacandoAtivo = false;
-						bater(false);
-						mover(direita, esquerda);
-						pular(Keyboard::isKeyPressed(teclas.at(2)));
-					}
+					// Animacao completou: para sempre; exige novo pressionamento
+					atacandoAtivo = false;
+					bater(false);
+					mover(direita, esquerda);
+					pular(Keyboard::isKeyPressed(teclas.at(2)));
 				}
 				else
 				{
-					// Animacao em progresso: força continuação
+					// Animacao em progresso: continua automaticamente
 					bater(true);
 				}
 				return;
 			}
 
-			// Iniciar novo ataque
-			if (ataquePressionado && !isJumping)
+			// Iniciar novo ataque apenas na borda de subida do botao
+			if (ataqueNovo && !isJumping)
 			{
 				atacandoAtivo = true;
 				bater(true);
