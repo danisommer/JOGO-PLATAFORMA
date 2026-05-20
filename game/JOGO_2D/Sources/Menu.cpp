@@ -1,4 +1,5 @@
 #include "Menu.hpp"
+#include "Configuracao.hpp"
 
 Menu::Menu() :
 	posicaoTela(gerenciador_grafico->getViewCenter()),
@@ -83,6 +84,10 @@ void Menu::executar()
 					telaAtual.push(4);
 				}
 				else if (evento == 3)
+				{
+					executarTelaConfiguracoes();
+				}
+				else if (evento == 4)
 				{
 					gerenciador_grafico->fecharJanela();
 					exit(1);
@@ -266,9 +271,9 @@ void Menu::inicializaTextos()
 	std::vector<sf::Vector2f> coordenadas;
 	std::vector<std::size_t> tamanhos;
 
-	opcoes = { "Novo Jogo", "Continuar", "Ranking", "Sair" };
-	coordenadas = { { 70, 300}, { 70, 390 }, { 70, 480 }, { 70, 570 } };
-	tamanhos = { 38, 38, 38, 38 };
+	opcoes = { "Novo Jogo", "Continuar", "Ranking", "Configuracoes", "Sair" };
+	coordenadas = { { 70, 280}, { 70, 360 }, { 70, 440 }, { 70, 520 }, { 70, 600 } };
+	tamanhos = { 38, 38, 38, 38, 38 };
 
 	for (size_t i = 0; i < opcoes.size(); i++)
 	{
@@ -386,6 +391,7 @@ void Menu::inicializaBotoes()
 	sf::RectangleShape* novoJogo;
 	sf::RectangleShape* continuar;
 	sf::RectangleShape* ranking;
+	sf::RectangleShape* configuracoes;
 	sf::RectangleShape* sair;
 
 	sf::RectangleShape* umJogador;
@@ -411,27 +417,33 @@ void Menu::inicializaBotoes()
 	//TELA INICIAL
 	novoJogo = new sf::RectangleShape();
 	novoJogo->setSize(sf::Vector2f(250.0f, 50.0f));
-	novoJogo->setPosition(sf::Vector2f(70, 300));
+	novoJogo->setPosition(sf::Vector2f(70, 280));
 	novoJogo->setFillColor(sf::Color::Red);
 
 	continuar = new sf::RectangleShape();
 	continuar->setSize(sf::Vector2f(240.0f, 50.0f));
-	continuar->setPosition(sf::Vector2f(70, 390));
+	continuar->setPosition(sf::Vector2f(70, 360));
 	continuar->setFillColor(sf::Color::Red);
 
 	ranking = new sf::RectangleShape();
 	ranking->setSize(sf::Vector2f(190.0f, 50.0f));
-	ranking->setPosition(sf::Vector2f(70, 480));
+	ranking->setPosition(sf::Vector2f(70, 440));
 	ranking->setFillColor(sf::Color::Red);
+
+	configuracoes = new sf::RectangleShape();
+	configuracoes->setSize(sf::Vector2f(310.0f, 50.0f));
+	configuracoes->setPosition(sf::Vector2f(70, 520));
+	configuracoes->setFillColor(sf::Color::Red);
 
 	sair = new sf::RectangleShape();
 	sair->setSize(sf::Vector2f(110.0f, 50.0f));
-	sair->setPosition(sf::Vector2f(70, 570));
+	sair->setPosition(sf::Vector2f(70, 600));
 	sair->setFillColor(sf::Color::Red);
 
 	telaInicial.addBotao(novoJogo);
 	telaInicial.addBotao(continuar);
 	telaInicial.addBotao(ranking);
+	telaInicial.addBotao(configuracoes);
 	telaInicial.addBotao(sair);
 
 	//TELA 1
@@ -600,5 +612,357 @@ void Menu::limparRanking()
 	if (arquivo.is_open())
 	{
 		arquivo.close();
+	}
+}
+
+namespace
+{
+	// Helper para o desenho das telas de configuracao: monta um botao
+	// (retangulo + texto) em uma posicao, devolvendo o retangulo para
+	// teste de colisao do mouse e o texto pronto para desenhar.
+	struct ItemConfig
+	{
+		sf::RectangleShape retangulo;
+		sf::Text rotulo;
+	};
+
+	ItemConfig criarItem(const sf::Font& fonte, const std::string& texto,
+		sf::Vector2f pos, sf::Vector2f tamanho, unsigned int tamFonte = 32)
+	{
+		ItemConfig item;
+		item.retangulo.setPosition(pos);
+		item.retangulo.setSize(tamanho);
+		item.retangulo.setFillColor(sf::Color(0, 0, 0, 160));
+		item.retangulo.setOutlineColor(sf::Color::White);
+		item.retangulo.setOutlineThickness(1.5f);
+
+		item.rotulo.setFont(fonte);
+		item.rotulo.setString(texto);
+		item.rotulo.setCharacterSize(tamFonte);
+		item.rotulo.setOutlineColor(sf::Color::Black);
+		item.rotulo.setFillColor(sf::Color::White);
+		item.rotulo.setPosition(pos.x + 10.0f, pos.y + 5.0f);
+		return item;
+	}
+}
+
+void Menu::executarTelaConfiguracoes()
+{
+	auto* cfg = Gerenciadores::Configuracao::getInstancia();
+
+	sf::Text titulo;
+	titulo.setFont(*fonte);
+	titulo.setString("Configuracoes");
+	titulo.setPosition(470, 70);
+	titulo.setCharacterSize(75);
+	titulo.setOutlineColor(sf::Color::Black);
+	titulo.setStyle(sf::Text::Bold);
+
+	ItemConfig btnControles = criarItem(*fonte, "Controles", {70, 300}, {300, 50}, 38);
+	ItemConfig btnTela = criarItem(*fonte, "Tela", {70, 390}, {300, 50}, 38);
+	ItemConfig btnVoltar = criarItem(*fonte, "Voltar", {70, 480}, {300, 50}, 38);
+
+	while (gerenciador_grafico->getOpen())
+	{
+		sf::Event evento;
+		while (gerenciador_grafico->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerenciador_grafico->fecharJanela();
+				return;
+			}
+
+			if (evento.type == sf::Event::MouseButtonReleased &&
+				evento.mouseButton.button == sf::Mouse::Left)
+			{
+				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
+				const sf::Vector2f cm = gerenciador_grafico->getJanela()->mapPixelToCoords(mp);
+
+				if (btnControles.retangulo.getGlobalBounds().contains(cm))
+				{
+					executarTelaControles();
+				}
+				else if (btnTela.retangulo.getGlobalBounds().contains(cm))
+				{
+					executarTelaTela();
+				}
+				else if (btnVoltar.retangulo.getGlobalBounds().contains(cm))
+				{
+					cfg->salvar();
+					return;
+				}
+			}
+		}
+
+		gerenciador_grafico->limpaTela();
+		gerenciador_grafico->desenhaSprite(*sprite);
+
+		gerenciador_grafico->desenhaTexto(titulo);
+		gerenciador_grafico->desenhaTela(&btnControles.retangulo);
+		gerenciador_grafico->desenhaTexto(btnControles.rotulo);
+		gerenciador_grafico->desenhaTela(&btnTela.retangulo);
+		gerenciador_grafico->desenhaTexto(btnTela.rotulo);
+		gerenciador_grafico->desenhaTela(&btnVoltar.retangulo);
+		gerenciador_grafico->desenhaTexto(btnVoltar.rotulo);
+
+		gerenciador_grafico->mostraElemento();
+	}
+}
+
+void Menu::executarTelaControles()
+{
+	using Acao = Gerenciadores::Configuracao::Acao;
+	auto* cfg = Gerenciadores::Configuracao::getInstancia();
+
+	sf::Text titulo;
+	titulo.setFont(*fonte);
+	titulo.setString("Controles");
+	titulo.setPosition(470, 70);
+	titulo.setCharacterSize(75);
+	titulo.setOutlineColor(sf::Color::Black);
+	titulo.setStyle(sf::Text::Bold);
+
+	// 8 acoes (4 por jogador) + Voltar. Cada linha possui um retangulo
+	// clicavel que abre a captura da proxima tecla pressionada.
+	struct Linha
+	{
+		int jogador;
+		Acao acao;
+		std::string descricao;
+	};
+
+	const Linha linhas[] = {
+		{0, Acao::ESQUERDA, "P1 Esquerda"},
+		{0, Acao::DIREITA, "P1 Direita"},
+		{0, Acao::PULAR, "P1 Pulo"},
+		{0, Acao::ATACAR, "P1 Ataque"},
+		{1, Acao::ESQUERDA, "P2 Esquerda"},
+		{1, Acao::DIREITA, "P2 Direita"},
+		{1, Acao::PULAR, "P2 Pulo"},
+		{1, Acao::ATACAR, "P2 Ataque"},
+	};
+
+	int aguardando = -1; // indice da linha aguardando tecla, ou -1
+	sf::Text aviso;
+	aviso.setFont(*fonte);
+	aviso.setCharacterSize(26);
+	aviso.setFillColor(sf::Color::Yellow);
+	aviso.setPosition(60, 220);
+
+	while (gerenciador_grafico->getOpen())
+	{
+		// Reconstroi as caixas a cada frame para refletir mudancas
+		// imediatas no rotulo da tecla apos a captura.
+		std::vector<ItemConfig> itens;
+		for (std::size_t i = 0; i < sizeof(linhas) / sizeof(linhas[0]); ++i)
+		{
+			const std::string texto = linhas[i].descricao + ":  " +
+				Gerenciadores::Configuracao::nomeTecla(cfg->getTecla(linhas[i].jogador, linhas[i].acao));
+			const float y = 280.0f + i * 60.0f;
+			itens.push_back(criarItem(*fonte, texto, {60, y}, {520, 48}, 28));
+		}
+		ItemConfig btnVoltar = criarItem(*fonte, "Voltar",
+			{60, 280.0f + sizeof(linhas) / sizeof(linhas[0]) * 60.0f + 20.0f},
+			{300, 48}, 32);
+
+		if (aguardando >= 0)
+		{
+			itens[aguardando].rotulo.setString(
+				linhas[aguardando].descricao + ":  [pressione uma tecla]");
+			itens[aguardando].rotulo.setFillColor(sf::Color::Yellow);
+		}
+
+		sf::Event evento;
+		while (gerenciador_grafico->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerenciador_grafico->fecharJanela();
+				return;
+			}
+
+			if (aguardando >= 0)
+			{
+				// Aguardando uma tecla: a proxima KeyPressed remapeia.
+				// ESC cancela sem alterar.
+				if (evento.type == sf::Event::KeyPressed)
+				{
+					if (evento.key.code != sf::Keyboard::Escape)
+					{
+						cfg->setTecla(linhas[aguardando].jogador,
+							linhas[aguardando].acao, evento.key.code);
+					}
+					aguardando = -1;
+				}
+				continue;
+			}
+
+			if (evento.type == sf::Event::MouseButtonReleased &&
+				evento.mouseButton.button == sf::Mouse::Left)
+			{
+				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
+				const sf::Vector2f cm = gerenciador_grafico->getJanela()->mapPixelToCoords(mp);
+
+				bool clicouLinha = false;
+				for (std::size_t i = 0; i < itens.size(); ++i)
+				{
+					if (itens[i].retangulo.getGlobalBounds().contains(cm))
+					{
+						aguardando = static_cast<int>(i);
+						clicouLinha = true;
+						break;
+					}
+				}
+
+				if (!clicouLinha && btnVoltar.retangulo.getGlobalBounds().contains(cm))
+				{
+					cfg->salvar();
+					return;
+				}
+			}
+		}
+
+		aviso.setString(aguardando >= 0
+			? std::string("Pressione a nova tecla (ESC para cancelar)")
+			: std::string("Clique em uma acao para remapear"));
+
+		gerenciador_grafico->limpaTela();
+		gerenciador_grafico->desenhaSprite(*sprite);
+		gerenciador_grafico->desenhaTexto(titulo);
+		gerenciador_grafico->desenhaTexto(aviso);
+
+		for (auto& it : itens)
+		{
+			gerenciador_grafico->desenhaTela(&it.retangulo);
+			gerenciador_grafico->desenhaTexto(it.rotulo);
+		}
+		gerenciador_grafico->desenhaTela(&btnVoltar.retangulo);
+		gerenciador_grafico->desenhaTexto(btnVoltar.rotulo);
+
+		gerenciador_grafico->mostraElemento();
+	}
+}
+
+void Menu::executarTelaTela()
+{
+	auto* cfg = Gerenciadores::Configuracao::getInstancia();
+
+	// Resolucoes oferecidas. Mantemos uma lista curta para evitar
+	// confusao com modos exoticos; a opcao tela cheia desce ao modo
+	// nativo do monitor automaticamente quando precisa.
+	struct Resolucao { unsigned int largura; unsigned int altura; };
+	const Resolucao resolucoes[] = {
+		{1280, 720}, {1366, 768}, {1600, 900}, {1920, 1080}, {2560, 1440}
+	};
+	const std::size_t nResolucoes = sizeof(resolucoes) / sizeof(resolucoes[0]);
+
+	const unsigned int fpsOpcoes[] = {30, 60, 75, 120, 144, 240};
+	const std::size_t nFps = sizeof(fpsOpcoes) / sizeof(fpsOpcoes[0]);
+
+	auto indiceResolucao = [&]() -> std::size_t {
+		for (std::size_t i = 0; i < nResolucoes; ++i)
+		{
+			if (resolucoes[i].largura == cfg->getLargura() &&
+				resolucoes[i].altura == cfg->getAltura())
+				return i;
+		}
+		return 2; // default 1600x900
+	};
+
+	auto indiceFps = [&]() -> std::size_t {
+		for (std::size_t i = 0; i < nFps; ++i)
+			if (fpsOpcoes[i] == cfg->getFpsMax())
+				return i;
+		return 1; // default 60
+	};
+
+	std::size_t idxRes = indiceResolucao();
+	std::size_t idxFps = indiceFps();
+	bool tcheia = cfg->getTelaCheia();
+
+	sf::Text titulo;
+	titulo.setFont(*fonte);
+	titulo.setString("Tela");
+	titulo.setPosition(470, 70);
+	titulo.setCharacterSize(75);
+	titulo.setOutlineColor(sf::Color::Black);
+	titulo.setStyle(sf::Text::Bold);
+
+	while (gerenciador_grafico->getOpen())
+	{
+		const std::string txtRes = "Resolucao:  " +
+			std::to_string(resolucoes[idxRes].largura) + " x " +
+			std::to_string(resolucoes[idxRes].altura);
+		const std::string txtTC = std::string("Tela cheia:  ") + (tcheia ? "Sim" : "Nao");
+		const std::string txtFps = "FPS maximo:  " + std::to_string(fpsOpcoes[idxFps]);
+
+		ItemConfig itemRes = criarItem(*fonte, txtRes, {70, 280}, {520, 50}, 32);
+		ItemConfig itemTC = criarItem(*fonte, txtTC, {70, 360}, {520, 50}, 32);
+		ItemConfig itemFps = criarItem(*fonte, txtFps, {70, 440}, {520, 50}, 32);
+		ItemConfig btnAplicar = criarItem(*fonte, "Aplicar", {70, 540}, {220, 50}, 32);
+		ItemConfig btnVoltar = criarItem(*fonte, "Voltar", {310, 540}, {220, 50}, 32);
+
+		sf::Text dica;
+		dica.setFont(*fonte);
+		dica.setString("(clique em cada opcao para alternar)");
+		dica.setCharacterSize(22);
+		dica.setFillColor(sf::Color::White);
+		dica.setOutlineColor(sf::Color::Black);
+		dica.setPosition(70, 230);
+
+		sf::Event evento;
+		while (gerenciador_grafico->getJanela()->pollEvent(evento))
+		{
+			if (evento.type == sf::Event::Closed)
+			{
+				gerenciador_grafico->fecharJanela();
+				return;
+			}
+
+			if (evento.type == sf::Event::MouseButtonReleased &&
+				evento.mouseButton.button == sf::Mouse::Left)
+			{
+				const sf::Vector2i mp = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
+				const sf::Vector2f cm = gerenciador_grafico->getJanela()->mapPixelToCoords(mp);
+
+				if (itemRes.retangulo.getGlobalBounds().contains(cm))
+					idxRes = (idxRes + 1) % nResolucoes;
+				else if (itemTC.retangulo.getGlobalBounds().contains(cm))
+					tcheia = !tcheia;
+				else if (itemFps.retangulo.getGlobalBounds().contains(cm))
+					idxFps = (idxFps + 1) % nFps;
+				else if (btnAplicar.retangulo.getGlobalBounds().contains(cm))
+				{
+					cfg->setResolucao(resolucoes[idxRes].largura, resolucoes[idxRes].altura);
+					cfg->setTelaCheia(tcheia);
+					cfg->setFpsMax(fpsOpcoes[idxFps]);
+					cfg->salvar();
+					gerenciador_grafico->aplicarConfiguracao();
+				}
+				else if (btnVoltar.retangulo.getGlobalBounds().contains(cm))
+				{
+					cfg->salvar();
+					return;
+				}
+			}
+		}
+
+		gerenciador_grafico->limpaTela();
+		gerenciador_grafico->desenhaSprite(*sprite);
+		gerenciador_grafico->desenhaTexto(titulo);
+		gerenciador_grafico->desenhaTexto(dica);
+		gerenciador_grafico->desenhaTela(&itemRes.retangulo);
+		gerenciador_grafico->desenhaTexto(itemRes.rotulo);
+		gerenciador_grafico->desenhaTela(&itemTC.retangulo);
+		gerenciador_grafico->desenhaTexto(itemTC.rotulo);
+		gerenciador_grafico->desenhaTela(&itemFps.retangulo);
+		gerenciador_grafico->desenhaTexto(itemFps.rotulo);
+		gerenciador_grafico->desenhaTela(&btnAplicar.retangulo);
+		gerenciador_grafico->desenhaTexto(btnAplicar.rotulo);
+		gerenciador_grafico->desenhaTela(&btnVoltar.retangulo);
+		gerenciador_grafico->desenhaTexto(btnVoltar.rotulo);
+
+		gerenciador_grafico->mostraElemento();
 	}
 }

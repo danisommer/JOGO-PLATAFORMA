@@ -34,6 +34,13 @@ namespace Gerenciadores
 		bool getOpen();
 		void setCentro(sf::Vector2f centro);
 		Vector2f getViewCenter();
+
+		// Recria a janela usando os valores atuais armazenados em
+		// Configuracao (resolucao, tela cheia, limite de FPS). A view
+		// continua usando TELA_X/TELA_Y como tamanho logico, de modo que
+		// a arte e o layout do menu permanecem identicos em qualquer
+		// resolucao - a janela apenas redimensiona o resultado final.
+		void aplicarConfiguracao();
 	};
 
 }

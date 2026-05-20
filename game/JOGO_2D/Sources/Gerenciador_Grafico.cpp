@@ -1,4 +1,5 @@
 #include "Gerenciador_Grafico.hpp"
+#include "Configuracao.hpp"
 
 using namespace sf;
 
@@ -7,17 +8,15 @@ namespace Gerenciadores
 	Gerenciador_Grafico* Gerenciador_Grafico::pGerenciador = nullptr;
 
 	Gerenciador_Grafico::Gerenciador_Grafico() :
-		janela(new RenderWindow(VideoMode(TELA_X, TELA_Y), "Knight's Quest")),
+		janela(nullptr),
 		view(FloatRect(0.0f, 0.f, TELA_X, TELA_Y))
 	{
-		if (janela == nullptr)
-		{
-			cout << "Erro alocando a janela!!" << endl;
-			exit(1);
-		}
+		// Cria a janela ja respeitando o arquivo de configuracao.
+		// A view e mantida em coordenadas logicas (TELA_X x TELA_Y)
+		// para que a arte do jogo nao precise ser reescalada quando
+		// o usuario muda a resolucao da janela.
 		view.zoom(1.0f);
-		janela->setView(view);
-		janela->setFramerateLimit(60);
+		aplicarConfiguracao();
 	}
 
 	Gerenciador_Grafico::~Gerenciador_Grafico()
@@ -91,5 +90,41 @@ namespace Gerenciadores
 	Vector2f Gerenciador_Grafico::getViewCenter()
 	{
 		return view.getCenter();
+	}
+
+	void Gerenciador_Grafico::aplicarConfiguracao()
+	{
+		auto* cfg = Configuracao::getInstancia();
+
+		const unsigned int largura = cfg->getLargura();
+		const unsigned int altura = cfg->getAltura();
+		const unsigned int estilo = cfg->getTelaCheia()
+			? sf::Style::Fullscreen
+			: sf::Style::Default;
+
+		if (janela)
+		{
+			janela->close();
+			delete janela;
+			janela = nullptr;
+		}
+
+		// Em tela cheia o modo de video precisa estar entre os
+		// suportados pelo monitor; se nao estiver, caimos no modo
+		// nativo da area de trabalho. Isso evita uma falha silenciosa
+		// (janela em preto) ao escolher uma resolucao customizada.
+		VideoMode modo(largura, altura);
+		if (cfg->getTelaCheia() && !modo.isValid())
+			modo = VideoMode::getDesktopMode();
+
+		janela = new RenderWindow(modo, "Knight's Quest", estilo);
+		if (janela == nullptr)
+		{
+			cout << "Erro alocando a janela!!" << endl;
+			exit(1);
+		}
+
+		janela->setView(view);
+		janela->setFramerateLimit(cfg->getFpsMax());
 	}
 }

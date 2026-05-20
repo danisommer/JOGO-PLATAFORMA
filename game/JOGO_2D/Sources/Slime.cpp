@@ -37,10 +37,14 @@ namespace Entidades
 
 		void Slime::danar(int jogador)
 		{
+			// O efeito so dura enquanto o jogador continua em contato:
+			// usamos uma duracao curtissima (3 passos) que e renovada
+			// a cada frame de colisao. Ao sair, o efeito expira em ~3
+			// passos, sem o antigo arrasto de varios segundos.
 			Entidades::Personagens::Jogador* alvo =
 				mundo ? mundo->getJogador(jogador - 1) : nullptr;
 			if (alvo)
-				alvo->setLento(true, 300, pegajosidadeMovimento, pegajosidadePulo);
+				alvo->setLento(true, 3, pegajosidadeMovimento, pegajosidadePulo);
 		}
 		void Slime::limparArquivo(int save)
 		{

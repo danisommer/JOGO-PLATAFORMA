@@ -62,4 +62,11 @@ public:
 
 	void mostrarRanking();
 	void limparRanking();
+
+	// Telas de configuracao - cada uma assume o controle do loop ate
+	// o usuario voltar. Mantemos fora do switch de telaAtual porque
+	// estas precisam desenhar dinamicamente (teclas atuais, valores).
+	void executarTelaConfiguracoes();
+	void executarTelaControles();
+	void executarTelaTela();
 };

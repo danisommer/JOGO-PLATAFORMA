@@ -59,6 +59,13 @@ namespace Entidades
 			const bool getParado() const;
 			const float getDistanciaAtaqueX() const;
 			const float getDistanciaAtaqueY() const;
+			// Verifica se o inimigo pode atacar o alvo, considerando o
+			// alinhamento adequado: inimigos terrestres so atacam quando
+			// estao aproximadamente na mesma altura dos "pes"; voadores
+			// usam uma tolerancia vertical em torno do centro. Em ambos
+			// os casos a sobreposicao horizontal e exigida (com base no
+			// alcance de ataque).
+			bool podeAtacarAlvo(const sf::RectangleShape& alvo) const;
 			void limparArquivo(int save) = 0;
 			void salvar(int save) = 0;
 		};

@@ -1,5 +1,6 @@
 #include "Jogador.hpp"
 #include "Gerenciador_Recursos.hpp"
+#include "Configuracao.hpp"
 #include <iostream>
 
 namespace Entidades
@@ -190,8 +191,13 @@ namespace Entidades
 
 		void Jogador::setLento(bool lentidao, int tempo, float fL, float fP)
 		{
+			// Reativar o efeito reinicia o contador. Sem isto, contatos
+			// repetidos com o Slime nao recomecavam o temporizador e o
+			// estado podia expirar enquanto o jogador ainda estava em
+			// cima da plataforma gosmenta.
 			lento = lentidao;
 			tempoLentidao = tempo;
+			tempoDecorridoLentidao = 0;
 			forcaLentidao = fL;
 			forcaPulo = fP;
 		}
@@ -262,6 +268,18 @@ namespace Entidades
 
 		void Jogador::processarEntrada()
 		{
+			// Durante a animacao de morte (animacao == 2) ou apos
+			// zerar a vida, o jogador nao responde mais a teclas.
+			// Sem este bloqueio, era possivel virar o sprite para os
+			// lados (e disparar ataques) enquanto o personagem caia.
+			if (animacao == 2 || vida <= 0.0f)
+			{
+				velocity.x = 0.0f;
+				atacando = false;
+				regiaoAtaque = Vector2f();
+				return;
+			}
+
 			// teclas: 0 = esquerda, 1 = direita, 2 = pulo, 3 = ataque.
 			// Cada jogador traz seu proprio mapeamento (ver inicializaTeclas),
 			// portanto o gerenciador de eventos nao precisa codificar teclas.
@@ -412,20 +430,14 @@ namespace Entidades
 
 		void Jogador::inicializaTeclas()
 		{
-			if (indiceJogador == 0)
-			{
-				teclas.push_back(Keyboard::A);
-				teclas.push_back(Keyboard::D);
-				teclas.push_back(Keyboard::W);
-				teclas.push_back(Keyboard::E);
-			}
-			else
-			{
-				teclas.push_back(Keyboard::Left);
-				teclas.push_back(Keyboard::Right);
-				teclas.push_back(Keyboard::Up);
-				teclas.push_back(Keyboard::M);
-			}
+			// As teclas vem do singleton de configuracao (Saves/config.txt).
+			// Ordem: 0 = esquerda, 1 = direita, 2 = pulo, 3 = ataque.
+			auto* cfg = Gerenciadores::Configuracao::getInstancia();
+
+			teclas.push_back(cfg->getTecla(indiceJogador, Gerenciadores::Configuracao::ESQUERDA));
+			teclas.push_back(cfg->getTecla(indiceJogador, Gerenciadores::Configuracao::DIREITA));
+			teclas.push_back(cfg->getTecla(indiceJogador, Gerenciadores::Configuracao::PULAR));
+			teclas.push_back(cfg->getTecla(indiceJogador, Gerenciadores::Configuracao::ATACAR));
 		}
 
 	}

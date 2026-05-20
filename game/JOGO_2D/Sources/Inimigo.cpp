@@ -214,6 +214,46 @@ namespace Entidades
 		{
 			return distanciaAtaqueY;
 		}
+
+		bool Inimigo::podeAtacarAlvo(const sf::RectangleShape& alvo) const
+		{
+			const sf::FloatRect rA = alvo.getGlobalBounds();
+			const sf::FloatRect rE = corpo.getGlobalBounds();
+
+			// Alcance horizontal: a distancia entre o centro do inimigo
+			// e o centro do alvo precisa caber dentro de
+			// distanciaAtaqueX + metade da largura do alvo. Assim a
+			// hitbox do golpe sai a partir do corpo do inimigo, e nao
+			// do "centro do mundo" como antes.
+			const float centroAlvoX = rA.left + rA.width / 2.0f;
+			const float centroInimigoX = rE.left + rE.width / 2.0f;
+			const float deltaX = std::fabs(centroAlvoX - centroInimigoX);
+			const float alcanceX = distanciaAtaqueX + rA.width / 2.0f;
+
+			if (deltaX > alcanceX)
+				return false;
+
+			// Alinhamento vertical: para inimigos terrestres o ataque
+			// so faz sentido quando os "pes" (base do corpo) estao
+			// aproximadamente no mesmo nivel - assim eles nao atacam o
+			// jogador estando em cima ou embaixo de uma plataforma. Para
+			// voadores, usamos a sobreposicao entre as caixas verticais
+			// (mais permissiva, mas exige aproximacao real).
+			if (voador)
+			{
+				const float centroAlvoY = rA.top + rA.height / 2.0f;
+				const float centroInimigoY = rE.top + rE.height / 2.0f;
+				return std::fabs(centroAlvoY - centroInimigoY)
+					<= (distanciaAtaqueY + rA.height / 2.0f);
+			}
+
+			const float baseAlvo = rA.top + rA.height;
+			const float baseInimigo = rE.top + rE.height;
+			// Tolerancia pequena (15 px) compensa diferencas finas
+			// entre alturas de personagens e atrito de pulo curto, sem
+			// deixar o inimigo atacar por cima/baixo de plataformas.
+			return std::fabs(baseAlvo - baseInimigo) <= 15.0f;
+		}
 	}
 
 

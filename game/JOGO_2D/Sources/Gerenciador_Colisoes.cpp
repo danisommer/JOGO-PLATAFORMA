@@ -61,30 +61,11 @@ namespace Gerenciadores
 
 			if (inimigos.at(i) && !inimigos.at(i)->getParado())
 			{
-				float distanciaX;
-				float distanciaY;
+				if (pJogador && inimigos.at(i)->podeAtacarAlvo(*pJogador->getCorpo()))
+					inimigos.at(i)->atacar(1);
 
-				if (pJogador)
-				{
-					distanciaX = pJogador->getPos().x - inimigos.at(i)->getPos().x;
-					distanciaY = pJogador->getPos().y - inimigos.at(i)->getPos().y;
-
-					if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
-					{
-						inimigos.at(i)->atacar(1);
-					}
-				}
-				
-				if (pJogador2)
-				{
-					distanciaX = pJogador2->getPos().x - inimigos.at(i)->getPos().x;
-					distanciaY = pJogador2->getPos().y - inimigos.at(i)->getPos().y;
-
-					if (fabs(distanciaY) <= inimigos.at(i)->getDistanciaAtaqueY() && fabs(distanciaX) <= inimigos.at(i)->getDistanciaAtaqueX())
-					{
-						inimigos.at(i)->atacar(2);
-					}
-				}
+				if (pJogador2 && inimigos.at(i)->podeAtacarAlvo(*pJogador2->getCorpo()))
+					inimigos.at(i)->atacar(2);
 			}
 
 		}
