@@ -104,7 +104,7 @@ void Mundo::avancarFase()
 {
 	faseAtual++;
 	// Bonus de pontuacao por terminar uma fase.
-	adicionarPontos(0, 50);
+	adicionarPontos(0, 30);
 	arvore.adicionarPontos(1);
 }
 
@@ -121,18 +121,16 @@ void Mundo::setKills(int k)
 void Mundo::registrarKill(bool ehChefao)
 {
 	kills++;
-	// Pontos para a pontuacao "tradicional" (ranking) e pontos para
-	// a arvore de habilidades. Boss vale bem mais que inimigo comum.
 	if (ehChefao)
 	{
-		adicionarPontos(0, 200);
-		arvore.adicionarPontos(5);
+		adicionarPontos(0, 150);
+		arvore.adicionarPontos(4);
 	}
 	else
 	{
-		adicionarPontos(0, 10);
-		// Inimigo comum: 1 ponto a cada 2 kills, para nao inflacionar.
-		if (kills % 2 == 0)
+		adicionarPontos(0, 8);
+		// 1 ponto de arvore a cada 3 kills (progressao mais gradual)
+		if (kills % 3 == 0)
 			arvore.adicionarPontos(1);
 	}
 }

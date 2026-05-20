@@ -237,21 +237,15 @@ namespace Fases
 			return entidades;
 		}
 
-		// Geracao logica de plataformas. Cada secao recebe UMA
-		// estrutura - escolhida aleatoriamente entre:
-		//   1) plataforma unica baixa (mais comum, mais natural)
-		//   2) escada de 2 degraus (intermediaria)
-		//   3) torre de 3 degraus (rara, espacada)
-		//
-		// O degrau mais baixo fica em y=14 (3 tiles acima do piso 17),
-		// alcance comodo do pulo. Os degraus de uma escada/torre sao
-		// SEPARADOS horizontalmente em ~5 tiles para nao virar uma
-		// coluna apertada - dando uma sensacao mais espacosa.
-		//
-		// Sob algumas plataformas baixas (~50%) ha uma serra/espinho
-		// no chao, dando motivo para subir mas sem entupir a fase.
+		// Geracao de plataformas: cada secao recebe 2-3 estruturas para
+		// preencher melhor o espaco. Tipos:
+		//   0-3: plataforma unica (40%)
+		//   4-6: escada de 2 degraus (30%)
+		//   7-8: torre de 3 degraus (20%)
+		//   9:   plataforma flutuante alta + baixa na mesma secao (10%)
 
 		std::vector<int> xPisoComHazard;
+		std::vector<int> xAlturaMediaComHazard;
 
 		auto colocarPlataforma = [&](int x, int y) {
 			instanciarChar('p', x, y, tema, entidades, indiceJogador);
@@ -260,60 +254,83 @@ namespace Fases
 		for (int s = 0; s < numSecoes; ++s)
 		{
 			const int inicioSecao = s * tilesPorSecao;
-			const int meioSecao = inicioSecao + tilesPorSecao / 2;
+			const int fimSecao = inicioSecao + tilesPorSecao;
 
-			// Sorteio do tipo de estrutura.
-			const int tipo = sortear(0, 9);
-			int xBase = meioSecao + sortear(-6, 6);
-			// Pequena chance da plataforma "baixa" ser ainda mais baixa
-			// (y=15) para dar uma rampa de aprendizado.
-			const int yBase = (sortear(0, 4) == 0) ? 15 : 14;
+			// Primeira estrutura: parte central da secao
+			{
+				const int tipo = sortear(0, 9);
+				int xBase = inicioSecao + tilesPorSecao / 2 + sortear(-5, 5);
+				const int yBase = sortear(12, 14);
 
-			if (tipo < 5) // 0..4: plataforma unica (50%)
-			{
-				colocarPlataforma(xBase, yBase);
-				if (sortear(0, 1) == 0)
+				if (tipo < 4)
+				{
+					colocarPlataforma(xBase, yBase);
+					if (sortear(0, 1) == 0) xPisoComHazard.push_back(xBase);
+				}
+				else if (tipo < 7)
+				{
+					const int dir = (sortear(0, 1) == 0) ? 1 : -1;
+					colocarPlataforma(xBase, yBase);
+					colocarPlataforma(xBase + 6 * dir, yBase - 3);
+					if (sortear(0, 1) == 0) xPisoComHazard.push_back(xBase);
+				}
+				else if (tipo < 9)
+				{
+					const int dir1 = (sortear(0, 1) == 0) ? 1 : -1;
+					colocarPlataforma(xBase, yBase);
+					colocarPlataforma(xBase + 5 * dir1, yBase - 3);
+					colocarPlataforma(xBase + 5 * dir1 + 5 * (-dir1), yBase - 6);
 					xPisoComHazard.push_back(xBase);
+				}
+				else
+				{
+					// Combo: plataforma baixa + plataforma alta deslocada
+					colocarPlataforma(xBase, 15);
+					colocarPlataforma(xBase + sortear(7, 12), 10);
+					xAlturaMediaComHazard.push_back(xBase);
+				}
 			}
-			else if (tipo < 8) // 5..7: escada de 2 degraus (30%)
+
+			// Segunda estrutura: no primeiro quarto da secao (evita so
+			// ter conteudo no centro)
+			if (sortear(0, 2) != 0) // 2/3 de chance
 			{
-				const int dir = (sortear(0, 1) == 0) ? 1 : -1;
-				colocarPlataforma(xBase, yBase);
-				colocarPlataforma(xBase + 5 * dir, yBase - 3);
-				if (sortear(0, 1) == 0)
-					xPisoComHazard.push_back(xBase);
+				int xExtra = inicioSecao + sortear(3, tilesPorSecao / 3);
+				const int yExtra = sortear(10, 14);
+				colocarPlataforma(xExtra, yExtra);
+				// Pequena chance de hazard sob esta plataforma tambem
+				if (sortear(0, 3) == 0)
+					xPisoComHazard.push_back(xExtra);
 			}
-			else // 8..9: torre de 3 degraus (20%)
+
+			// Hazard espinhoso ocasional no alto (para quem fica em cima)
+			if (sortear(0, 4) == 0)
 			{
-				const int dir1 = (sortear(0, 1) == 0) ? 1 : -1;
-				const int dir2 = -dir1;
-				colocarPlataforma(xBase, yBase);
-				colocarPlataforma(xBase + 5 * dir1, yBase - 3);
-				colocarPlataforma(xBase + 5 * dir1 + 5 * dir2, yBase - 6);
-				xPisoComHazard.push_back(xBase);
+				const int xEsp = inicioSecao + sortear(5, tilesPorSecao - 5);
+				instanciarChar('e', xEsp, 16, tema, entidades, indiceJogador);
 			}
 		}
 
-		// Hazards de chao posicionados embaixo das plataformas mais
-		// baixas. So um a cada estrutura selecionada, alternando entre
-		// serra e espinho.
+		// Hazards de chao
 		bool usarSerra = (sortear(0, 1) == 0);
 		for (int xH : xPisoComHazard)
 		{
-			const char tipo = usarSerra ? 's' : 'e';
-			instanciarChar(tipo, xH, 16, tema, entidades, indiceJogador);
+			instanciarChar(usarSerra ? 's' : 'e', xH, 16, tema, entidades, indiceJogador);
 			usarSerra = !usarSerra;
 		}
+		for (int xH : xAlturaMediaComHazard)
+		{
+			instanciarChar('s', xH, 15, tema, entidades, indiceJogador);
+		}
 
-		// Inimigos: cresce a quantidade com a fase. Distribuidos pelo
-		// nivel; voadores no alto, terrestres perto do piso. Slime e
-		// armadilha pegajosa esparsa.
-		// Em fases altas (>= 8) a contagem cresce de forma mais
-		// agressiva para que a dificuldade nao estabilize.
+		// Inimigos: cresce com a fase. Voadores raros (F) aparecem a partir
+		// da fase 3 com chance crescente.
 		const int extra = (numeroFase >= 8) ? (numeroFase - 7) : 0;
 		const int nVoadores = 1 + numeroFase / 2 + extra;
 		const int nCogumelos = 1 + numeroFase / 2 + extra;
-		const int nSlimes = numeroFase / 4;
+		const int nSlimes = 1 + numeroFase / 3;
+		// 1 voador raro a partir da fase 3; mais a partir da fase 6
+		const int nRaros = (numeroFase >= 3) ? (1 + (numeroFase - 3) / 3) : 0;
 
 		auto colocarEntreParedes = [&](char tipo, int yMin, int yMax) {
 			const int x = sortear(6, xFim - 6);
@@ -323,6 +340,8 @@ namespace Fases
 
 		for (int i = 0; i < nVoadores; ++i)
 			colocarEntreParedes('f', 4, 10);
+		for (int i = 0; i < nRaros; ++i)
+			colocarEntreParedes('F', 4, 10);
 		for (int i = 0; i < nCogumelos; ++i)
 			colocarEntreParedes('m', 14, 15);
 		for (int i = 0; i < nSlimes; ++i)

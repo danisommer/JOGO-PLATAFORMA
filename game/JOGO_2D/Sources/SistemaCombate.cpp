@@ -32,7 +32,7 @@ namespace Sistemas
 					// So pontua quando o golpe realmente acerta - tomarDano
 					// devolve false durante os quadros de invulnerabilidade.
 					if (inimigo->tomarDano(jogador->getDano(), dir))
-						mundo.adicionarPontos(indiceJogador, 10);
+						mundo.adicionarPontos(indiceJogador, 3);
 				}
 			}
 		}
