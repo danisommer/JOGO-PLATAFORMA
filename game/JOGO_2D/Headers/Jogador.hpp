@@ -40,6 +40,14 @@ namespace Entidades
 			int tempoDecorridoLentidao;
 			float forcaLentidao;
 			float forcaPulo;
+
+			bool atordoado;
+			int tempoAtordoado;
+			int tempoDecorridoAtordoado;
+
+			// Controla o ciclo completo do ataque: true enquanto a animacao
+			// de ataque nao completou um ciclo apos o primeiro disparo.
+			bool atacandoAtivo;
 		
 			Vector2f regiaoAtaque;
 			std::vector<Animacao> animacoes;
@@ -51,6 +59,7 @@ namespace Entidades
 			
 			void inicializaAnimacoes();
 			void inicializaTeclas();
+			void desenharEfeitosAtivos();
 
 			// Bonus de pulo duplo (skill PULO_DUPLO). Quando true, o
 			// jogador pode pular novamente uma vez no ar.
@@ -64,6 +73,7 @@ namespace Entidades
 			float fatorArmadura;
 			// Vampiro (skill VAMPIRO): cura ao matar.
 			bool vampiro;
+			float curaVampiro;
 			// Bonus de alcance dos ataques (skill ALCANCE_EXTRA).
 			float bonusAlcance;
 
@@ -78,6 +88,7 @@ namespace Entidades
 			// Acessores para o sistema de combate alimentar a habilidade
 			// Vampiro (cura por kill) e o pulo duplo (consumir/recarregar).
 			bool getVampiro() const;
+			float getCuraVampiro() const;
 			void curar(float quanto);
 			void recarregarPuloDuplo();
 			// Sobrescreve para aplicar a reducao de dano da habilidade
@@ -91,6 +102,8 @@ namespace Entidades
 			float getVida();
 			void setEnvenenado(bool veneno, int tempo, float intensidade, Color cor);
 			void setLento(bool lentidao, int tempo, float fL, float fP);
+			void setAtordoado(bool atoroado, int tempo);
+			bool getAtordoado() const;
 			void mover(bool direita, bool esquerda);
 			void bater(bool batendo);
 			void pular(bool pulando);

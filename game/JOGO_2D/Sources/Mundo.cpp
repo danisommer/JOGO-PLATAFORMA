@@ -176,6 +176,17 @@ void Mundo::limparVidaPersistida()
 	vidaPersistida[1] = -1.0f;
 }
 
+void Mundo::enfileirarInimigo(Entidades::Personagens::Inimigo* inim)
+{
+	if (inim)
+		filaInimigos.push_back(inim);
+}
+
+std::vector<Entidades::Personagens::Inimigo*>& Mundo::getFilaInimigos()
+{
+	return filaInimigos;
+}
+
 void Mundo::gravarRanking(const std::string& nome1, const std::string& nome2) const
 {
 	std::ofstream arquivo("Saves/ranking.txt", std::ios::app);

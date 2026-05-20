@@ -6,6 +6,7 @@
 #include "ArvoreHabilidades.hpp"
 
 namespace Entidades { namespace Personagens { class Jogador; } }
+namespace Entidades { namespace Personagens { class Inimigo; } }
 namespace Sistemas { class Camera; }
 
 // Estado compartilhado de uma sessao de jogo. Substitui os membros
@@ -43,6 +44,10 @@ private:
 	// na Camera, e o Mundo expoe um atalho para que as entidades nao
 	// precisem conhecer Fase.
 	Sistemas::Camera* camera;
+
+	// Inimigos gerados dinamicamente (chefao spawna voadores por portais).
+	// Drenada por Fase::AtualizarPersonagens a cada quadro.
+	std::vector<Entidades::Personagens::Inimigo*> filaInimigos;
 
 public:
 	Mundo();
@@ -92,6 +97,11 @@ public:
 	// Pode ser nullptr (ex.: entre transicoes de fase).
 	void setCamera(Sistemas::Camera* c);
 	Sistemas::Camera* getCamera() const;
+
+	// Fila de inimigos a registrar na Fase. O chefao enfileira aqui;
+	// Fase::AtualizarPersonagens drena a fila a cada quadro.
+	void enfileirarInimigo(Entidades::Personagens::Inimigo* inim);
+	std::vector<Entidades::Personagens::Inimigo*>& getFilaInimigos();
 
 	// Reinicia o estado da run (fase, kills, pontuacao); a arvore de
 	// habilidades e seus pontos NAO sao zerados aqui - sobrevivem

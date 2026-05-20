@@ -15,8 +15,11 @@ namespace Entidades
 			int tempoLentidao;
 			float forcaPulo;
 
+			// Variante rara: tint roxo, aplica veneno alem de lentidao.
+			bool raro;
+
 		public:
-			OlhoVoador(Vector2f pos, Vector2f tam);
+			OlhoVoador(Vector2f pos, Vector2f tam, bool raro = false);
 			~OlhoVoador();
 			void atacar(int jogador);
 			void setAnimacao(int anim);

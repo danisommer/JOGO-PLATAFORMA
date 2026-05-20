@@ -1036,20 +1036,28 @@ void Menu::abrirTelaHabilidades(Mundo& mundoRef)
 		{
 			auto h = static_cast<ArvoreHabilidades::Habilidade>(i);
 			const auto& info = ArvoreHabilidades::getInfo(h);
-			const bool desbloqueada = arvore.foiDesbloqueada(h);
-			const bool podeComprar = !desbloqueada && pontos >= info.custo;
+			const int nivel = arvore.getNivel(h);
+			const int custoProx = arvore.custoProximoNivel(h);
+			const bool noMaximo = (custoProx < 0);
+			const bool podeComprar = !noMaximo && pontos >= custoProx;
+
+			std::string nivelStr;
+			if (info.maxNivel > 1)
+				nivelStr = " [Nv " + std::to_string(nivel) + "/" + std::to_string(info.maxNivel) + "]";
+			else
+				nivelStr = nivel >= 1 ? " [MAX]" : "";
 
 			std::string sufixo;
-			if (desbloqueada)
-				sufixo = "  [DESBLOQUEADA]";
+			if (noMaximo)
+				sufixo = "  [MAX]";
 			else
-				sufixo = "  [custo " + std::to_string(info.custo) + "]";
+				sufixo = "  [custo " + std::to_string(custoProx) + "]";
 
-			const std::string texto = std::string(info.nome) + " - " + info.descricao + sufixo;
+			const std::string texto = std::string(info.nome) + nivelStr + " - " + info.descricao + sufixo;
 			ItemConfig item = criarItem(fonte, texto,
 				{60, yBase + i * passoY}, {1280, 50}, 22);
 
-			if (desbloqueada)
+			if (noMaximo)
 				item.rotulo.setFillColor(sf::Color(120, 255, 120));
 			else if (podeComprar)
 				item.rotulo.setFillColor(sf::Color::White);

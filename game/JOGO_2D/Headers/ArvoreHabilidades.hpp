@@ -3,10 +3,6 @@
 #include <array>
 #include <string>
 
-// Skill tree achatada (sem pre-requisitos). Cada habilidade tem custo
-// fixo em pontos, uma descricao, e um estado bool de desbloqueio.
-// Os efeitos sao aplicados em tempo de spawn pelo Jogador (consultando
-// foiDesbloqueada).
 class ArvoreHabilidades
 {
 public:
@@ -27,28 +23,32 @@ public:
 	{
 		const char* nome;
 		const char* descricao;
-		int custo;
+		int custoBase;   // custo do nivel 1
+		int custoNivel;  // acrescimo por nivel adicional
+		int maxNivel;    // nivel maximo (1 = so desbloquear)
 	};
 
 	ArvoreHabilidades();
 
-	// Pontos disponiveis para gastar na arvore. Crescem com kills e
-	// fim de fase, consumidos ao desbloquear habilidades.
 	int getPontos() const;
 	void adicionarPontos(int p);
 	void setPontos(int p);
 
+	// Retorna o nivel atual da habilidade (0 = nao desbloqueada).
+	int getNivel(Habilidade h) const;
+	// Alias legivel: true se nivel >= 1.
 	bool foiDesbloqueada(Habilidade h) const;
-	void desbloquear(Habilidade h);
-	void setDesbloqueada(Habilidade h, bool v);
+	void setNivel(Habilidade h, int v);
 
-	// Tenta gastar os pontos e marca a habilidade como desbloqueada.
-	// Retorna true se a compra foi efetivada.
+	// Custo para adquirir o proximo nivel. Retorna -1 se ja no maximo.
+	int custoProximoNivel(Habilidade h) const;
+
+	// Tenta comprar o proximo nivel. Retorna true se efetivado.
 	bool comprar(Habilidade h);
 
 	static const Info& getInfo(Habilidade h);
 
 private:
 	int pontos;
-	std::array<bool, N_HABILIDADES> desbloqueadas;
+	std::array<int, N_HABILIDADES> niveis;
 };

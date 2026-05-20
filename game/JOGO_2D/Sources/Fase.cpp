@@ -252,6 +252,23 @@ namespace Fases
 			morreu = true;
 		}
 
+		// Registra inimigos gerados dinamicamente (ex.: spawns do chefao).
+		if (mundo)
+		{
+			auto& fila = mundo->getFilaInimigos();
+			for (Inimigo* inim : fila)
+			{
+				if (inim)
+				{
+					inim->setMundo(mundo);
+					inim->aplicarDificuldade(mundo->getFaseAtual());
+					gerenciador_colisoes->addInimigo(inim);
+					listaPersonagem.addEntidade(inim);
+				}
+			}
+			fila.clear();
+		}
+
 		// Combate corpo-a-corpo dos jogadores.
 		if (mundo)
 			sistemaCombate.resolver(*mundo, listaPersonagem);
@@ -300,7 +317,7 @@ namespace Fases
 							if (Jogador* j = mundo->getJogador(s))
 							{
 								if (j->getVampiro())
-									j->curar(5.0f);
+									j->curar(j->getCuraVampiro());
 							}
 						}
 					}
@@ -455,8 +472,8 @@ namespace Fases
 
 		for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
 		{
-			dados.skillsDesbloqueadas.push_back(
-				mundo->getArvore().foiDesbloqueada(
+			dados.skillsNiveis.push_back(
+				mundo->getArvore().getNivel(
 					static_cast<ArvoreHabilidades::Habilidade>(i)));
 		}
 
@@ -490,10 +507,10 @@ namespace Fases
 		mundo->getArvore().setPontos(dados.pontosArvore);
 		for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
 		{
-			const bool v = (i < static_cast<int>(dados.skillsDesbloqueadas.size()))
-				? dados.skillsDesbloqueadas[i] : false;
-			mundo->getArvore().setDesbloqueada(
-				static_cast<ArvoreHabilidades::Habilidade>(i), v);
+			const int nv = (i < static_cast<int>(dados.skillsNiveis.size()))
+				? dados.skillsNiveis[i] : 0;
+			mundo->getArvore().setNivel(
+				static_cast<ArvoreHabilidades::Habilidade>(i), nv);
 		}
 	}
 }

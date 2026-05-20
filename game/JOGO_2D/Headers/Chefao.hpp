@@ -15,17 +15,27 @@ namespace Entidades
 	{
 		class Chefao : public Inimigo
 		{
+		public:
+			enum class Estagio { E1 = 1, E2, E3, E4 };
+
 		private:
 			void inicializaAnimacoes();
 			std::vector<Entidades::Projetil*> projeteis;
 			std::vector<Entidades::Obstaculos::Portal*> portais;
 			std::chrono::steady_clock::time_point ultimoAtaque;
+			std::chrono::steady_clock::time_point ultimoSlam;
+			std::chrono::steady_clock::time_point ultimoSpawn;
 			int delayAtaque;
-			bool bravo;
-			bool muitoBravo;
-			bool enfurecido;
+			Estagio estagio;
 			bool morrendo;
-			Animacao animacaoTeleporte;
+
+			// Slam: bater no chao para atordoar o jogador
+			bool realizandoSlam;
+			float posYOriginal;
+
+			void dispararProjetil(bool guiado);
+			void realizarSlam();
+			void spawnVoadores();
 
 		public:
 			Chefao(Vector2f pos, Vector2f tam);

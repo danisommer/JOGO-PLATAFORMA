@@ -2,77 +2,70 @@
 
 namespace
 {
-	const ArvoreHabilidades::Info TABELA_HABILIDADES[ArvoreHabilidades::N_HABILIDADES] = {
-		{ "Vida +25",       "Aumenta a vida maxima em 25",          1 },
-		{ "Dano +5",        "Aumenta o dano dos ataques em 5",       1 },
-		{ "Velocidade +2",  "Move-se mais rapido pelo cenario",      2 },
-		{ "Pulo +25%",      "Pula com mais forca",                   2 },
-		{ "Alcance +30%",   "Aumenta o alcance dos ataques",         2 },
-		{ "Vampiro",        "Recupera 5 de vida ao matar inimigo",   3 },
-		{ "Pulo duplo",     "Permite pular uma vez no ar",           3 },
-		{ "Armadura",       "Recebe 25% menos dano",                 3 },
+	// custoBase = custo do nivel 1
+	// custoNivel = acrescimo por nivel adicional (nivel 2 custa base + 1*extra, nivel 3 = base + 2*extra...)
+	// maxNivel = teto de upgrades
+	const ArvoreHabilidades::Info TABELA[ArvoreHabilidades::N_HABILIDADES] = {
+		{ "Vida +25",      "Aumenta a vida maxima em 25 por nivel",        1, 2, 3 },
+		{ "Dano +5",       "Aumenta o dano dos ataques em 5 por nivel",     1, 2, 3 },
+		{ "Velocidade",    "Move-se mais rapido (2 px/nivel)",              2, 2, 3 },
+		{ "Pulo Forte",    "Pula com mais forca (25% por nivel)",           2, 3, 2 },
+		{ "Alcance",       "Alcance dos ataques +15% por nivel",            2, 2, 3 },
+		{ "Vampiro",       "Recupera 5 HP por kill (acumula por nivel)",    3, 3, 3 },
+		{ "Pulo Duplo",    "Permite pular uma vez no ar",                   3, 0, 1 },
+		{ "Armadura",      "Recebe 12.5% menos dano por nivel",             3, 3, 3 },
 	};
 }
 
 ArvoreHabilidades::ArvoreHabilidades() :
 	pontos(0)
 {
-	desbloqueadas.fill(false);
+	niveis.fill(0);
 }
 
-int ArvoreHabilidades::getPontos() const
-{
-	return pontos;
-}
+int ArvoreHabilidades::getPontos() const { return pontos; }
+void ArvoreHabilidades::adicionarPontos(int p) { pontos += p; }
+void ArvoreHabilidades::setPontos(int p) { pontos = p; }
 
-void ArvoreHabilidades::adicionarPontos(int p)
+int ArvoreHabilidades::getNivel(Habilidade h) const
 {
-	pontos += p;
-}
-
-void ArvoreHabilidades::setPontos(int p)
-{
-	pontos = p;
+	if (h < 0 || h >= N_HABILIDADES) return 0;
+	return niveis[h];
 }
 
 bool ArvoreHabilidades::foiDesbloqueada(Habilidade h) const
 {
-	if (h < 0 || h >= N_HABILIDADES)
-		return false;
-	return desbloqueadas[h];
+	return getNivel(h) >= 1;
 }
 
-void ArvoreHabilidades::desbloquear(Habilidade h)
+void ArvoreHabilidades::setNivel(Habilidade h, int v)
 {
 	if (h >= 0 && h < N_HABILIDADES)
-		desbloqueadas[h] = true;
+		niveis[h] = v;
 }
 
-void ArvoreHabilidades::setDesbloqueada(Habilidade h, bool v)
+int ArvoreHabilidades::custoProximoNivel(Habilidade h) const
 {
-	if (h >= 0 && h < N_HABILIDADES)
-		desbloqueadas[h] = v;
+	if (h < 0 || h >= N_HABILIDADES) return -1;
+	const int atual = niveis[h];
+	if (atual >= TABELA[h].maxNivel) return -1;
+	return TABELA[h].custoBase + atual * TABELA[h].custoNivel;
 }
 
 bool ArvoreHabilidades::comprar(Habilidade h)
 {
-	if (h < 0 || h >= N_HABILIDADES)
-		return false;
-	if (desbloqueadas[h])
-		return false;
-
-	const int custo = TABELA_HABILIDADES[h].custo;
-	if (pontos < custo)
+	const int custo = custoProximoNivel(h);
+	if (custo < 0 || pontos < custo)
 		return false;
 
 	pontos -= custo;
-	desbloqueadas[h] = true;
+	niveis[h]++;
 	return true;
 }
 
 const ArvoreHabilidades::Info& ArvoreHabilidades::getInfo(Habilidade h)
 {
 	if (h < 0 || h >= N_HABILIDADES)
-		return TABELA_HABILIDADES[0];
-	return TABELA_HABILIDADES[h];
+		return TABELA[0];
+	return TABELA[h];
 }

@@ -59,7 +59,10 @@ namespace Fases
 			e = new Jogador(pos, sf::Vector2f(30.0f, 90.0f), indiceJogador++);
 			break;
 		case 'f':
-			e = new OlhoVoador(pos, sf::Vector2f(40.0f, 50.0f));
+			e = new OlhoVoador(pos, sf::Vector2f(40.0f, 50.0f), false);
+			break;
+		case 'F': // OlhoVoador raro (veneno + lentidao)
+			e = new OlhoVoador(pos, sf::Vector2f(40.0f, 50.0f), true);
 			break;
 		case 'c':
 			e = new Chefao(pos, sf::Vector2f(100.0f, 120.0f));

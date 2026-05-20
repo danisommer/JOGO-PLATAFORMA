@@ -27,7 +27,7 @@ namespace Persistencia
 		int pontuacao[2] = {0, 0};
 		int kills = 0;
 		int pontosArvore = 0;
-		std::vector<bool> skillsDesbloqueadas;
+		std::vector<int> skillsNiveis; // nivel de cada habilidade (0 = nao desbloqueada)
 	};
 
 	// Camada de serializacao do jogo.

@@ -61,11 +61,10 @@ void Principal::recuperaFase(int save)
 	mundo.getArvore().setPontos(dados.pontosArvore);
 	for (int i = 0; i < ArvoreHabilidades::N_HABILIDADES; ++i)
 	{
-		mundo.getArvore().setDesbloqueada(
-			static_cast<ArvoreHabilidades::Habilidade>(i),
-			i < static_cast<int>(dados.skillsDesbloqueadas.size())
-				? dados.skillsDesbloqueadas[i]
-				: false);
+		const int nv = (i < static_cast<int>(dados.skillsNiveis.size()))
+			? dados.skillsNiveis[i] : 0;
+		mundo.getArvore().setNivel(
+			static_cast<ArvoreHabilidades::Habilidade>(i), nv);
 	}
 
 	Gerenciadores::Gerenciador_Estados estados;

@@ -4,6 +4,7 @@
 #include <string>
 #include <ctime>
 #include <iomanip>
+#include <cmath>
 
 namespace Entidades
 {
@@ -19,7 +20,12 @@ namespace Entidades
 		n_frames(0),
 		count(0),
 		lado(0),
-		iteracoes(0)
+		iteracoes(0),
+		guiado(false),
+		posAlvo(0.0f, 0.0f),
+		angulo(direita ? 0.0f : 3.14159265f),
+		velAngular(0.0f),
+		vidaUtil(0)
 	{
 		if (direita)
 			lado = 1;
@@ -36,15 +42,71 @@ namespace Entidades
 	{
 	}
 
+	void Projetil::setHoming(sf::Vector2f alvoInicial, float velAngularRad, int frames)
+	{
+		guiado = true;
+		posAlvo = alvoInicial;
+		velAngular = velAngularRad;
+		vidaUtil = frames;
+	}
+
+	void Projetil::atualizarAlvo(sf::Vector2f pos)
+	{
+		posAlvo = pos;
+	}
+
+	bool Projetil::isGuiado() const
+	{
+		return guiado;
+	}
+
 	void Projetil::atualizar()
 	{
 		int animacao = 0;
 
-		corpo.move(vel * lado, 0.0f);
-		distanciaPercorrida += vel;
-
-		if (distanciaPercorrida >= 1200.0f || colidiu)
+		if (guiado && vidaUtil > 0 && !colidiu)
 		{
+			// Calcula o angulo desejado em direcao ao alvo
+			const sf::Vector2f minha = corpo.getPosition();
+			const sf::Vector2f delta = posAlvo - minha;
+			const float anguloAlvo = std::atan2(delta.y, delta.x);
+
+			// Rotacao lenta: diferenca de angulo limitada por velAngular
+			float diff = anguloAlvo - angulo;
+			// Normaliza para [-pi, pi]
+			while (diff > 3.14159265f)  diff -= 2.0f * 3.14159265f;
+			while (diff < -3.14159265f) diff += 2.0f * 3.14159265f;
+
+			if (diff > velAngular)  diff = velAngular;
+			if (diff < -velAngular) diff = -velAngular;
+			angulo += diff;
+
+			lado = (std::cos(angulo) >= 0.0f) ? 1 : -1;
+			corpo.move(vel * std::cos(angulo), vel * std::sin(angulo));
+			distanciaPercorrida += vel;
+			vidaUtil--;
+
+			if (vidaUtil <= 0)
+			{
+				animacao = 1;
+				vel = 0.0f;
+			}
+		}
+		else if (!guiado)
+		{
+			// Modo normal: linha reta
+			corpo.move(vel * lado, 0.0f);
+			distanciaPercorrida += vel;
+
+			if (distanciaPercorrida >= 1200.0f || colidiu)
+			{
+				animacao = 1;
+				vel = 0.0f;
+			}
+		}
+		else
+		{
+			// Homing expirado ou colidiu
 			animacao = 1;
 			vel = 0.0f;
 		}
@@ -114,8 +176,19 @@ namespace Entidades
 			explodiu = true;
 
 		animacaoAtual->aplicar(sprite, count);
-		sprite.setScale(2.3f * lado, 2.3f);
-		sprite.setPosition(corpo.getPosition().x - 80.0f * lado, corpo.getPosition().y);
+		if (guiado)
+		{
+			// Homing: rotaciona o sprite conforme o angulo atual
+			sprite.setScale(2.3f, 2.3f);
+			sprite.setRotation(angulo * 180.0f / 3.14159265f);
+			sprite.setPosition(corpo.getPosition().x, corpo.getPosition().y);
+		}
+		else
+		{
+			sprite.setScale(2.3f * lado, 2.3f);
+			sprite.setRotation(0.0f);
+			sprite.setPosition(corpo.getPosition().x - 80.0f * lado, corpo.getPosition().y);
+		}
 
 		desenharSprite();
 	}

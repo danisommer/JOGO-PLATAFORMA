@@ -36,6 +36,10 @@ namespace Entidades
 			tempoDecorridoVeneno(0),
 			tempoVeneno(0),
 			tempoLentidao(0),
+			atordoado(false),
+			tempoAtordoado(0),
+			tempoDecorridoAtordoado(0),
+			atacandoAtivo(false),
 			tamanhoCorpo(tam),
 			concluiuFase(false),
 			puloDuploDisponivel(false),
@@ -43,6 +47,7 @@ namespace Entidades
 			puloPressionadoAnterior(false),
 			fatorArmadura(1.0f),
 			vampiro(false),
+			curaVampiro(5.0f),
 			bonusAlcance(0.0f)
 		{
 			dano = DANO_JOGADOR;
@@ -62,9 +67,6 @@ namespace Entidades
 
 		void Jogador::atualizar()
 		{
-			// Recarrega o pulo duplo sempre que o jogador esta no chao.
-			// isJumping == false logo apos a resolucao da colisao com o
-			// piso (Gerenciador_Colisoes::verificaColisao zera isto).
 			if (!isJumping)
 				puloDuploDisponivel = puloDuploLiberado;
 
@@ -78,7 +80,6 @@ namespace Entidades
 						vida -= forcaVeneno;
 						tempoDecorridoVeneno++;
 
-						// Tint verde na camera enquanto durar o veneno.
 						if (mundo && mundo->getCamera())
 							mundo->getCamera()->setEnvenenado(true);
 					}
@@ -108,16 +109,32 @@ namespace Entidades
 						tempoDecorridoLentidao = 0;
 						lento = false;
 						animacoes.at(0).setAnimationSpeed(25.0f);
+					}
+				}
 
+				if (atordoado)
+				{
+					if (tempoDecorridoAtordoado < tempoAtordoado)
+					{
+						// Efeito visual: piscar amarelo durante o stun
+						const int ciclo = tempoDecorridoAtordoado % 12;
+						sprite.setColor(ciclo < 6
+							? sf::Color(255, 255, 80)
+							: sf::Color(255, 255, 255));
+						vel.x = 0.0f;
+						tempoDecorridoAtordoado++;
+					}
+					else
+					{
+						sprite.setColor(sf::Color(255, 255, 255));
+						tempoDecorridoAtordoado = 0;
+						atordoado = false;
 					}
 				}
 			}
 
 			if (isJumping)
-			{
 				animacao = 6;
-			}
-
 
 			if (vida <= 0.0f)
 			{
@@ -129,7 +146,6 @@ namespace Entidades
 				if (concluida)
 					morrer();
 			}
-
 
 			atualizarAnimacao(animacao);
 		}
@@ -176,6 +192,55 @@ namespace Entidades
 			sprite.setPosition(corpo.getPosition().x + 15.0f, corpo.getPosition().y);
 
 			desenharSprite();
+			desenharEfeitosAtivos();
+		}
+
+		void Jogador::desenharEfeitosAtivos()
+		{
+			const sf::Font& fonte = Gerenciadores::Gerenciador_Recursos::getGerenciador()
+				->getFonte("Menu/antiquity-print.ttf");
+
+			// Converte frames restantes em segundos (60 fps).
+			float offsetY = -55.0f;
+			const float linhaH = 18.0f;
+
+			auto desenharContador = [&](const std::string& label, sf::Color cor)
+			{
+				sf::Text t;
+				t.setFont(fonte);
+				t.setString(label);
+				t.setCharacterSize(14);
+				t.setFillColor(cor);
+				t.setOutlineColor(sf::Color::Black);
+				t.setOutlineThickness(1.0f);
+				t.setPosition(corpo.getPosition().x - 10.0f, corpo.getPosition().y + offsetY);
+				Gerenciadores::Gerenciador_Grafico::getGerenciador()->desenhaTexto(t);
+				offsetY -= linhaH;
+			};
+
+			if (envenenado && tempoVeneno > 0)
+			{
+				const float segs = static_cast<float>(tempoVeneno - tempoDecorridoVeneno) / 60.0f;
+				char buf[32];
+				std::snprintf(buf, sizeof(buf), "Veneno %.1fs", segs);
+				desenharContador(buf, sf::Color(180, 80, 220));
+			}
+
+			if (lento && tempoLentidao > 0)
+			{
+				const float segs = static_cast<float>(tempoLentidao - tempoDecorridoLentidao) / 60.0f;
+				char buf[32];
+				std::snprintf(buf, sizeof(buf), "Lento %.1fs", segs);
+				desenharContador(buf, sf::Color(80, 160, 255));
+			}
+
+			if (atordoado && tempoAtordoado > 0)
+			{
+				const float segs = static_cast<float>(tempoAtordoado - tempoDecorridoAtordoado) / 60.0f;
+				char buf[32];
+				std::snprintf(buf, sizeof(buf), "Atordoado %.1fs", segs);
+				desenharContador(buf, sf::Color(255, 220, 40));
+			}
 		}
 
 		void Jogador::setAnimacao(int anim)
@@ -213,15 +278,23 @@ namespace Entidades
 
 		void Jogador::setLento(bool lentidao, int tempo, float fL, float fP)
 		{
-			// Reativar o efeito reinicia o contador. Sem isto, contatos
-			// repetidos com o Slime nao recomecavam o temporizador e o
-			// estado podia expirar enquanto o jogador ainda estava em
-			// cima da plataforma gosmenta.
 			lento = lentidao;
 			tempoLentidao = tempo;
 			tempoDecorridoLentidao = 0;
 			forcaLentidao = fL;
 			forcaPulo = fP;
+		}
+
+		void Jogador::setAtordoado(bool atorz, int tempo)
+		{
+			atordoado = atorz;
+			tempoAtordoado = tempo;
+			tempoDecorridoAtordoado = 0;
+		}
+
+		bool Jogador::getAtordoado() const
+		{
+			return atordoado;
 		}
 
 
@@ -303,33 +376,70 @@ namespace Entidades
 
 		void Jogador::processarEntrada()
 		{
-			// Durante a animacao de morte (animacao == 2) ou apos
-			// zerar a vida, o jogador nao responde mais a teclas.
-			// Sem este bloqueio, era possivel virar o sprite para os
-			// lados (e disparar ataques) enquanto o personagem caia.
 			if (animacao == 2 || vida <= 0.0f)
 			{
 				velocity.x = 0.0f;
 				atacando = false;
+				atacandoAtivo = false;
 				regiaoAtaque = Vector2f();
 				return;
 			}
 
-			// teclas: 0 = esquerda, 1 = direita, 2 = pulo, 3 = ataque.
-			// Cada jogador traz seu proprio mapeamento (ver inicializaTeclas),
-			// portanto o gerenciador de eventos nao precisa codificar teclas.
-			if (Keyboard::isKeyPressed(teclas.at(3)))
+			// Stun: bloqueia toda entrada
+			if (atordoado)
 			{
+				velocity.x = 0.0f;
+				bater(false);
+				return;
+			}
+
+			const bool ataquePressionado = Keyboard::isKeyPressed(teclas.at(3));
+			const bool direita = Keyboard::isKeyPressed(teclas.at(1));
+			const bool esquerda = Keyboard::isKeyPressed(teclas.at(0));
+
+			// Ataque em andamento: so cancela com movimento, caso contrario
+			// a animacao continua ate completar um ciclo completo.
+			if (atacandoAtivo)
+			{
+				if ((direita || esquerda) && !isJumping)
+				{
+					// Movimento cancela o ataque
+					atacandoAtivo = false;
+					bater(false);
+					mover(direita, esquerda);
+					pular(Keyboard::isKeyPressed(teclas.at(2)));
+				}
+				else if (concluida)
+				{
+					// Animacao completou: reinicia se tecla ainda pressionada
+					if (ataquePressionado)
+						bater(true); // recomecar ciclo
+					else
+					{
+						atacandoAtivo = false;
+						bater(false);
+						mover(direita, esquerda);
+						pular(Keyboard::isKeyPressed(teclas.at(2)));
+					}
+				}
+				else
+				{
+					// Animacao em progresso: força continuação
+					bater(true);
+				}
+				return;
+			}
+
+			// Iniciar novo ataque
+			if (ataquePressionado && !isJumping)
+			{
+				atacandoAtivo = true;
 				bater(true);
 				return;
 			}
 
 			bater(false);
-
-			const bool direita = Keyboard::isKeyPressed(teclas.at(1));
-			const bool esquerda = Keyboard::isKeyPressed(teclas.at(0));
 			mover(direita, esquerda);
-
 			pular(Keyboard::isKeyPressed(teclas.at(2)));
 		}
 
@@ -465,46 +575,51 @@ namespace Entidades
 
 		void Jogador::aplicarHabilidades()
 		{
-			// Os efeitos das habilidades sao aplicados como bonus
-			// aditivos/multiplicativos sobre os atributos base. A vida
-			// e curada para o novo maximo, evitando comecar uma fase
-			// com a barra parcialmente vazia apos a compra de Vida +.
 			if (!mundo)
 				return;
 
 			const ArvoreHabilidades& arv = mundo->getArvore();
 
-			if (arv.foiDesbloqueada(ArvoreHabilidades::VIDA_EXTRA))
+			const int nvVida = arv.getNivel(ArvoreHabilidades::VIDA_EXTRA);
+			vida += 25.0f * nvVida;
+			vidaMaxima += 25.0f * nvVida;
+
+			const int nvDano = arv.getNivel(ArvoreHabilidades::DANO_EXTRA);
+			dano += 5.0f * nvDano;
+
+			const int nvVel = arv.getNivel(ArvoreHabilidades::VELOCIDADE);
+			vel.x += 2.0f * nvVel;
+
+			const int nvPulo = arv.getNivel(ArvoreHabilidades::PULO_FORTE);
+			for (int i = 0; i < nvPulo; ++i)
+				jumpStrength *= 1.25f;
+
+			const int nvAlcance = arv.getNivel(ArvoreHabilidades::ALCANCE_EXTRA);
+			bonusAlcance = 0.15f * nvAlcance;
+
+			const int nvVampiro = arv.getNivel(ArvoreHabilidades::VAMPIRO);
+			if (nvVampiro > 0)
 			{
-				vida += 25.0f;
-				vidaMaxima += 25.0f;
-			}
-
-			if (arv.foiDesbloqueada(ArvoreHabilidades::DANO_EXTRA))
-				dano += 5.0f;
-
-			if (arv.foiDesbloqueada(ArvoreHabilidades::VELOCIDADE))
-				vel.x += 2.0f;
-
-			if (arv.foiDesbloqueada(ArvoreHabilidades::PULO_FORTE))
-				jumpStrength *= 1.25f; // mais forca (mais negativo)
-
-			if (arv.foiDesbloqueada(ArvoreHabilidades::ALCANCE_EXTRA))
-				bonusAlcance = 0.30f;
-
-			if (arv.foiDesbloqueada(ArvoreHabilidades::VAMPIRO))
 				vampiro = true;
+				curaVampiro = 5.0f * nvVampiro;
+			}
 
 			if (arv.foiDesbloqueada(ArvoreHabilidades::PULO_DUPLO))
 				puloDuploLiberado = true;
 
-			if (arv.foiDesbloqueada(ArvoreHabilidades::ARMADURA))
-				fatorArmadura = 0.75f;
+			const int nvArmadura = arv.getNivel(ArvoreHabilidades::ARMADURA);
+			if (nvArmadura > 0)
+				fatorArmadura = 1.0f - 0.125f * nvArmadura;
 		}
 
 		bool Jogador::getVampiro() const
 		{
 			return vampiro;
+		}
+
+		float Jogador::getCuraVampiro() const
+		{
+			return curaVampiro;
 		}
 
 		void Jogador::curar(float quanto)

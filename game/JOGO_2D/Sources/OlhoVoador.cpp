@@ -12,13 +12,12 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		OlhoVoador::OlhoVoador(Vector2f pos, Vector2f tam):
+		OlhoVoador::OlhoVoador(Vector2f pos, Vector2f tam, bool raro):
 			Inimigo(pos, tam),
 			tempoLentidao(700),
 			forcaLentidao(2.0f),
-			forcaPulo(-11.0f)
-
-
+			forcaPulo(-11.0f),
+			raro(raro)
 		{
 			sprite.setPosition(pos);
 			inicializaAnimacoes();
@@ -31,6 +30,13 @@ namespace Entidades
 			vida = VIDA_MAX;
 			vidaMaxima = vida;
 			dano = 10.0f;
+
+			// Variante rara: tint roxo escuro, mais dano e veneno no ataque.
+			if (raro)
+			{
+				sprite.setColor(sf::Color(200, 80, 255));
+				dano *= 1.5f;
+			}
 
 			healthBar.setScale(vida / 500.0f, 0.2f);
 
@@ -50,6 +56,10 @@ namespace Entidades
 					const int dir = (alvo->getPos().x >= getPos().x) ? 1 : -1;
 					alvo->tomarDano(dano, dir);
 					alvo->setLento(true, tempoLentidao, forcaLentidao, forcaPulo);
+
+					// Raro: tambem aplica veneno (roxo)
+					if (raro)
+						alvo->setEnvenenado(true, 300, 0.05f, sf::Color(180, 60, 220));
 				}
 			}
 
@@ -173,12 +183,14 @@ namespace Entidades
 
 			atualizarAnimacao();
 
+			if (raro && animacao != 2)
+				sprite.setColor(sf::Color(200, 80, 255));
+
 			if (vida <= 0.0f)
 			{
 				parado = true;
 				animacao = 2;
 				voador = false;
-				// corpo.move(0.0f, 0.9f);
 			}
 
 			desenharSprite();

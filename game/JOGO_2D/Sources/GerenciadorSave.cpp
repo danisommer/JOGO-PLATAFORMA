@@ -33,8 +33,8 @@ namespace Persistencia
 		arquivo << "PONTOS_ARVORE " << dados.pontosArvore << "\n";
 
 		arquivo << "SKILLS";
-		for (bool s : dados.skillsDesbloqueadas)
-			arquivo << " " << (s ? 1 : 0);
+		for (int n : dados.skillsNiveis)
+			arquivo << " " << n;
 		arquivo << "\n";
 
 		return true;
@@ -92,7 +92,7 @@ namespace Persistencia
 			{
 				int v;
 				while (iss >> v)
-					dados.skillsDesbloqueadas.push_back(v != 0);
+					dados.skillsNiveis.push_back(v);
 			}
 			// Tags desconhecidas sao ignoradas (compatibilidade futura).
 		}
