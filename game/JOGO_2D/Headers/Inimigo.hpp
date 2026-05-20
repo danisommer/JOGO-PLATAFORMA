@@ -66,6 +66,12 @@ namespace Entidades
 			// os casos a sobreposicao horizontal e exigida (com base no
 			// alcance de ataque).
 			bool podeAtacarAlvo(const sf::RectangleShape& alvo) const;
+
+			// Aplica o escalonamento de dificuldade baseado no numero
+			// da fase. Vida cresce ~12% e dano ~8% por fase, fazendo
+			// com que fases mais altas exijam mais habilidade mesmo
+			// quando o jogador esta com a arvore de skills carregada.
+			void aplicarDificuldade(int numeroFase);
 			void limparArquivo(int save) = 0;
 			void salvar(int save) = 0;
 		};

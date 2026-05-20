@@ -48,44 +48,59 @@ void Tela::desenharTela()
 
 int Tela::verificaEventoTela()
 {
+	// Atualiza o estado de "hover" UMA VEZ por chamada (independente de
+	// haver eventos), para que o highlight do botao acompanhe o mouse
+	// mesmo sem MouseMoved. A versao antiga so atualizava dentro do
+	// loop de eventos, o que deixava o destaque "preso" quando nao
+	// chegavam eventos.
+	auto* janela = gerenciador_grafico->getJanela();
+	posMouse = sf::Mouse::getPosition(*janela);
+	coordenadasMouse = janela->mapPixelToCoords(posMouse);
+
+	for (int i = 0; i < (int)botoes.size(); i++)
+	{
+		if (botoes.at(i)->getGlobalBounds().contains(coordenadasMouse))
+			textos[i].setOutlineThickness(larguraSelecionado);
+		else
+			textos[i].setOutlineThickness(larguraPadrao);
+	}
+
+	int resultado = -1;
 	sf::Event evento;
 
-	while (gerenciador_grafico->getJanela()->pollEvent(evento))
+	while (janela->pollEvent(evento))
 	{
 		if (evento.type == sf::Event::Closed)
-			gerenciador_grafico->fecharJanela();
-
-		posMouse = sf::Mouse::getPosition(*gerenciador_grafico->getJanela());
-		coordenadasMouse = gerenciador_grafico->getJanela()->mapPixelToCoords(posMouse);
-
-		for (int i = 0; i < botoes.size(); i++)
 		{
-			if (botoes.at(i)->getGlobalBounds().contains(coordenadasMouse))
-			{
-				textos[i].setOutlineThickness(larguraSelecionado);
-
-				if (evento.type == sf::Event::MouseButtonReleased && evento.mouseButton.button == sf::Mouse::Left)
-				{
-					return i;
-				}
-			}
-			else
-			{
-				textos[i].setOutlineThickness(larguraPadrao);
-			}
+			gerenciador_grafico->fecharJanela();
+			continue;
 		}
 
-		if (campoTexto.getGlobalBounds().contains(coordenadasMouse))
+		if (evento.type == sf::Event::MouseButtonReleased &&
+			evento.mouseButton.button == sf::Mouse::Left)
 		{
-			if (evento.type == sf::Event::MouseButtonReleased && evento.mouseButton.button == sf::Mouse::Left)
+			// Usa as coordenadas EXATAS do clique (e nao a posicao
+			// atual do mouse) para evitar perder cliques quando o
+			// usuario move o mouse logo apos clicar - causa do bug
+			// em que era preciso clicar duas vezes para selecionar.
+			const sf::Vector2i mp(evento.mouseButton.x, evento.mouseButton.y);
+			const sf::Vector2f cm = janela->mapPixelToCoords(mp);
+
+			for (int i = 0; i < (int)botoes.size(); i++)
+			{
+				if (botoes.at(i)->getGlobalBounds().contains(cm))
+				{
+					resultado = i;
+					break;
+				}
+			}
+
+			if (campoTexto.getGlobalBounds().contains(cm))
 			{
 				caixa1selecionada = true;
 				caixa2selecionada = false;
 			}
-		}
-		else if (campoTexto2.getGlobalBounds().contains(coordenadasMouse))
-		{
-			if (evento.type == sf::Event::MouseButtonReleased && evento.mouseButton.button == sf::Mouse::Left)
+			else if (campoTexto2.getGlobalBounds().contains(cm))
 			{
 				caixa1selecionada = false;
 				caixa2selecionada = true;
@@ -95,17 +110,13 @@ int Tela::verificaEventoTela()
 		if (evento.type == sf::Event::TextEntered)
 		{
 			if (entradaAtiva && caixa1selecionada)
-			{
 				processarEntradaTexto(evento);
-			}
 			else if (entradaAtiva2 && caixa2selecionada)
-			{
 				processarEntradaTexto2(evento);
-			}
 		}
 	}
 
-	return -1;
+	return resultado;
 }
 
 void Tela::processarEntradaTexto(sf::Event evento)

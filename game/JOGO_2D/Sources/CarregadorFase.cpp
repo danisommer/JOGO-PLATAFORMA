@@ -137,6 +137,26 @@ namespace Fases
 		return entidades;
 	}
 
+	void CarregadorFase::calcularLimites(int numeroFase, float& minX, float& maxX)
+	{
+		const bool ehFaseChefao = (numeroFase > 0 && numeroFase % 5 == 0);
+		int numSecoes;
+		if (ehFaseChefao)
+			numSecoes = 2;
+		else
+			numSecoes = 3 + (numeroFase / 3);
+		if (numSecoes > 7) numSecoes = 7;
+
+		const int tilesPorSecao = 38;
+		const int xFim = numSecoes * tilesPorSecao;
+
+		// Mundo cobre de x=0 (parede esquerda) ate x=(xFim+1)*50
+		// (logo apos a parede direita). A camera so anda dentro deste
+		// intervalo - alem dele so ha o vazio do background.
+		minX = 0.0f;
+		maxX = static_cast<float>((xFim + 1) * 50);
+	}
+
 	std::vector<std::unique_ptr<Entidades::Entidade>> CarregadorFase::gerarProcedural(
 		int numeroFase, int numJogadores)
 	{
@@ -208,25 +228,71 @@ namespace Fases
 			return entidades;
 		}
 
-		// Plataformas flutuantes: 2 a 4 por secao, alturas variadas.
-		const int platsPorSecao = 2 + (numeroFase % 3);
+		// Geracao logica de plataformas. Em cada secao construimos uma
+		// "torre" de 1 a 3 plataformas, cada degrau ~3 tiles acima do
+		// anterior - alturas que cabem no pulo do jogador (~4 tiles).
+		// O degrau mais baixo fica em y=14 (3 tiles acima do piso 17),
+		// nao tao alto como antes (quando podia spawnar em y=6).
+		//
+		// Sob cada torre colocamos uma serra ou espinho no chao, dando
+		// um motivo concreto para o jogador subir nas plataformas em
+		// vez de passar correndo pelo solo.
+
+		struct Torre
+		{
+			int xBase;
+			int alturaDegraus;
+			int xHazard;  // ponto onde o hazard fica no piso
+			char hazard;  // 's' (serra) ou 'e' (espinho)
+		};
+
+		std::vector<Torre> torres;
+
 		for (int s = 0; s < numSecoes; ++s)
 		{
-			for (int p = 0; p < platsPorSecao; ++p)
+			// Cada secao ganha de 1 a 2 torres, deslocadas no eixo X.
+			const int torresNaSecao = 1 + sortear(0, 1);
+			for (int t = 0; t < torresNaSecao; ++t)
 			{
-				const int x = s * tilesPorSecao + sortear(5, tilesPorSecao - 5);
-				const int y = sortear(6, 13);
-				instanciarChar('p', x, y, tema, entidades, indiceJogador);
+				Torre tor;
+				tor.alturaDegraus = 1 + sortear(0, 2); // 1..3
+				tor.xBase = s * tilesPorSecao + sortear(7, tilesPorSecao - 7);
+
+				// Hazard centrado embaixo do degrau mais baixo.
+				tor.xHazard = tor.xBase;
+				tor.hazard = (sortear(0, 1) == 0) ? 's' : 'e';
+				torres.push_back(tor);
+
+				int xAtual = tor.xBase;
+				for (int d = 0; d < tor.alturaDegraus; ++d)
+				{
+					// Degrau d: y = 14 - d*3, xAtual ligeiramente
+					// deslocado a cada degrau para nao virar uma coluna.
+					const int y = 14 - d * 3;
+					instanciarChar('p', xAtual, y, tema, entidades, indiceJogador);
+					xAtual += sortear(-2, 2);
+				}
 			}
 		}
 
+		// Coloca os hazards do solo embaixo das torres. Garante uma
+		// brecha de 4 tiles entre torres para nao deixar a fase
+		// intransponivel (jogador precisa de espaco para pousar).
+		for (const Torre& tor : torres)
+		{
+			// 'e' (espinho) tem 100x50 = 2 tiles de largura; o sprite
+			// nasce uma posicao a esquerda do x indicado.
+			instanciarChar(tor.hazard, tor.xHazard, 16, tema, entidades, indiceJogador);
+		}
+
 		// Inimigos: cresce a quantidade com a fase. Distribuidos pelo
-		// nivel; voadores no alto, terrestres perto do piso. Espinhos
-		// e serras como hazards de chao. Slime como armadilha pegajosa.
-		const int nVoadores = 1 + numeroFase / 2;
-		const int nCogumelos = 1 + numeroFase / 2;
-		const int nEspinhos = numeroFase / 3;
-		const int nSerras = numeroFase / 4;
+		// nivel; voadores no alto, terrestres perto do piso. Slime e
+		// armadilha pegajosa esparsa.
+		// Em fases altas (>= 8) a contagem cresce de forma mais
+		// agressiva para que a dificuldade nao estabilize.
+		const int extra = (numeroFase >= 8) ? (numeroFase - 7) : 0;
+		const int nVoadores = 1 + numeroFase / 2 + extra;
+		const int nCogumelos = 1 + numeroFase / 2 + extra;
 		const int nSlimes = numeroFase / 4;
 
 		auto colocarEntreParedes = [&](char tipo, int yMin, int yMax) {
@@ -239,10 +305,6 @@ namespace Fases
 			colocarEntreParedes('f', 4, 10);
 		for (int i = 0; i < nCogumelos; ++i)
 			colocarEntreParedes('m', 14, 15);
-		for (int i = 0; i < nEspinhos; ++i)
-			colocarEntreParedes('e', 16, 16);
-		for (int i = 0; i < nSerras; ++i)
-			colocarEntreParedes('s', 15, 15);
 		for (int i = 0; i < nSlimes; ++i)
 			colocarEntreParedes('g', 16, 16);
 

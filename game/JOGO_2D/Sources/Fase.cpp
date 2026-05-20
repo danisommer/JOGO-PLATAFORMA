@@ -45,6 +45,8 @@ namespace Fases
 	void Fase::setMundo(Mundo* m)
 	{
 		mundo = m;
+		if (mundo)
+			mundo->setCamera(&camera);
 	}
 
 	namespace
@@ -75,6 +77,17 @@ namespace Fases
 					// aplicamos os bonus permanentes da run.
 					jog->aplicarHabilidades();
 
+					// HP do roguelike persiste entre fases. Se o Mundo
+					// guardou um valor da fase anterior, restauramos
+					// (no minimo 1, para nao spawnar morto).
+					if (mundo)
+					{
+						const int idxSlot = static_cast<int>(jogadores.size());
+						const float vidaSalva = mundo->getVidaPersistida(idxSlot);
+						if (vidaSalva > 0.0f)
+							jog->carregarEstado(vidaSalva, jog->getPos());
+					}
+
 					if (jogadores.empty())
 					{
 						eventos->setJogador(jog);
@@ -91,6 +104,12 @@ namespace Fases
 				}
 				else if (Inimigo* inim = dynamic_cast<Inimigo*>(e))
 				{
+					// Aplica o escalonamento de dificuldade baseado na
+					// fase atual do Mundo: vida e dano dos inimigos
+					// crescem com o passar das fases.
+					if (mundo)
+						inim->aplicarDificuldade(mundo->getFaseAtual());
+
 					colisoes->addInimigo(inim);
 					listaPersonagem.addEntidade(up.release());
 				}
@@ -133,6 +152,19 @@ namespace Fases
 		registrarEntidades(entidades, mundo, gerenciador_eventos,
 			gerenciador_colisoes, listaPersonagem, listaObstaculo,
 			numJogadores);
+
+		// Configura os limites horizontais da camera de acordo com o
+		// tamanho real da fase gerada. Sem isto, a camera revelaria o
+		// vazio antes da parede esquerda ou apos a direita.
+		float minX = 0.0f;
+		float maxX = 0.0f;
+		CarregadorFase::calcularLimites(numeroFase, minX, maxX);
+		camera.definirLimites(minX, maxX);
+	}
+
+	Sistemas::Camera& Fase::getCamera()
+	{
+		return camera;
 	}
 
 	void Fase::setFase(int f)
@@ -153,6 +185,18 @@ namespace Fases
 
 	void Fase::desalocaEntidades()
 	{
+		// Antes de destruir a fase, registra o HP de cada jogador no
+		// Mundo para que ele persista na proxima fase. Se um jogador
+		// ja estava marcado como morto (slot nullptr), ignoramos.
+		if (mundo)
+		{
+			for (int i = 0; i < mundo->getNumSlots(); ++i)
+			{
+				if (Jogador* j = mundo->getJogador(i))
+					mundo->setVidaPersistida(i, j->getVidaAtual());
+			}
+		}
+
 		gerenciador_eventos->setJogador(nullptr);
 		gerenciador_eventos->setJogador2(nullptr);
 		gerenciador_colisoes->setJogador(nullptr);

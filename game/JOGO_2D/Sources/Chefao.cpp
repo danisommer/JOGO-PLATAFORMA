@@ -1,6 +1,7 @@
 #include "Chefao.hpp"
 #include "Gerenciador_Recursos.hpp"
 #include "Mundo.hpp"
+#include "Camera.hpp"
 
 #include "iostream"
 #define VIDA_MAX 600.0f
@@ -55,6 +56,11 @@ namespace Entidades
 
 				ultimoAtaque = agora;
 
+				// Tremor da camera no ataque do chefao: rapido e sutil
+				// (15 frames, 7 px de intensidade) para dar peso ao
+				// golpe sem nausear o jogador.
+				if (mundo && mundo->getCamera())
+					mundo->getCamera()->dispararTremor(15, 7.0f);
 			}
 			parado = false;
 
@@ -242,6 +248,11 @@ namespace Entidades
 		void Chefao::teleportar()
 		{
 			teleportando = true;
+
+			// Tremor mais intenso e prolongado no teletransporte:
+			// marca a "passagem" do chefao para o jogador.
+			if (mundo && mundo->getCamera())
+				mundo->getCamera()->dispararTremor(25, 12.0f);
 
 			float lado1;
 			float lado2 = -1.0f;

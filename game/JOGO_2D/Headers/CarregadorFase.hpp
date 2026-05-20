@@ -43,5 +43,10 @@ namespace Fases
 		// fases gera o chefao no lugar de inimigos comuns.
 		std::vector<std::unique_ptr<Entidades::Entidade>> gerarProcedural(
 			int numeroFase, int numJogadores);
+
+		// Limites horizontais (em pixels) da fase procedural para a
+		// fase indicada. Usado pela camera para nao revelar areas
+		// vazias antes da parede inicial ou apos a parede final.
+		static void calcularLimites(int numeroFase, float& minX, float& maxX);
 	};
 }

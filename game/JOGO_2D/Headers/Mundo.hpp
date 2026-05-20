@@ -6,6 +6,7 @@
 #include "ArvoreHabilidades.hpp"
 
 namespace Entidades { namespace Personagens { class Jogador; } }
+namespace Sistemas { class Camera; }
 
 // Estado compartilhado de uma sessao de jogo. Substitui os membros
 // 'static' que antes viviam espalhados em Inimigo, Obstaculo, Fase e
@@ -31,6 +32,17 @@ private:
 	int faseAtual;
 	int kills;
 	ArvoreHabilidades arvore;
+
+	// Vida persistida entre fases. Valores <= 0 significam "ainda nao
+	// definida", caso em que cada jogador comeca com sua vida maxima.
+	// Esta usada pelo modo roguelike para que o HP NAO recarregue ao
+	// trocar de fase - so e zerado em reiniciarRun().
+	float vidaPersistida[2];
+
+	// Camera "observada", nao possuida. Os efeitos cinematicos vivem
+	// na Camera, e o Mundo expoe um atalho para que as entidades nao
+	// precisem conhecer Fase.
+	Sistemas::Camera* camera;
 
 public:
 	Mundo();
@@ -67,6 +79,19 @@ public:
 
 	ArvoreHabilidades& getArvore();
 	const ArvoreHabilidades& getArvore() const;
+
+	// HP persistido entre fases. setVidaPersistida(i, v) registra a
+	// vida atual do jogador i ao terminar a fase; getVidaPersistida
+	// devolve -1 quando nao ha valor registrado.
+	void setVidaPersistida(int indiceJogador, float vida);
+	float getVidaPersistida(int indiceJogador) const;
+	void limparVidaPersistida();
+
+	// Camera viva da fase em curso. Permite que personagens (jogador,
+	// chefao) disparem efeitos cinematicos sem se acoplarem a Fase.
+	// Pode ser nullptr (ex.: entre transicoes de fase).
+	void setCamera(Sistemas::Camera* c);
+	Sistemas::Camera* getCamera() const;
 
 	// Reinicia o estado da run (fase, kills, pontuacao); a arvore de
 	// habilidades e seus pontos NAO sao zerados aqui - sobrevivem

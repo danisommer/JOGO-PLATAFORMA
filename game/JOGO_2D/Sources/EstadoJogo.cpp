@@ -4,6 +4,7 @@
 #include "Principal.hpp"
 #include "Fase.hpp"
 #include "Mundo.hpp"
+#include "Camera.hpp"
 
 namespace Estados
 {
@@ -63,6 +64,9 @@ namespace Estados
 		fase->atualizaCamera();
 		fase->AtualizarPersonagens();
 		gerenciadorColisoes->Executar();
+		// Overlays cinematicos da camera (flash de dano, tint de
+		// veneno) entram apos as entidades para cobri-las.
+		fase->getCamera().desenharOverlays();
 		fase->desenharHUD();
 		gerenciadorGrafico->mostraElemento();
 

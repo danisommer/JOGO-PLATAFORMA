@@ -3,6 +3,7 @@
 #include "Configuracao.hpp"
 #include "Mundo.hpp"
 #include "ArvoreHabilidades.hpp"
+#include "Camera.hpp"
 #include <iostream>
 
 namespace Entidades
@@ -75,12 +76,18 @@ namespace Entidades
 						sprite.setColor(corEnvenenado);
 						vida -= forcaVeneno;
 						tempoDecorridoVeneno++;
+
+						// Tint verde na camera enquanto durar o veneno.
+						if (mundo && mundo->getCamera())
+							mundo->getCamera()->setEnvenenado(true);
 					}
 					else
 					{
 						sprite.setColor(Color{255, 255, 255});
 						tempoDecorridoVeneno = 0;
 						envenenado = false;
+						if (mundo && mundo->getCamera())
+							mundo->getCamera()->setEnvenenado(false);
 					}
 				}
 
@@ -511,7 +518,14 @@ namespace Entidades
 
 		bool Jogador::tomarDano(float dano, int dirKnockback)
 		{
-			return Personagem::tomarDano(dano * fatorArmadura, dirKnockback);
+			const bool acertou = Personagem::tomarDano(dano * fatorArmadura, dirKnockback);
+
+			// Feedback cinematico: flash vermelho curto quando o golpe
+			// realmente acerta (evita piscar se invulneravel).
+			if (acertou && mundo && mundo->getCamera())
+				mundo->getCamera()->dispararFlashDano(12, 140);
+
+			return acertou;
 		}
 
 		void Jogador::inicializaTeclas()

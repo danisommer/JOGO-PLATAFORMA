@@ -71,5 +71,10 @@ namespace Fases
 		// Serializacao da fase (via GerenciadorSave).
 		void salvarJogo(int slot);
 		void aplicarSave(int slot);
+
+		// Acesso a camera para que outras entidades (jogador, chefao)
+		// possam disparar efeitos cinematicos sem conhecer a Camera
+		// diretamente.
+		Sistemas::Camera& getCamera();
 	};
 }

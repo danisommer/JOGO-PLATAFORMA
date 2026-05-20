@@ -7,8 +7,20 @@ Mundo::Mundo() :
 	chefaoMorreu(false),
 	posChefao(0.0f, 0.0f),
 	faseAtual(1),
-	kills(0)
+	kills(0),
+	vidaPersistida{ -1.0f, -1.0f },
+	camera(nullptr)
 {
+}
+
+void Mundo::setCamera(Sistemas::Camera* c)
+{
+	camera = c;
+}
+
+Sistemas::Camera* Mundo::getCamera() const
+{
+	return camera;
 }
 
 void Mundo::definirJogadores(const std::vector<Entidades::Personagens::Jogador*>& js)
@@ -142,6 +154,26 @@ void Mundo::reiniciarRun()
 	zerarPontuacao();
 	chefaoMorreu = false;
 	posChefao = sf::Vector2f();
+	limparVidaPersistida();
+}
+
+void Mundo::setVidaPersistida(int indiceJogador, float vida)
+{
+	if (indiceJogador >= 0 && indiceJogador < 2)
+		vidaPersistida[indiceJogador] = vida;
+}
+
+float Mundo::getVidaPersistida(int indiceJogador) const
+{
+	if (indiceJogador < 0 || indiceJogador >= 2)
+		return -1.0f;
+	return vidaPersistida[indiceJogador];
+}
+
+void Mundo::limparVidaPersistida()
+{
+	vidaPersistida[0] = -1.0f;
+	vidaPersistida[1] = -1.0f;
 }
 
 void Mundo::gravarRanking(const std::string& nome1, const std::string& nome2) const

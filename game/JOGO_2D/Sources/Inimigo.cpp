@@ -215,6 +215,18 @@ namespace Entidades
 			return distanciaAtaqueY;
 		}
 
+		void Inimigo::aplicarDificuldade(int numeroFase)
+		{
+			if (numeroFase <= 1)
+				return;
+
+			const float fatorVida = 1.0f + 0.12f * (numeroFase - 1);
+			const float fatorDano = 1.0f + 0.08f * (numeroFase - 1);
+
+			vida *= fatorVida;
+			dano *= fatorDano;
+		}
+
 		bool Inimigo::podeAtacarAlvo(const sf::RectangleShape& alvo) const
 		{
 			const sf::FloatRect rA = alvo.getGlobalBounds();
