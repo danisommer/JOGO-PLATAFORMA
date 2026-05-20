@@ -261,7 +261,14 @@ namespace Entidades
 
 		const bool Jogador::getAtacando() const
 		{
-			return atacando;
+			if (!atacando) return false;
+			// Dano so e aplicado apos 40% da animacao de ataque concluida.
+			// count e n_frames refletem o frame anterior (atualizarAnimacao
+			// roda depois do combate), entao a janela de dano nao e imediata.
+			if (n_frames <= 1) return true;
+			const float progresso = static_cast<float>(count)
+				/ static_cast<float>(n_frames - 1);
+			return progresso >= 0.70f;
 		}
 
 		float Jogador::getVida()
